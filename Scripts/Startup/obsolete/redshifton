@@ -1,0 +1,36 @@
+#!/bin/bash
+
+pkill --signal SIGINT redshiftoff
+pkill --signal SIGINT redshifton
+
+backlight_dir=/sys/class/backlight/intel_backlight
+location="35.996948:-78.899017"
+
+luminance() {
+    read -r level < "$backlight_dir"/actual_brightness
+    factor=$((max))
+    new_brightness="$(bc -l <<< "scale = 2; $level / $factor")"
+    printf '%f\n' $new_brightness
+}
+read -r max < "$backlight_dir"/max_brightness
+
+turnoff() {
+temp="$(redshift -p -l $location | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
+temp=${temp%?}
+
+interval=$(bc <<< "(6500 - $temp)/45")
+while [[ $temp -le 6500 ]]; do
+  echo "$temp"
+  redshift -P -O $temp -b $(luminance)
+  temp=$(($temp + $interval))
+done
+exit
+}
+
+trap "turnoff" SIGINT
+
+redshift -o -P -l $location -b $(luminance)
+inotifywait -me modify --format '' "$backlight_dir"/actual_brightness | while read; do
+    #xrandr --output eDP1 --brightness "$(luminance)"
+    redshift -o -P -l $location -b $(luminance)
+done

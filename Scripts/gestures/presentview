@@ -1,0 +1,8 @@
+#!/bin/bash
+
+state=$(cat )
+if [[ $state = open ]]; then
+  close
+else
+  minimize
+fi

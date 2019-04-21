@@ -1,0 +1,33 @@
+#!/bin/bash
+# work in progress, will control brightness and redshift while saving on power,
+# TODO update redshift value automatically, another inotify check?, script to transition from off to on.
+paath=/sys/class/backlight/intel_backlight
+
+location="35.996948:-78.899017"
+luminance() {
+    read -r level < "$paath"/actual_brightness
+    factor=$((max))
+    new_brightness="$(bc -l <<< "scale = 2; $level / $factor")"
+    printf '%f\n' $new_brightness
+}
+
+read -r max < "$paath"/max_brightness
+temp="$(redshift -p -l 35.996948:-78.899017 | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
+temp=${temp%?}
+
+interval=$(bc <<< "(6500 - $temp)/60")
+while [[ $temp -le 6500 ]]; do
+  echo "$temp"
+  redshift -P -O $temp -b $(luminance)
+  temp=$(($temp + $interval))
+done
+#}
+
+trap 'transition' INT
+
+#sleep 2
+#while [ $temp -ge 4500 ]; do
+#  echo "$temp"
+#  let temp=$(expr $temp - $interval)
+#  redshift -P -O $temp
+#done

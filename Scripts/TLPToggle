@@ -1,0 +1,48 @@
+#!/bin/bash
+ 
+CState=$(tlp-stat -s | grep -oP 'Power source   = \K.*')
+CMode=$(tlp-stat -s | grep -oP 'Mode           = \K.*')
+Wrongpass=0 #first time run
+
+if [ "$CMode" = "battery" ]; then
+    CMode="BAT" #changes battery to BAT when checking TLP mode
+fi
+
+if [ "$CState" = "battery" ]; then
+    CState="Battery" #changes battery to Battery when checking Laptops current power state
+fi
+
+while true; do  #Loop makes sure password dialog appears every time a failed attempt occurs
+    if ! sudo -n true; then
+        if [ $Wrongpass = 0 ]; then
+            password=$(kdialog --title "Toggle($CMode)" --password "Enter password")
+        else
+            password=$(kdialog --title "Toggle($CMode)" --password "Try Again") #Changes prompt when an incorrect password is entered
+        fi
+    fi
+    if [ $? = 0 ]; then #checks if ok or cancel was selected
+        echo "Selected: OK"
+        if tlp-stat -s | grep -q 'Mode           = AC'; then    #Checks for the current mode and toggles it in the following statements
+            echo "Changing TLP to BAT mode ($CState connected)"
+            if echo "$password" | sudo -S tlp BAT; then
+                kdialog --title "TLP mode BAT" --passivepopup "Power Savings on ($CState connected)" 3
+                break
+            else
+                echo "Wrong password entered"
+                Wrongpass=1
+            fi
+        else
+            echo "Changing TLP to AC mode ($CState connected)"
+            if echo "$password" | sudo -S tlp AC; then
+                kdialog --title "TLP mode AC" --passivepopup "Power Savings off ($CState connected)" 3
+                break
+            else
+                echo "Wrong password entered"
+                Wrongpass=1
+            fi
+        fi
+    else
+        echo "Selected: Cancel"
+        break
+    fi
+done
