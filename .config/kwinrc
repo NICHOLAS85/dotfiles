@@ -51,6 +51,7 @@ highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
 kwin4_effect_loginEnabled[$d]
 kwin4_effect_maximizeEnabled=false
+kwin4_effect_minimizescaleEnabled=true
 kwin4_effect_translucencyEnabled[$d]
 lattewindowcolorsEnabled=true
 minimizeanimationEnabled=false
