@@ -1,0 +1,78 @@
+
+/* No text in bookmark bar */
+.bookmark-item{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important; 
+}
+toolbarbutton.bookmark-item .toolbarbutton-text{
+    display: none !important;
+}
+toolbarbutton.bookmark-item .toolbarbutton-icon{
+    margin-left: 2px !important;
+}
+#PlacesToolbarItems > .bookmark-item > .toolbarbutton-icon[label]:not([label=""]) {
+    margin-inline-end: 2px !important;
+}
+toolbarbutton.subviewbutton.subviewbutton-iconic .toolbarbutton-text{
+    display: -moz-box !important;
+} 
+
+/* --- [1] --- */
+/* Show text on hover */
+toolbarbutton.bookmark-item:hover:not(.subviewbutton):not([disabled="true"]):not([open]) .toolbarbutton-text{
+    display: -moz-box !important;
+}
+/* --- [/1] --- */
+
+/* --- [2] --- */
+/* Show name of folders */
+toolbarbutton.bookmark-item[type="menu"]{
+    margin-right: .5em !important
+}
+toolbarbutton.bookmark-item[type="menu"] .toolbarbutton-text{
+    display: -moz-box !important;
+}
+/* --- [/2] --- */
+
+/* --- [4] --- */
+/* Fade bookmarksbar when not focused 
+#PlacesToolbarItems{
+    opacity: 0.3;
+    transition-delay: 3s; 
+    transition-duration: .5s;
+}
+#PlacesToolbarItems:hover{
+    transition-delay: 0s;
+    opacity: 1;
+}
+ --- [/4] --- */
+
+/* --- [5] --- */
+/* Completely hide bookmarkbar when not focused */
+#PersonalToolbar{
+    height: 4px !important;
+    min-height: 4px !important;
+    max-height: 4px !important;
+    padding:0;
+}
+#PersonalToolbar #personal-bookmarks{
+    opacity: 0;
+}
+#PersonalToolbar:hover{
+        height: 2.5em !important;
+    min-height: 2.5em !important;
+    max-height: 2.5em !important;
+    padding: 0 6px 2px;
+}
+#PersonalToolbar:hover #personal-bookmarks{
+    opacity: 1;
+}
+#PersonalToolbar, #PersonalToolbar #personal-bookmarks{
+    transition-delay: 1s !important; /* Change the 1s to change how long the bookmarkbar stays visible */
+}
+#PersonalToolbar:hover, #PersonalToolbar:hover #personal-bookmarks{
+    transition-delay: 0.2s !important;
+}
+/* --- [/5] --- */

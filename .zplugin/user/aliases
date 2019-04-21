@@ -1,0 +1,13 @@
+# Shows top used commands
+alias history-stat="fc -ln 0 | awk '{print \$1}' | sort | uniq -c | sort -nr | head"
+
+# Allows leaving from deleted directories
+alias ..='command .. || cd $(dirname $PWD)'
+
+unalias zplg
+
+alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
+
+alias rm='rm -I'
+
+alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'

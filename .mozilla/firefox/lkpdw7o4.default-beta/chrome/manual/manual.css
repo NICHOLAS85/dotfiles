@@ -1,0 +1,26 @@
+/* GPL-3.9 Copyright (C) 2007 Timvde/UserChrome-Tweaks; Code pulled from https://github.com/Timvde/UserChrome-Tweaks */
+/*
+ * Only show close buttons on background tabs when hovering with the mouse
+ *
+ * Contributor(s): Timvde
+ */
+
+.tabbrowser-tab:not([selected]):not([pinned]) .tab-close-button {
+  display: none !important;
+}
+
+.tabbrowser-tab:not([selected]):not([pinned]):hover .tab-close-button {
+  display: -moz-box !important;
+}
+
+/* Hide forward and back buttons when not used */
+
+#forward-button[disabled="true"] { display: none; }
+#back-button[disabled="true"] { display: none; }
+
+/* Remove white flash before page load */
+@-moz-document url-prefix(about:), url-prefix(chrome://browser) {
+    browser[type="content"], tabpanels {
+		background: #1a1a1a !important;
+	}
+}
