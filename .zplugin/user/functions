@@ -31,8 +31,14 @@ fi
 
 updatelocal(){
     zplugin unload -q desyncr/auto-ls
-    cd ~/Downloads/installed || echo "error"
+    dir=~/Downloads/installed
+    if [[ $1 = "-f" || $2 = "-f" ]]; then
+    dir=$PWD
+    fi
 
+    cd $dir || echo "error"
+    colorls -d
+    
     pullupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
         git fetch
@@ -47,7 +53,7 @@ updatelocal(){
         BASE=$(git merge-base @ "$UPSTREAM")
 
         if [ $LOCAL = $REMOTE ]; then
-            echo "Up-to-date"
+            echo "Up-to-date $PWD"
         elif [ $LOCAL = $BASE ]; then
             echo -e "\e[00;31mNeed to pull $PWD\e[00m"
         elif [ $REMOTE = $BASE ]; then
@@ -81,8 +87,7 @@ updatelocal(){
     if [[ $1 = "--changes" ]]; then
     for d in ./*/ ; do (builtin cd "$d" && changelogs); done
     fi
-    popd 2> /dev/null || exit 0
+    popd 2> /dev/null
     zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
     zplugin load desyncr/auto-ls
 }
-
