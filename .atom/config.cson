@@ -1,0 +1,88 @@
+"*":
+  "atom-beautify":
+    executables:
+      beautysh:
+        path: "/home/nicholas/.local/bin/beautysh"
+  "atom-html-preview":
+    scrollToCursor: true
+  "atom-material-ui":
+    colors:
+      abaseColor: "#607d8b"
+      predefinedColor: "Blue Grey"
+    tabs:
+      compactTabs: true
+      noTabMinWidth: true
+    ui:
+      panelContrast: true
+      panelShadows: true
+  core:
+    audioBeep: false
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "fuzzy-finder"
+      "archive-view"
+      "package-generator"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "atom-material-ui"
+      "one-dark-syntax"
+    ]
+  editor:
+    fontFamily: "Fira Code"
+    fontSize: 15
+    preferredLineLength: 200
+    showIndentGuide: true
+    softWrap: true
+  "exception-reporting":
+    userId: "58e2e8e6-4bc6-4061-a119-2c82a1d28c91"
+  github: {}
+  linter: {}
+  "linter-eslint":
+    disabling:
+      disableWhenNoEslintConfig: false
+    global:
+      globalNodePath: "/usr/local"
+  "linter-shellcheck":
+    userParameters: "-x"
+  "linter-stylelint":
+    disableWhenNoConfig: false
+    useStandard: true
+  "linter-ui-default":
+    alwaysTakeMinimumSpace: true
+    decorateOnTreeView: "None"
+    showPanel: true
+    showProviderName: true
+  "linter-vnu":
+    vnuUrl: "http://localhost:8844"
+  "markdown-preview":
+    useGitHubStyle: true
+  minimap:
+    plugins:
+      bookmarks: true
+      bookmarksDecorationsZIndex: 0
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+      "minimap-autohider": true
+      "minimap-autohiderDecorationsZIndex": 0
+    scrollAnimation: true
+  "minimap-autohider":
+    VisiblePercentage: 25
+  "minimap-linter":
+    markerTypeInfo: "off"
+  "platformio-ide-terminal":
+    core:
+      mapTerminalsTo: "File"
+    style:
+      theme: "one-dark"
+  "preview-plus":
+    htmlp: true
+    livePreview: true
+    webview: false
+  "pull-request": {}
+  "tree-view-sort":
+    type: 7
+  welcome:
+    showOnStartup: false

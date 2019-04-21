@@ -1,0 +1,35 @@
+/*
+ * Code by William Chang and Matt McFarland
+ * https://medium.com/@docodemore/an-alternative-to-operator-mono-font-6e5d040e1c7e#.ofkdp0aww
+ * flottflott - http://www.dafont.com/flottflott.font
+ * Fira Code - https://github.com/tonsky/FiraCode
+*/
+
+atom-text-editor {
+  font-family: 'Fira Code';
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+}
+
+atom-text-editor.editor {
+  .syntax--string.syntax--quoted,
+  .syntax--string.syntax--regexp {
+    -webkit-font-feature-settings: "liga" off, "calt" off;
+  }
+
+  .syntax--storage.syntax--type.syntax--function.syntax--arrow.syntax--js {
+    font-size: 1.5em;
+    line-height: 1rem;
+  }
+
+  .syntax--comment {
+    font-style: italic;
+  }
+
+  .syntax--source.syntax--js.syntax--jsx,
+  .syntax--storage.syntax--type.syntax--function.syntax--arrow.syntax--js,
+  .syntax--variable {
+    font-family: 'Fira Code';
+    font-style: normal;
+  }
+}
