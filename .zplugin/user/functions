@@ -28,3 +28,61 @@ auto-ls-colorls(){
 if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
     function cd () { builtin cd "$@" && clear -x; }
 fi
+
+updatelocal(){
+    zplugin unload -q desyncr/auto-ls
+    cd ~/Downloads/installed || echo "error"
+
+    pullupdates(){
+    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
+        git fetch
+    fi
+    }
+
+    checkupdates(){
+    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
+        UPSTREAM=${1:-'@{u}'}
+        LOCAL=$(git rev-parse @)
+        REMOTE=$(git rev-parse "$UPSTREAM")
+        BASE=$(git merge-base @ "$UPSTREAM")
+
+        if [ $LOCAL = $REMOTE ]; then
+            echo "Up-to-date"
+        elif [ $LOCAL = $BASE ]; then
+            echo -e "\e[00;31mNeed to pull $PWD\e[00m"
+        elif [ $REMOTE = $BASE ]; then
+            echo -e "\e[00;31mNeed to push $PWD\e[00m"
+        else
+            echo -e "\e[00;31mDiverged $PWD\e[00m"
+        fi
+    fi
+
+    }
+
+    changes=false
+    changelogs(){
+    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
+        upstream=$(git status | grep "On branch " | awk -F"branch " '{print $NF}')
+        if [[ $(git log $upstream..origin/$upstream) ]]; then
+        changes=true
+        fi
+
+        if $changes; then echo "BEGIN----------------------------------------------------"
+        echo "$PWD"; fi
+        git log --stat $upstream..origin/$upstream
+        if $changes; then echo "------------------------------------------------------END"
+        echo ""; fi
+    fi
+    }
+    echo "Pulling latest updates..."
+    for d in ./*/ ; do (builtin cd "$d" && pullupdates); done
+    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+    echo ""
+    if [[ $1 = "--changes" ]]; then
+    for d in ./*/ ; do (builtin cd "$d" && changelogs); done
+    fi
+    popd 2> /dev/null || exit 0
+    zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
+    zplugin load desyncr/auto-ls
+}
+
