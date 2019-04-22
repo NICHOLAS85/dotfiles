@@ -134,4 +134,6 @@ source ~/.zplugin/user/functions
 
 if dots status | grep -q "Changes not staged" || dots status | grep -q "Changes to be committed"; then
     dots status
+elif dots status | grep -q "ahead of"; then
+    dots push
 fi
