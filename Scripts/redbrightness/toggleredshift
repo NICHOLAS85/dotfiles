@@ -4,7 +4,7 @@ backlight_dir=/sys/class/backlight/intel_backlight
 location="36.01:-78.95"
 temphigh=6500
 
-trap 'echo "done" > /home/nicholas/Scripts/redbrightness/cache; echo "curtemp=$curtemp" > /home/nicholas/Scripts/redbrightness/curtemp; exit' INT EXIT
+trap 'echo "done" > /home/nicholas/Scripts/redbrightness/cache; echo "curtemp=$curtemp" > /home/nicholas/Scripts/redbrightness/curtemp; exit' 0
 
 luminance() {
     read -r level < "$backlight_dir"/actual_brightness
