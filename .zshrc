@@ -132,4 +132,6 @@ source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/functions
 
-dots status
+if dots status | grep -q "Changes not staged" || dots status | grep -q "Changes to be committed"; then
+    dots status
+fi
