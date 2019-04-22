@@ -15,4 +15,4 @@ EDITOR=kate
 PATH="$HOME/.cargo/bin:$PATH"
 
 # Directory checked for locally built projects (function updatelocal)
-dir=~/github/Built
+gdir=~/github/Built

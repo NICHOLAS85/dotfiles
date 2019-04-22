@@ -32,10 +32,10 @@ fi
 updatelocal(){
     zplugin unload -q desyncr/auto-ls
     if [[ $1 = "-f" || $2 = "-f" ]]; then
-    dir=$PWD
+    gdir=$PWD
     fi
 
-    cd $dir || return 1
+    cd $gdir || return 1
     colorls -d
     
     pullupdates(){
