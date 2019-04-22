@@ -31,12 +31,11 @@ fi
 
 updatelocal(){
     zplugin unload -q desyncr/auto-ls
-    dir=~/Downloads/installed
     if [[ $1 = "-f" || $2 = "-f" ]]; then
     dir=$PWD
     fi
 
-    cd $dir || echo "error"
+    cd $dir || return 1
     colorls -d
     
     pullupdates(){

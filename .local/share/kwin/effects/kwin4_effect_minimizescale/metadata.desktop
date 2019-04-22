@@ -1,0 +1,23 @@
+[Desktop Entry]
+Comment=Animate the minimizing of windows
+Icon=preferences-system-windows-effect-minimizescale
+Name=Scale
+
+Type=Service
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=Vlad Zagorodniy
+X-KDE-PluginInfo-Category=Appearance
+X-KDE-PluginInfo-Email=vladzzag@gmail.com
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-Name=kwin4_effect_minimizescale
+X-KDE-PluginInfo-Version=1
+X-KDE-PluginInfo-Website=
+X-KDE-ServiceTypes=KWin/Effect,KCModule
+X-KDE-PluginInfo-EnabledByDefault=false
+X-KDE-Ordering=60
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
+X-KDE-PluginKeyword=kwin4_effect_minimizescale
+X-KDE-Library=kcm_kwin4_genericscripted
+X-KDE-ParentComponents=kwin4_effect_minimizescale
+X-KWin-Exclusive-Category=minimize

@@ -131,3 +131,5 @@ zplugin light zdharma/fast-syntax-highlighting
 source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/functions
+
+dots status
