@@ -4,12 +4,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 bindkey -e
 # End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-#zstyle :compinstall filename '/home/nicholas/.zshrc'
-
-#autoload -Uz compinit
-#compinit
-# End of lines added by compinstall
 
 ### Added by Zplugin's installer
 source '/home/nicholas/.zplugin/bin/zplugin.zsh'
@@ -135,5 +129,6 @@ source ~/.zplugin/user/functions
 if dots status | grep -q "Changes not staged" || dots status | grep -q "Changes to be committed"; then
     dots status
 elif dots status | grep -q "ahead of"; then
+    dots status
     dots push
 fi
