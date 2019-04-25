@@ -1,10 +1,12 @@
 [commands.swipe.three]
 left_up = ""
 right_up = ""
-up = "xdotool key ctrl+F9"
+up = "./home/nicholas/Scripts/gestures/presentview --up &"
+#up = "xdotool key ctrl+F9"
 left_down = ""
 right_down = ""
-down = "xdotool key super+s"
+down = "./home/nicholas/Scripts/gestures/presentview --down"
+#down = "xdotool key super+s"
 left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
@@ -19,5 +21,5 @@ left = "xdotool key super+a"
 right = "xdotool key super+d"
 
 [commands.pinch]
-in = ""
+in = "xdotool key ctrl+shift+t"
 out = "./home/nicholas/Scripts/gestures/firefoxorbust"

@@ -1,8 +1,38 @@
 #!/bin/bash
 
-state=$(cat )
-if [[ $state = open ]]; then
-  close
-else
-  minimize
+TOGGLE=$HOME/Scripts/gestures/currentlydown
+
+#if [[ $1 = "--up" ]]; then
+#  if [[ ! -e $TOGGLE ]]; then
+#    xdotool key ctrl+F9
+#    touch $TOGGLE
+#    sleep 5
+#    rm $TOGGLE
+#  fi
+#elif [[ $1 = "--down" ]]; then
+#  pkill -f "presentview --up"
+#  if [[ -e $TOGGLE ]]; then
+#    xdotool key ctrl+F9
+#  else
+#    xdotool key super+s
+#  fi
+#  rm $TOGGLE
+#fi
+
+if [[ $1 = "--up" ]]; then
+  trap 'touch $TOGGLE; exit' SIGINT
+  if [[ -e $TOGGLE ]]; then
+    rm $TOGGLE
+    xdotool key ctrl+F9
+    sleep 4
+  fi
+  touch $TOGGLE
+elif [[ $1 = "--down" ]]; then
+  pkill -f "presentview --up"
+  if [[ ! -e $TOGGLE ]]; then
+    xdotool key ctrl+F9
+    touch $TOGGLE
+  else
+    xdotool key super+s
+  fi
 fi
