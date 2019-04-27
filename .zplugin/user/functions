@@ -75,7 +75,7 @@ updatelocal(){
         if $changes; then echo "BEGIN----------------------------------------------------"
         echo "$PWD"; fi
         git log --stat $upstream..origin/$upstream
-        if $changes; then echo "------------------------------------------------------END"
+        if $changes; then echo "$PWD"; echo "------------------------------------------------------END"
         echo ""; fi
     fi
     }
