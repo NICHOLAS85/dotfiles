@@ -36,6 +36,7 @@ transition() {
         done
     elif [[ $1 = "turnon" ]]; then
       if [[ $2 = "startup" ]]; then
+        xrandr --output eDP-1 --brightness 1
         curtemp=6500
         echo "$2"
       fi
