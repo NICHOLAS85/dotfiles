@@ -24,7 +24,6 @@ TabBox=false
 TabBoxAlternative=true
 
 [Effect-PresentWindows]
-MiddleButtonWindow=2
 TouchBorderActivate=7
 TouchBorderActivateAll=9
 
