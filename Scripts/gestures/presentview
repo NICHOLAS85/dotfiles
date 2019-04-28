@@ -2,34 +2,22 @@
 
 TOGGLE=$HOME/Scripts/gestures/currentlydown
 
-#if [[ $1 = "--up" ]]; then
-#  if [[ ! -e $TOGGLE ]]; then
-#    xdotool key ctrl+F9
-#    touch $TOGGLE
-#    sleep 5
-#    rm $TOGGLE
-#  fi
-#elif [[ $1 = "--down" ]]; then
-#  pkill -f "presentview --up"
-#  if [[ -e $TOGGLE ]]; then
-#    xdotool key ctrl+F9
-#  else
-#    xdotool key super+s
-#  fi
-#  rm $TOGGLE
-#fi
-
-if [[ $1 = "--up" ]]; then
+if [[ $1 = "--up" && -e $TOGGLE ]]; then
+  xdotool key ctrl+F9
   trap 'touch $TOGGLE; exit' SIGINT
-  if [[ -e $TOGGLE ]]; then
-    rm $TOGGLE
-    xdotool key ctrl+F9
-    sleep 4
-  fi
-  touch $TOGGLE
+  rm $TOGGLE
+  MOUSE_ID=$(xinput --list | grep -i -m 1 'TM3' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+  while true; do
+    sleep 0.11
+    STATE1=$(xinput --query-state $MOUSE_ID)
+    if [[ $STATE1 == *"button[1]=down"* ]]; then
+      touch $TOGGLE
+      break
+    fi
+  done
 elif [[ $1 = "--down" ]]; then
-  pkill -f "presentview --up"
   if [[ ! -e $TOGGLE ]]; then
+    pkill -f "presentview --up"
     xdotool key ctrl+F9
     touch $TOGGLE
   else
