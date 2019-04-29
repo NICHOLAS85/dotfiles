@@ -79,7 +79,7 @@ if [[ $1 = "--on" ]]; then
   transition turnon $2
   inotifywait -me modify --format '' "$backlight_dir"/actual_brightness | while read; do
     temp="$(redshift -p -l $location | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
-    if [[ ${temp%?} != $curtemp ]]; then
+    if [[ ${temp%?} != "$curtemp" ]]; then
     transition turnon
     fi
     redshift -o -P -l $location -b $(luminance)
