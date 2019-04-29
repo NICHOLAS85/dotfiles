@@ -79,12 +79,14 @@ updatelocal(){
         echo ""; fi
     fi
     }
-    echo "Pulling latest updates..."
-    for d in ./*/ ; do (builtin cd "$d" && pullupdates); done
-    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
-    echo ""
-    if [[ $1 = "--changes" ]]; then
-    for d in ./*/ ; do (builtin cd "$d" && changelogs); done
+    if ! [[ $1 = "--changes" ]]; then
+        echo "Pulling latest updates..."
+        for d in ./*/ ; do (builtin cd "$d" && pullupdates); done
+        for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+        echo ""
+    else
+        for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+        for d in ./*/ ; do (builtin cd "$d" && changelogs); done
     fi
     popd 2> /dev/null
     zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
