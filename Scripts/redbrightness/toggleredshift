@@ -70,8 +70,12 @@ transition() {
 }
 
 while [[ $(cat /home/nicholas/Scripts/redbrightness/cache) = transitioning ]]; do
+    ((++timeout))
     sleep .2
     echo "transitioning..."
+    if [[ $timeout -gt 20 ]]; then
+      echo "done" > /home/nicholas/Scripts/redbrightness/cache
+    fi
 done
 
 if [[ $1 = "--on" ]]; then
