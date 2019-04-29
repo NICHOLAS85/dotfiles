@@ -1,6 +1,6 @@
 #!/bin/bash
 
-excludefile="/home/nicholas/Documents/OneDrive/dontpush"
+excludefile=$HOME/Documents/OneDrive/dontpush
 pushfiles(){
         rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/NCSSM/
         read -p "Press enter to Push";
