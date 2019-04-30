@@ -9,19 +9,19 @@ generatecomp(){
 
 auto-ls-modecheck(){
     if tlp-stat -s | grep -q 'Mode           = battery'; then
-        varcache=($AUTO_LS_COMMANDS)
-        AUTO_LS_COMMANDS=($AUTO_LS_COMMANDSBAT)
+        varcache=("${AUTO_LS_COMMANDS[@]}")
+        AUTO_LS_COMMANDS=("${AUTO_LS_COMMANDSBAT[@]}")
         auto-ls
-        AUTO_LS_COMMANDS=($varcache)
+        AUTO_LS_COMMANDS=("${varcache[@]}")
         break
     fi
 }
 
 auto-ls-colorls(){
     if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == true ]]; then
-    colorlsprefix+=(${colorlsgitprefix[@]})
+    colorlsprefix+=("${colorlsgitprefix[@]}")
     fi
-    colorls ${colorlsprefix[@]}
+    colorls "${colorlsprefix[@]}"
 }
 
 # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
@@ -30,65 +30,65 @@ if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
 fi
 
 updatelocal(){
-    zplugin unload -q desyncr/auto-ls
-    if [[ $1 = "-f" || $2 = "-f" ]]; then
+  zplugin unload -q desyncr/auto-ls
+  if [[ $1 = "-f" || $2 = "-f" || $2 = "-force" ]]; then
     gdir=$PWD
-    fi
+  fi
 
-    cd $gdir || return 1
-    colorls -d
-    
-    pullupdates(){
+  cd $gdir || return 1
+  colorls -d
+
+  fetchupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-        git fetch
+      git fetch -j$(nproc)
+      echo "Fetching $PWD..."
     fi
-    }
+  }
 
-    checkupdates(){
+  checkupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-        UPSTREAM=${1:-'@{u}'}
-        LOCAL=$(git rev-parse @)
-        REMOTE=$(git rev-parse "$UPSTREAM")
-        BASE=$(git merge-base @ "$UPSTREAM")
+      UPSTREAM=${1:-'@{u}'}
+      LOCAL=$(git rev-parse @)
+      REMOTE=$(git rev-parse "$UPSTREAM")
+      BASE=$(git merge-base @ "$UPSTREAM")
 
-        if [ $LOCAL = $REMOTE ]; then
-            echo "Up-to-date $PWD"
-        elif [ $LOCAL = $BASE ]; then
-            echo -e "\e[00;31mNeed to pull $PWD\e[00m"
-        elif [ $REMOTE = $BASE ]; then
-            echo -e "\e[00;31mNeed to push $PWD\e[00m"
-        else
-            echo -e "\e[00;31mDiverged $PWD\e[00m"
-        fi
+      if [ $LOCAL = $REMOTE ]; then
+        echo "Up-to-date $PWD"
+      elif [ $LOCAL = $BASE ]; then
+        echo -e "\e[00;31mNeed to pull $PWD\e[00m"
+      elif [ $REMOTE = $BASE ]; then
+        echo -e "\e[00;31mNeed to push $PWD\e[00m"
+      else
+        echo -e "\e[00;31mDiverged $PWD\e[00m"
+      fi
     fi
+  }
 
-    }
-
-    changes=false
-    changelogs(){
+  changelogs(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-        upstream=$(git status | grep "On branch " | awk -F"branch " '{print $NF}')
-        if [[ $(git log $upstream..origin/$upstream) ]]; then
-        changes=true
-        fi
+      upstream=$(git status | grep "On branch " | awk -F"branch " '{print $NF}')
+      changes=$(git log $upstream..origin/$upstream)
 
-        if $changes; then echo "BEGIN----------------------------------------------------"
-        echo "$PWD"; fi
-        git log --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream
-        if $changes; then echo "$PWD"; echo "------------------------------------------------------END"
-        echo ""; fi
+      if [[ $changes ]]; then echo "BEGIN----------------------------------------------------"
+      echo "$PWD"; fi
+      git log --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream
+      if [[ $changes ]]; then echo "$PWD"; echo "------------------------------------------------------END"
+      echo ""; fi
     fi
-    }
-    if ! [[ $1 = "--changes" ]]; then
-        echo "Pulling latest updates..."
-        for d in ./*/ ; do (builtin cd "$d" && pullupdates); done
-        for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
-        echo ""
-    else
-        for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
-        for d in ./*/ ; do (builtin cd "$d" && changelogs); done
-    fi
-    popd 2> /dev/null
-    zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
-    zplugin load desyncr/auto-ls
+  }
+
+  if ! [[ $1 = "--changes" ]]; then
+    echo "Fetching latest updates..."
+    for d in ./*/ ; do (builtin cd "$d" && fetchupdates); done
+    echo ""
+    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+    echo ""
+  else
+    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+    echo ""
+    for d in ./*/ ; do (builtin cd "$d" && changelogs); done
+  fi
+  popd 2> /dev/null
+  zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
+  zplugin load desyncr/auto-ls
 }
