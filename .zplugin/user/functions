@@ -74,7 +74,7 @@ updatelocal(){
 
         if $changes; then echo "BEGIN----------------------------------------------------"
         echo "$PWD"; fi
-        git log --stat $upstream..origin/$upstream
+        if $changes; then git log --graph --max-count=10 --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream; fi
         if $changes; then echo "$PWD"; echo "------------------------------------------------------END"
         echo ""; fi
     fi
