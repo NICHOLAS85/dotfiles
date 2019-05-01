@@ -31,7 +31,7 @@ fi
 
 updatelocal(){
   zplugin unload -q desyncr/auto-ls
-  if [[ $1 = "-f" || $2 = "-f" || $2 = "-force" ]]; then
+  if [[ $1 = "-f" || $2 = "-f" || $2 = "--force" ]]; then
     gdir=$PWD
   fi
 
