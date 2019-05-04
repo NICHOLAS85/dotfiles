@@ -6,8 +6,10 @@ alias ..='command .. || cd $(dirname $PWD)'
 
 unalias zplg
 
+# Access zsh config files
 alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
 
 alias rm='rm -I'
 
+# dot file management
 alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'

@@ -29,6 +29,7 @@ if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
     function cd () { builtin cd "$@" && clear -x; }
 fi
 
+# Update locally built git projects
 updatelocal(){
   zplugin unload -q desyncr/auto-ls
   if [[ $1 = "-f" || $2 = "-f" || $2 = "--force" ]]; then

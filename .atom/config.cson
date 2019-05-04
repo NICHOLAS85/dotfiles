@@ -36,6 +36,8 @@
     softWrap: true
   "exception-reporting":
     userId: "58e2e8e6-4bc6-4061-a119-2c82a1d28c91"
+  "file-icons":
+    onChanges: true
   github: {}
   linter: {}
   "linter-eslint":
