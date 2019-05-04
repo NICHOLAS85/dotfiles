@@ -1,0 +1,7 @@
+[Mouse]
+Acceleration=1.5
+MouseButtonMapping=RightHanded
+ReverseScrollPolarity=false
+Threshold=4
+cursorSize=36
+cursorTheme=breeze_cursors

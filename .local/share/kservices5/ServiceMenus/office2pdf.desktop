@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.presentation;application/msword;application/vnd.ms-word;application/vnd.ms-excel;application/vnd.ms-powerpoint;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheet.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;
+Icon=application-vnd.oasis.opendocument.text
+Actions=pdf
+X-KDE-Priority=TopLevel
+X-KDE-StartupNotify=false
+X-KDE-Submenu=Export as
+X-KDE-Submenu[it]=Esporta come
+
+[Desktop Action pdf]
+Name=PDF document
+Name[it]=Documento PDF
+Icon=application-pdf
+Exec=soffice  --headless --convert-to pdf %f
