@@ -19,6 +19,16 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt share_history          # share command history data
 setopt no_beep
 
+# Fuzzy matching of completions for when you mistype them:
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# menu selection autocompletions and to have the words sorted by time
+#xdvi() { command xdvi ${*:-*.dvi(om[1])}  }
+#zstyle ':completion:*:*:xdvi:*' menu yes select
+#zstyle ':completion:*:*:xdvi:*' file-sort time
+
 # Oh-my-zsh libs
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::lib/history.zsh
