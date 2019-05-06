@@ -135,10 +135,10 @@ zplugin light zdharma/fast-syntax-highlighting
 source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/functions
-
-if dots status | grep -q "Changes not staged" || dots status | grep -q "Changes to be committed"; then
+dotvar=$(dots status)
+if echo "$dotvar" | grep -q "Changes not staged" && ! echo "$dotvar" | grep -q "modified:   ../../../.gtkrc-2.0"|| echo "$dotvar" | grep -q "Changes to be committed"; then
     dots status
-elif dots status | grep -q "ahead of"; then
+elif echo "$dotvar" | grep -q "ahead of"; then
     dots status
     dots push
 fi
