@@ -2,7 +2,7 @@
 Description=Window settings for synaptic
 clientmachine=nicholas-laptop
 clientmachinematch=0
-size=817,548
+size=853,548
 sizerule=4
 title=Repositories
 titlematch=1
