@@ -136,7 +136,7 @@ source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/functions
 dotvar=$(dots status)
-if echo "$dotvar" | grep -q "Changes not staged" && ! echo "$dotvar" | grep -q "modified:   ../../../.gtkrc-2.0"|| echo "$dotvar" | grep -q "Changes to be committed"; then
+if echo "$dotvar" | grep -q "Changes not staged" && ! echo "$dotvar" | grep -q "modified:   ../../../.gtkrc-2.0" && ! echo "$dotvar" | grep -q ".config/kwinrules.rc" || echo "$dotvar" | grep -q "Changes to be committed"; then
     dots status
 elif echo "$dotvar" | grep -q "ahead of"; then
     dots status

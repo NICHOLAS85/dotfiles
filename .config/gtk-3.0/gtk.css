@@ -1,0 +1,21 @@
+.title {
+	color: transparent;
+}
+
+
+/*
+ /* Always use background color 
+GtkWindow {
+    background-color: @theme_bg_color;
+}
+
+/* Fix tooltip background override 
+.tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.tooltip * {
+    background-color: transparent;
+}
+
+*/
