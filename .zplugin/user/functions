@@ -31,13 +31,19 @@ fi
 
 # Update locally built git projects
 updatelocal(){
+  trap "loadautols; return 0" SIGINT
   zplugin unload -q desyncr/auto-ls
-  if [[ $1 = "-f" || $2 = "-f" || $2 = "--force" ]]; then
+  if [[ $1 = "-p" || $1 = "--pwd" || $2 = "-p" || $2 = "--pwd" || $1 = "-r" || $1 = "--repull" ]]; then
     gdir=$PWD
   fi
 
   cd $gdir || return 1
   colorls -d
+
+  loadautols(){
+    zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
+    zplugin load desyncr/auto-ls
+  }
 
   fetchupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
@@ -72,24 +78,34 @@ updatelocal(){
 
       if [[ $changes ]]; then echo "BEGIN----------------------------------------------------"
       echo "$PWD"; fi
-      git log --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream
+      git log --color=always --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream
       if [[ $changes ]]; then echo "$PWD"; echo "------------------------------------------------------END"
       echo ""; fi
     fi
   }
+  case $1 in
+    --changes )
+      for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+      echo ""
+      for d in ./*/ ; do (builtin cd "$d" && changelogs); done | less -R
+      ;;
+    --repull | -r )
+      echo "Assuming --pwd"
+      IFS=
+      read -n 1 key
+      if [ "$key" = "" ]; then
+        git reset --hard; git clean -fdx; git pull
+      fi
+      ;;
+    * )
+      echo "Fetching latest updates..."
+      for d in ./*/ ; do (builtin cd "$d" && fetchupdates); done
+      echo ""
+      for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+      echo ""
+      ;;
+  esac
 
-  if ! [[ $1 = "--changes" ]]; then
-    echo "Fetching latest updates..."
-    for d in ./*/ ; do (builtin cd "$d" && fetchupdates); done
-    echo ""
-    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
-    echo ""
-  else
-    for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
-    echo ""
-    for d in ./*/ ; do (builtin cd "$d" && changelogs); done
-  fi
   popd 2> /dev/null
-  zplugin ice load'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]'
-  zplugin load desyncr/auto-ls
+  loadautols
 }
