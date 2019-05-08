@@ -8,6 +8,7 @@ unalias zplg
 
 # Access zsh config files
 alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
+alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
 
 alias rm='rm -I'
 
