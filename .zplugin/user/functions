@@ -85,9 +85,9 @@ updatelocal(){
   }
   case $1 in
     --changes )
-      for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
+      { for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
-      for d in ./*/ ; do (builtin cd "$d" && changelogs); done | less -R
+      for d in ./*/ ; do (builtin cd "$d" && changelogs); done } | less -R
       ;;
     --repull | -r )
       echo "Assuming --pwd"
