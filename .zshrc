@@ -91,10 +91,6 @@ zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
 zplugin ice wait'0' lucid
 zplugin light hlissner/zsh-autopair
 
-#zplugin ice wait'0' lucid
-#zplugin light RobSis/zsh-reentry-hook
-#deleted, doesnt seem to be needed anymore?
-
 #zplugin ice wait'0' if'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]' lucid
 #zplugin load gretzky/auto-color-ls
 #deleted, replicated with auto-ls and functions
@@ -135,10 +131,5 @@ zplugin light zdharma/fast-syntax-highlighting
 source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/functions
-dotvar=$(dots status | grep -v -e "gtkrc-2.0" -e "kwinrulesrc" -e '\.\./')
-if echo "$dotvar" | grep -q -e "Changes not staged" && echo "$dotvar" | grep -q -e "modified" || echo "$dotvar" | grep -q "Changes to be committed"; then
-    dots status
-elif echo "$dotvar" | grep -q "ahead of"; then
-    dots status
-    dots push
-fi
+
+dotscheck

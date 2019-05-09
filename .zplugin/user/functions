@@ -29,15 +29,34 @@ if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
     function cd () { builtin cd "$@" && clear -x; }
 fi
 
+#
+dotscheck(){
+  dotsvar1=("${dotsvar[@]/%/'}")
+  dotsvar2=("${dotsvar1[@]/#/-e '}")
+  dotsvar3=(grep -v "${dotsvar2[*]}")
+  dotsvar4=$(dots status | eval "${dotsvar3[*]}")
+  if echo "$dotsvar4" | grep -q -e "Changes not staged" && echo "$dotsvar4" | grep -q -e "modified" || echo "$dotsvar4" | grep -q "Changes to be committed"; then
+      dots status
+  elif echo "$dotsvar4" | grep -q "ahead of"; then
+      dots status
+      dots push
+  elif echo "$dotsvar4" | grep -q "is behind"; then
+    dots status
+  fi
+}
+
 # Update locally built git projects
 updatelocal(){
   trap "loadautols; return 0" SIGINT
   zplugin unload -q desyncr/auto-ls
+  popit=false
+  if [[ $gdir != "$PWD" ]]; then popit=true; fi
   if [[ $1 = "-p" || $1 = "--pwd" || $2 = "-p" || $2 = "--pwd" || $1 = "-r" || $1 = "--repull" ]]; then
+    popit=false
     gdir=$PWD
   fi
 
-  cd $gdir || return 1
+  pushd $gdir || return 1
   colorls -d
 
   loadautols(){
@@ -91,6 +110,7 @@ updatelocal(){
       ;;
     --repull | -r )
       echo "Assuming --pwd"
+      echo "Are you sure you want to repull $PWD"
       IFS=
       read -n 1 key
       if [ "$key" = "" ]; then
@@ -106,6 +126,6 @@ updatelocal(){
       ;;
   esac
 
-  popd 2> /dev/null
+  if $popit; then popd 2> /dev/null; unset popit; fi
   loadautols
 }

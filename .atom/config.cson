@@ -25,6 +25,7 @@
       "h5"
       "h6"
       "p"
+      "th"
     ]
   core:
     audioBeep: false

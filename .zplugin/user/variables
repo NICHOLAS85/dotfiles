@@ -16,3 +16,6 @@ PATH="$HOME/.cargo/bin:$PATH"
 
 # Directory checked for locally built projects (function updatelocal)
 gdir=~/github/Built
+
+# Strings to ignore when using dotscheck, escape and single quote stuff that could be wild cards (../)
+dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' )
