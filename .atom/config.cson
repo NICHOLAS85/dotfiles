@@ -15,6 +15,17 @@
     ui:
       panelContrast: true
       panelShadows: true
+  "autoclose-html":
+    forceInline: [
+      "title"
+      "h1"
+      "h2"
+      "h3"
+      "h4"
+      "h5"
+      "h6"
+      "p"
+    ]
   core:
     audioBeep: false
     closeDeletedFileTabs: true
