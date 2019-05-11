@@ -36,9 +36,8 @@ transition() {
         done
     elif [[ $1 = "turnon" ]]; then
       if [[ $2 = "startup" ]]; then
-        decreaseto=$(bc -l <<< "(1 - $(luminance)) * 100")
-        #xrandr --output eDP-1 --brightness 1
-        #pkexec brillo -u 800000 -U $decreaseto
+        xrandr --output eDP-1 --brightness 1
+        brillo -S 100
         curtemp=6500
         echo "$2"
       fi
