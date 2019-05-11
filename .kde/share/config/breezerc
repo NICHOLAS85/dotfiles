@@ -1,12 +1,13 @@
 [Common]
-ShadowSize=ShadowLarge
+ShadowSize=ShadowMedium
 ShadowSize=15
-ShadowStrength=89
+ShadowStrength=140
 ShadowStrength=89
 
 [Style]
 AnimationsEnabled=true
 AnimationsEnabled=false
+MenuOpacity=96
 ScrollBarAddLineButtons=1
 ScrollBarAddLineButtons=1
 ScrollBarSubLineButtons=1

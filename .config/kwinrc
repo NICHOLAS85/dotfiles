@@ -18,6 +18,9 @@ TabBox=false
 TabBoxAlternative=false
 zPosition=576
 
+[Effect-DimInactive]
+Strength=3
+
 [Effect-FlipSwitch]
 Angle=10
 TabBox=false
@@ -27,11 +30,20 @@ TabBoxAlternative=true
 TouchBorderActivate=7
 TouchBorderActivateAll=9
 
+[Effect-Scale]
+InScale=0.9100000000000004
+OutScale=0.9100000000000004
+
 [Effect-Wobbly]
 AdvancedMode=true
-Drag=50
-MoveFactor=18
-Stiffness=20
+Drag=90
+MoveWobble=false
+Stiffness=6
+WobblynessLevel=2
+
+[Effect-kwin4_effect_translucency]
+ComboboxPopups=98
+Menus=98
 
 [ModifierOnlyShortcuts]
 Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
@@ -57,6 +69,7 @@ lattewindowcolorsEnabled=true
 minimizeanimationEnabled=false
 presentwindowsEnabled[$d]
 scaleEnabled=true
+screenedgeEnabled=false
 slideEnabled=true
 slidingpopupsEnabled[$d]
 sticky-window-snappingEnabled=true
@@ -193,5 +206,6 @@ ShadeHover=false
 [org.kde.kdecoration2]
 BorderSize=NoSides
 ButtonsOnLeft=MF
+CloseOnDoubleClickOnMenu=false
 library=org.kde.sierrabreezeenhanced
 theme[$d]
