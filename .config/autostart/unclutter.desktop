@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=xinput --set-prop "Synaptics TM3044-002" "libinput Tapping Enabled" 1
+Exec=unclutter --timeout 10 -b
 GenericName[en_US]=
 GenericName=
 Icon=system-run
@@ -15,6 +15,5 @@ TerminalOptions=
 Type=Application
 X-DBUS-ServiceName=
 X-DBUS-StartupType=
-X-KDE-RunOnDiscreteGpu=false
 X-KDE-SubstituteUID=false
 X-KDE-Username=

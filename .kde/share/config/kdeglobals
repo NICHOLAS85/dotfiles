@@ -152,11 +152,11 @@ XftHintStyle=hintslight
 XftSubPixel=rgb
 dbfile=/home/nicholas/.mozilla/firefox/firefox.default/places.sqlite
 fixed=DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0,Regular
-font=Noto Sans,10,-1,5,50,0,0,0,0,0,Regular
-menuFont=Noto Sans,10,-1,5,50,0,0,0,0,0,Regular
+font=Fira Sans,10,-1,5,50,0,0,0,0,0,Regular
+menuFont=Fira Sans,10,-1,5,50,0,0,0,0,0,Regular
 shadeSortColumn=true
-smallestReadableFont=Noto Sans,9,-1,5,50,0,0,0,0,0,Regular
-toolBarFont=Noto Sans,10,-1,5,50,0,0,0,0,0,Regular
+smallestReadableFont=Fira Sans,9,-1,5,50,0,0,0,0,0,Regular
+toolBarFont=Fira Sans,10,-1,5,50,0,0,0,0,0,Regular
 widgetStyle=breeze
 
 [Icons]

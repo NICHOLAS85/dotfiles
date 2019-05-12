@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=xinput --set-prop "Synaptics TM3044-002" "Coordinate Transformation Matrix" 1.25, 0, 0, 0, 2.35, 0, 0, 0, 1
+Exec=xinput --set-prop "Synaptics TM3044-002" "libinput Tapping Enabled" 1; xinput --set-prop "Synaptics TM3044-002" "Coordinate Transformation Matrix" 1.25, 0, 0, 0, 2.35, 0, 0, 0, 1
 GenericName[en_US]=
 GenericName=
 Icon=system-run

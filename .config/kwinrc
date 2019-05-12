@@ -49,6 +49,7 @@ Menus=98
 Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 
 [MouseBindings]
+CommandActiveTitlebar2=Lower
 CommandWindowWheel=Activate and scroll
 
 [Plugins]
@@ -204,7 +205,7 @@ RollOverDesktops=true
 ShadeHover=false
 
 [org.kde.kdecoration2]
-BorderSize=NoSides
+BorderSize=Tiny
 ButtonsOnLeft=MF
 CloseOnDoubleClickOnMenu=false
 library=org.kde.sierrabreezeenhanced
