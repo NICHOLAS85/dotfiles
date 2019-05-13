@@ -69,7 +69,6 @@
   "linter-ui-default":
     alwaysTakeMinimumSpace: true
     decorateOnTreeView: "None"
-    showPanel: true
     showProviderName: true
   "linter-vnu":
     vnuUrl: "http://localhost:8844"
