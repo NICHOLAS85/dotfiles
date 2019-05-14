@@ -1,7 +1,7 @@
 #!/bin/bash
 
 backlight_dir=/sys/class/backlight/intel_backlight
-location="36.01:-78.95"
+location="36.013901:-78.946400"
 temphigh=6500
 
 trap 'echo "done" > /home/nicholas/Scripts/redbrightness/cache; echo "curtemp=$curtemp" > /home/nicholas/Scripts/redbrightness/curtemp; exit' 0
