@@ -1,0 +1,30 @@
+/** ==UserStyle==
+ * @name New Style for student.naviance.com
+ * @author <<your full name>>
+ * @license UNLICENSED
+ * @description This block descries your new Style.
+ *     The name will be the one displayed in reStyles UI,
+ *     author and license (https://spdx.org/licenses/) are useful if you publish your style,
+ *     which you are encouraged to do (userstyles.org and GitHub are good places).
+ *     This block can also contain style setting declarations, for more information on that
+ *     see: TBD.
+ *     You can edit this template in reStyles options.
+ */
+
+ /*
+  * To apply your style rules only to some pages or browser UI areas,
+  * list them below and place your style rules between the curly braces.
+  * See: https://developer.mozilla.org/en-US/docs/Web/CSS/@document
+  */
+@-moz-document
+	domain("student.naviance.com")
+        {
+        }
+
+section button{
+ color: black;   
+}
+
+select {
+ color: black;   
+}
