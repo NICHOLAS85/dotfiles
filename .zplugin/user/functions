@@ -53,6 +53,7 @@ updatelocal(){
   if [[ $gdir != "$PWD" ]]; then popit=true; fi
   if [[ $1 = "-p" || $1 = "--pwd" || $2 = "-p" || $2 = "--pwd" || $1 = "-r" || $1 = "--repull" ]]; then
     popit=false
+    cache=$gdir
     gdir=$PWD
   fi
 
@@ -126,6 +127,7 @@ updatelocal(){
       ;;
   esac
 
+  gdir=$cache
   if $popit; then popd 2> /dev/null; unset popit; fi
   loadautols
 }
