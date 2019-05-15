@@ -50,10 +50,11 @@ updatelocal(){
   trap "loadautols; return 0" SIGINT
   zplugin unload -q desyncr/auto-ls
   popit=false
+  cache=$gdir
+
   if [[ $gdir != "$PWD" ]]; then popit=true; fi
   if [[ $1 = "-p" || $1 = "--pwd" || $2 = "-p" || $2 = "--pwd" || $1 = "-r" || $1 = "--repull" ]]; then
     popit=false
-    cache=$gdir
     gdir=$PWD
   fi
 
