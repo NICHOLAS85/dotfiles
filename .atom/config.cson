@@ -39,6 +39,7 @@
       "fuzzy-finder"
       "archive-view"
       "package-generator"
+      "teletype"
     ]
     telemetryConsent: "no"
     themes: [
@@ -54,6 +55,10 @@
     userId: "58e2e8e6-4bc6-4061-a119-2c82a1d28c91"
   "file-icons":
     onChanges: true
+  "git-blame":
+    colorCommitAuthors: true
+    showFirstNames: false
+    showHash: false
   github: {}
   linter: {}
   "linter-eslint":

@@ -1,6 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000
+HISTIGNORE='dots *'
 SAVEHIST=10000
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -61,9 +62,6 @@ zplugin light denysdovhan/spaceship-prompt
 zplugin ice wait"0" lucid
 zplugin light zdharma/history-search-multi-word
 
-zplugin ice wait'0' if'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]' lucid
-zplugin load desyncr/auto-ls
-
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
@@ -90,10 +88,6 @@ zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
 
 zplugin ice wait'0' lucid
 zplugin light hlissner/zsh-autopair
-
-#zplugin ice wait'0' if'[[ $(xdotool getwindowfocus getwindowname) != *Dolphin* ]]' lucid
-#zplugin load gretzky/auto-color-ls
-#deleted, replicated with auto-ls and functions
 
 zplugin ice wait'0' lucid
 zplugin light paulirish/git-open
@@ -122,14 +116,17 @@ zplugin light zsh-users/zsh-completions
 #zplugin light RobSis/zsh-completion-generator
 #loaded when needed via function generatecomp
 
+zplugin ice wait'[[ $isdolphin = false ]]' lucid
+zplugin load desyncr/auto-ls
+
 zplugin ice wait"0" atload"_zsh_autosuggest_start" lucid
 zplugin light zsh-users/zsh-autosuggestions
 
 zplugin ice wait"0" lucid atinit'zpcompinit; zpcdreplay'
 zplugin light zdharma/fast-syntax-highlighting
 
-source ~/.zplugin/user/aliases
 source ~/.zplugin/user/variables
+source ~/.zplugin/user/aliases
 source ~/.zplugin/user/functions
 
 dotscheck

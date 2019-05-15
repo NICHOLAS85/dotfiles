@@ -13,4 +13,8 @@ alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.z
 alias rm='rm -I'
 
 # dot file management
-alias dots='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+#           ^Space added to remove this command from history
+
+# Aesthetic function for Dolphin, clear -x if cd while in Dolphin
+$isdolphin && alias cd='clear -x; cd'
