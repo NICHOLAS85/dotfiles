@@ -8,6 +8,11 @@
 @import "manual/manual.css";
 @import "manual/roomy.css";
 
+/*
+toolbarbutton#alltabs-button {
+    -moz-binding: url("userChrome.xml#js");
+}*/
+
 /* Do not edit this section of this file (outside the Browser Toolbox). It is managed by the reStyle extension. */ /*START:344bfdef-ac24-4ee6-9beb-b28ef518ae52*/
 
 /*END:344bfdef-ac24-4ee6-9beb-b28ef518ae52*/

@@ -92,7 +92,7 @@ zplugin light hlissner/zsh-autopair
 zplugin ice wait'0' lucid
 zplugin light paulirish/git-open
 
-zplugin ice lucid wait'0' atload'unalias gi'
+zplugin ice wait'0' atload'unalias gi' lucid
 zplugin load 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
 
