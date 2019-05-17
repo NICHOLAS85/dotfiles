@@ -60,16 +60,6 @@ wmclasscomplete=false
 wmclassmatch=1
 
 [6]
-Description=Application settings for firefox
-clientmachine=nicholas-laptop
-clientmachinematch=0
-decocolor=ObsidianCoast
-decocolorrule=2
-wmclass=navigator firefox
-wmclasscomplete=true
-wmclassmatch=1
-
-[7]
 Description=Window settings for plasmashell
 clientmachine=localhost
 clientmachinematch=0
@@ -217,7 +207,7 @@ ColorScheme[$d]
 XftAntialias[$d]
 XftHintStyle[$d]
 XftSubPixel[$d]
-count=7
+count=6
 fixed[$d]
 font[$d]
 menuFont[$d]

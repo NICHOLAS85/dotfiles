@@ -299,17 +299,15 @@
 	margin: 0 !important;
 }
 
-.tab-throbber::before,
-.tab-throbber-fallback
-{
-	display: none !important;
-}
-
 .tab-throbber[progress]
 {
-	fill: var(--tab-loading-fill) !important;
-	fill-opacity: 1 !important;
 	background-image: url(spinner-progress.svg) !important;
+	animation-direction: normal !important;
+}
+
+.tab-throbber::before
+{
+	display: none !important;
 }
 
 /* clipped tabs */
