@@ -1,0 +1,32 @@
+/*AGENT_SHEET*/
+
+/*********************************************************************************************
+  simpleMenuWizard: Firefox 57+ userChrome.css tweaks to remove context menu items.
+  https://github.com/stonecrusher/simpleMenuWizard
+**********************************************************************************************
+
+/*** input-context.css ***/
+
+/* #context-undo,                               /* Undo                             */
+/* #context-sep-undo,                           /************ Separator *************/
+/* #context-cut,                                /* Cut                              */
+/* #context-copy,                               /* Copy                             */
+/* #context-paste,                              /* Paste                            */
+/* #context-delete,                             /* Delete                           */
+/* #context-sep-paste,                          /************ Separator *************/
+/* #context-selectall,                          /* Select All                       */
+/* #context-keywordfield,                       /* Add a Keyword for this Search…   */
+/* #spell-separator,                            /************ Separator *************/
+/* #spell-check-enabled,                        /* Check Spelling                   */
+/* #spell-add-dictionaries-main,                /* Add Dictionaries…                */
+/* #spell-dictionaries,                         /* Languages                        */
+/* #context-sep-bidi,                           /************ Separator *************/
+/* #context-bidi-text-direction-toggle,         /* Switch Text Direction            */
+/* #context-bidi-page-direction-toggle,         /* Switch Page Direction            */
+/* #fill-login-separator,                       /************ Separator *************/
+/* #fill-login,                                 /* Fill Login                       */
+/* #inspect-separator,                          /************ Separator *************/
+/* #context-inspect,                            /* Inspect Element (Q)              */
+
+#leave_this_dummy_here
+    { display:none !important; }
