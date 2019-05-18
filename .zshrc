@@ -106,8 +106,8 @@ zplugin light _local/_local-git-ignore
 zplugin ice wait"0" lucid atload'unalias help; alias rm="rm -I"'
 zplugin snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 
-zplugin ice wait'0' lucid
-zplugin light changyuheng/zsh-interactive-cd
+#zplugin ice wait'0' lucid
+#zplugin light changyuheng/zsh-interactive-cd
 
 zplugin ice wait"0" blockf lucid
 zplugin light zsh-users/zsh-completions
