@@ -56,7 +56,7 @@ updatelocal(){
   colorls -d
 
   loadautols(){
-    zplugin ice load'[[ $isdolphin ]]'
+    zplugin ice load'[[ $isdolphin ]]' lucid
     zplugin load desyncr/auto-ls
   }
 
@@ -71,10 +71,12 @@ updatelocal(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
       UPSTREAM=${1:-'@{u}'}
       LOCAL=$(git rev-parse @)
-      REMOTE=$(git rev-parse "$UPSTREAM")
-      BASE=$(git merge-base @ "$UPSTREAM")
+      REMOTE=$(git rev-parse "$UPSTREAM" 2>/dev/null)
+      BASE=$(git merge-base @ "$UPSTREAM" 2>/dev/null)
 
-      if [ $LOCAL = $REMOTE ]; then
+      if [[ $BASE = "" ]] || [[ $REMOTE = "" ]]; then
+        echo -e "\e[00;31mCustom commit checked out $PWD\e[00m"
+      elif [ $LOCAL = $REMOTE ]; then
         echo "Up-to-date $PWD"
       elif [ $LOCAL = $BASE ]; then
         echo -e "\e[00;31mNeed to pull $PWD\e[00m"
@@ -89,6 +91,7 @@ updatelocal(){
   changelogs(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
       upstream=$(git status | grep "On branch " | awk -F"branch " '{print $NF}')
+      if [[ $upstream = "" ]]; then return;  fi
       changes=$(git log $upstream..origin/$upstream)
 
       if [[ $changes ]]; then echo "BEGIN----------------------------------------------------"
@@ -98,7 +101,7 @@ updatelocal(){
       echo ""; fi
     fi
   }
-  
+
   case $1 in
     --changes )
       { for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
@@ -106,6 +109,10 @@ updatelocal(){
       for d in ./*/ ; do (builtin cd "$d" && changelogs); done } | less -R
       ;;
     --repull | -r )
+      UPSTREAM=${1:-'@{u}'}
+      REMOTE=$(git rev-parse "$UPSTREAM" 2>/dev/null)
+      if [[ $REMOTE = "" ]]; then echo "Commit checked out, pull manually" && return ; fi
+
       echo "Assuming --pwd"
       echo "Are you sure you want to repull $PWD"
       IFS=
@@ -116,7 +123,7 @@ updatelocal(){
       ;;
     * )
       echo "Fetching latest updates..."
-      for d in ./*/ ; do (builtin cd "$d" && fetchupdates); done
+      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done; wait)
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
