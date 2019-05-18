@@ -1,0 +1,21 @@
+#compdef tldr
+
+# zsh completions for 'tldr'
+# automatically generated with http://github.com/RobSis/zsh-completion-generator
+local arguments
+
+arguments=(
+  {-h,--help}'[show this screen]'
+  {-v,--version}'[show version information]'
+  {-l,--list}'[list all commands in the cache]'
+  {-f,--render}'[render a specific markdown file]'
+  {-o,--os}'[override the operating system \[linux, osx, sunos\]]'
+  {-u,--update}'[update the local cache]'
+  {-c,--clear-cache}'[clear the local cache]'
+  {-q,--quiet}'[suppress informational messages]'
+  '--config-path[show config file path]'
+  '--seed-config[create a basic config]'
+  '*:filename:_files'
+)
+
+_arguments -s $arguments

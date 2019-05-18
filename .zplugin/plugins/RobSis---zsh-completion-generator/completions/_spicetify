@@ -1,0 +1,17 @@
+#compdef spicetify
+
+# zsh completions for 'spicetify'
+# automatically generated with http://github.com/RobSis/zsh-completion-generator
+local arguments
+
+arguments=(
+  {-q,--quiet}'[quiet mode (no output). Be careful, dangerous operations]'
+  {-e,--extension}'[use with "update", "watch" or "path" command to]'
+  {-a,--app}'[use with "path" to focus on custom apps.]'
+  {-c,--config}'[print config file path and quit]'
+  {-h,--help}'[print this help text and quit]'
+  {-v,--version}'[print version number and quit]'
+  '*:filename:_files'
+)
+
+_arguments -s $arguments
