@@ -30,7 +30,7 @@ dotscheck(){
   dotsvar3=(grep -v "${dotsvar2[*]}")
   dotsvar4=$(dots status | eval "${dotsvar3[*]}")
   if echo "$dotsvar4" | grep -q "Changes not staged" && echo "$dotsvar4" | grep -q "modified" || echo "$dotsvar4" | grep -q "Changes to be committed"; then
-    dots status
+    dots status -s
   elif echo "$dotsvar4" | grep -q "ahead of"; then
     dots status
     dots push
@@ -62,7 +62,7 @@ updatelocal(){
 
   fetchupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-      git fetch -j$(nproc)
+      git -c color.ui=always fetch -j$(nproc)
       echo "Fetching $PWD..."
     fi
   }
@@ -118,7 +118,7 @@ updatelocal(){
       IFS=
       read -n 1 key
       if [ "$key" = "" ]; then
-        git reset --hard; git clean -fdx; git pull
+        git reset --hard; git clean -fdx; git pull -j$(nproc)
       fi
       ;;
     * )

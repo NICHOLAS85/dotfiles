@@ -85,6 +85,7 @@ BorderActivate=9
 TouchBorderActivate=9
 
 [Script-sticky-window-snapping]
+ignoreMinimized=true
 opacityOfUnaffected=30
 
 [SubSession: 3964237c-a7d1-4aaa-907d-92bc4ff13640]
