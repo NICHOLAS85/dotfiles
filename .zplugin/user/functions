@@ -18,10 +18,11 @@ auto-ls-modecheck(){
 }
 
 auto-ls-colorls(){
-    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == true ]]; then
-    colorlsprefix+=("${colorlsgitprefix[@]}")
+    if [[ -d .git ]]; then
+      eval "${colorlsgitcommand[@]}"
+    else
+      eval "${colorlscommand[@]}"
     fi
-    colorls "${colorlsprefix[@]}"
 }
 
 dotscheck(){
