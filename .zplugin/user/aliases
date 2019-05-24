@@ -4,13 +4,10 @@ alias history-stat="fc -ln 0 | awk '{print \$1}' | sort | uniq -c | sort -nr | h
 # Allows leaving from deleted directories
 alias ..='command .. || cd $(dirname $PWD)'
 
-unalias zplg
-
 # Access zsh config files
 alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
-alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
 
-alias rm='rm -I'
+alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
@@ -18,3 +15,9 @@ alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 
 # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
 $isdolphin && alias cd='clear -x; cd'
+
+alias rm='rm -I'
+alias ls='lsd'
+alias apt="apt-fast"
+
+unalias zplg

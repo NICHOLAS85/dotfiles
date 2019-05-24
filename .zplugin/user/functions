@@ -31,6 +31,7 @@ dotscheck(){
   dotsvar3=(grep -v "${dotsvar2[*]}")
   dotsvar4=$(dots status | eval "${dotsvar3[*]}")
   if echo "$dotsvar4" | grep -q "Changes not staged" && echo "$dotsvar4" | grep -q "modified" || echo "$dotsvar4" | grep -q "Changes to be committed"; then
+    echo ""
     dots status -s
   elif echo "$dotsvar4" | grep -q "ahead of"; then
     dots status
