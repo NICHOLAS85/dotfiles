@@ -5,9 +5,9 @@ alias history-stat="fc -ln 0 | awk '{print \$1}' | sort | uniq -c | sort -nr | h
 alias ..='command .. || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
+alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &!'
 
-alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &; disown 1>/dev/null'
+alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &!'
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
@@ -21,3 +21,7 @@ alias ls='lsd'
 alias apt="apt-fast"
 
 unalias zplg
+
+if [[ -n $SSH_CONNECTION ]]; then
+    alias ls="command ls --color=tty"
+fi

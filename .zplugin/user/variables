@@ -1,5 +1,6 @@
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
+DISABLE_LS_COLORS=true #Allows ls to be aliased
 
 SPACESHIP_NODE_SHOW=false
 
@@ -20,15 +21,13 @@ gdir=~/github/Built
 # Strings to ignore when using dotscheck, escape and single quote stuff that could be wild cards (../)
 dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' )
 
+isdolphin=false
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
     AUTO_LS_COMMANDS=(ls)
-    isdolphin=false
 else
     if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
         isdolphin=true
-    else
-        isdolphin=false
     fi
 fi

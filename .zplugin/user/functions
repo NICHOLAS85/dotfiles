@@ -55,8 +55,8 @@ updatelocal(){
   fi
 
   pushd $gdir || return 1
-  colorls -d
-
+  ls  
+    
   loadautols(){
     zplugin ice load'[[ $isdolphin ]]' lucid
     zplugin load desyncr/auto-ls
