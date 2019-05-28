@@ -1,0 +1,18 @@
+# Bridge | ScionicSpectre
+# vim:set ts=2 sw=2 sts=2 ai et:
+
+# Text/base colors
+gtk-color-scheme = "text_color:black\nbase_color:white"
+gtk-color-scheme = "fg_color:#2e3436\nbg_color:#f5f5f4"
+gtk-color-scheme = "selected_fg_color:#ffffff\nselected_bg_color:#4a90d9"
+gtk-color-scheme = "tooltip_fg_color:#ffffff\ntooltip_bg_color:#343434"
+gtk-color-scheme = "insensitive_fg_color: mix (0.5, @fg_color, @bg_color)"
+gtk-color-scheme = "insensitive_bg_color: mix (0.6, @bg_color, @base_color)"
+gtk-color-scheme = "menu_text_color:white\nmenu_color:#232729"
+gtk-color-scheme = "menu_accent:#215d9c"
+gtk-auto-mnemonics              = 1
+gtk-primary-button-warps-slider = 1
+
+include "main.rc"
+include "apps.rc"
+include "hacks.rc"

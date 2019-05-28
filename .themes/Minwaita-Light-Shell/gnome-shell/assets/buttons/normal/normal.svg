@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2.1166666mm"
+   height="7.9375mm"
+   viewBox="0 0 2.1166666 7.9375"
+   version="1.1"
+   id="svg5419"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="button-normal.svg">
+  <defs
+     id="defs5413">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4882"
+       id="linearGradient5403"
+       gradientUnits="userSpaceOnUse"
+       x1="5"
+       y1="2"
+       x2="5"
+       y2="30" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4882">
+      <stop
+         id="stop4888"
+         offset="0"
+         style="stop-color:#e8e8e7;stop-opacity:1" />
+      <stop
+         style="stop-color:#dededd;stop-opacity:1"
+         offset="0.60000002"
+         id="stop4886" />
+      <stop
+         id="stop4884"
+         offset="1"
+         style="stop-color:#cfcfcd;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4916"
+       id="linearGradient4922"
+       x1="5"
+       y1="1"
+       x2="5"
+       y2="31"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4916">
+      <stop
+         style="stop-color:#b6b6b3;stop-opacity:1;"
+         offset="0"
+         id="stop4918" />
+      <stop
+         id="stop4932"
+         offset="0.9285714"
+         style="stop-color:#b6b6b3;stop-opacity:1" />
+      <stop
+         style="stop-color:#91918c;stop-opacity:1"
+         offset="0.96428573"
+         id="stop4934" />
+      <stop
+         style="stop-color:#91918c;stop-opacity:1"
+         offset="1"
+         id="stop4920" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="26.269975"
+     inkscape:cx="1.3764685"
+     inkscape:cy="15.344488"
+     inkscape:document-units="mm"
+     inkscape:current-layer="button"
+     showgrid="false"
+     inkscape:window-width="1854"
+     inkscape:window-height="1141"
+     inkscape:window-x="66"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5416">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.973779,-141.19163)">
+    <g
+       inkscape:label="#button-default"
+       id="button"
+       transform="matrix(0.26458333,0,0,0.26458333,40.279636,144.6)">
+      <g
+         transform="translate(1.6235313,-13.882025)"
+         id="g5358">
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient5403);fill-opacity:1;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"
+           id="rect5360"
+           width="7"
+           height="29"
+           x="1.5"
+           y="1.5"
+           rx="3"
+           ry="3" />
+        <path
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;stroke:#ffffff;stroke-width:0.98445737;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.8;marker:none;enable-background:accumulate"
+           d="M 1.4922287,11.492229 V 5.4922287 c 0,-1.662 1.338,-3 3,-3 h 1 c 1.662,0 3,1.338 3,3 v 6.0000003"
+           id="rect5362"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cssssc" />
+        <rect
+           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:url(#linearGradient4922);stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate"
+           id="rect5365"
+           width="7"
+           height="29"
+           x="1.5"
+           y="1.5"
+           rx="3"
+           ry="3" />
+      </g>
+    </g>
+  </g>
+</svg>
