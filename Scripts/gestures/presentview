@@ -3,31 +3,34 @@
 TOGGLE=$HOME/Scripts/gestures/currentlyup
 DOWNID=$HOME/Scripts/gestures/downid
 
-if [[ $1 = "--up" ]]; then
-  if [[ -e $DOWNID ]]; then
-    xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)"
-    rm $DOWNID
-  elif [[ ! -e $TOGGLE ]]; then
-    xdotool key ctrl+F9
-    touch $TOGGLE
-    MOUSE_ID=$(xinput --list | grep -i -m 1 'TM3' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-    { trap 'rm $TOGGLE; exit' SIGINT
-      while true; do
-      sleep 0.11
-      STATE1=$(xinput --query-state $MOUSE_ID)
-      if [[ $STATE1 == *"button[1]=down"* ]]; then
-        rm $TOGGLE
-        break
-      fi
-    done } &
-  fi
-elif [[ $1 = "--down" ]]; then
-  if [[ -e $TOGGLE ]]; then
-    pkill -SIGINT -f "presentview --up"
-    xdotool key ctrl+F9
-  else
-    echo "$(xprop -id "$(xdotool getwindowfocus)" | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$')" > $DOWNID
-    xdotool key super+s
-    { sleep .6; rm $DOWNID;} &
-  fi
-fi
+case $1 in
+  --up )
+    if [[ -e $DOWNID ]]; then
+      xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)"
+      rm $DOWNID
+    elif [[ ! -e $TOGGLE ]]; then
+      xdotool key ctrl+F9
+      touch $TOGGLE
+      MOUSE_ID=$(xinput --list | grep -i -m 1 'TM3' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+      { trap 'rm $TOGGLE; exit' SIGINT
+        while true; do
+        sleep 0.11
+        STATE1=$(xinput --query-state $MOUSE_ID)
+        if [[ $STATE1 == *"button[1]=down"* ]]; then
+          rm $TOGGLE
+          break
+        fi
+      done } &
+    fi
+  ;;
+  --down )
+    if [[ -e $TOGGLE ]]; then
+      pkill -SIGINT -f "presentview --up"
+      xdotool key ctrl+F9
+    else
+      echo "$(xprop -id "$(xdotool getwindowfocus)" | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$')" > $DOWNID
+      xdotool key super+s
+      { sleep .6; rm $DOWNID; } &
+    fi
+  ;;
+esac
