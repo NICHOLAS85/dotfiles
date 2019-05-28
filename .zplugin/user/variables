@@ -4,7 +4,7 @@ DISABLE_LS_COLORS=true #Allows ls to be aliased
 
 SPACESHIP_NODE_SHOW=false
 
-colorlscommand=(lsd --group-dirs)
+colorlscommand=(lsd --group-dirs first)
 colorlsgitcommand=(colorls --gs -A)
 
 AUTO_LS_COMMANDS=(modecheck colorls)
@@ -25,7 +25,8 @@ isdolphin=false
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
-    AUTO_LS_COMMANDS=(ls)
+    colorlscommand=(lsd --group-dirs first --icon never)
+    AUTO_LS_COMMANDS=(colorls)
 else
     if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
         isdolphin=true

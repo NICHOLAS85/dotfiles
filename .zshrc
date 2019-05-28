@@ -65,7 +65,7 @@ zplugin light zdharma/history-search-multi-word
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
-zplugin ice wait"0" lucid
+zplugin ice wait"0" has'systemctl' lucid
 zplugin snippet OMZ::plugins/systemd/systemd.plugin.zsh
 
 zplugin ice wait"0" lucid
@@ -74,7 +74,7 @@ zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
 zplugin ice wait"0" lucid make'!'
 zplugin light sei40kr/zsh-fast-alias-tips
 
-zplugin ice wait"0" lucid
+zplugin ice wait"0" has'flatpak' lucid
 zplugin light RogueScholar/flatpak-zsh-completion
 
 zplugin ice wait"0" lucid
@@ -89,10 +89,10 @@ zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
 zplugin ice wait'0' lucid
 zplugin light hlissner/zsh-autopair
 
-zplugin ice wait'0' lucid
+zplugin ice wait'0' has'git' lucid
 zplugin light paulirish/git-open
 
-zplugin ice wait'0' atload'unalias gi' lucid
+zplugin ice wait'0' has'git' atload'unalias gi' lucid
 zplugin load 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
 
@@ -100,7 +100,7 @@ zplugin load 'wfxr/forgit'
 #zplugin light laggardkernel/git-ignore
 #deleted, replaced with local git-ignore plugin
 
-zplugin ice pick'_local-git-ignore.plugin.zsh' blockf atload'alias gi="cgit-ignore"' wait'0' lucid
+zplugin ice has'git' pick'_local-git-ignore.plugin.zsh' blockf atload'alias gi="cgit-ignore"' wait'0' lucid
 zplugin light _local/_local-git-ignore
 
 zplugin ice wait"0" lucid atload'unalias help; alias rm="rm -I"'

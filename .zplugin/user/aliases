@@ -19,9 +19,10 @@ $isdolphin && alias cd='clear -x; cd'
 alias rm='rm -I'
 alias ls='lsd'
 alias apt="apt-fast"
+alias open='xdg-open'
 
 unalias zplg
 
 if [[ -n $SSH_CONNECTION ]]; then
-    alias ls="command ls --color=tty"
+    alias ls="lsd --group-dirs first --icon never"
 fi

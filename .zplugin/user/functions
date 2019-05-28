@@ -18,7 +18,7 @@ auto-ls-modecheck(){
 }
 
 auto-ls-colorls(){
-    if [[ -d .git ]]; then
+    if [[ -d .git ]] && ! [[ -n $SSH_CONNECTION ]]; then
       eval "${colorlsgitcommand[@]}"
     else
       eval "${colorlscommand[@]}"
