@@ -20,6 +20,8 @@ alias rm='rm -I'
 alias ls='lsd'
 alias apt="apt-fast"
 alias open='xdg-open'
+alias sudo='sudo '
+alias checkinstall='checkinstall -D --pakdir=/home/nicholas/OneDrive/Linux/installed/debs/built'
 
 unalias zplg
 

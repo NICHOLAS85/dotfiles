@@ -55,8 +55,8 @@ updatelocal(){
   fi
 
   pushd $gdir || return 1
-  ls  
-    
+  ls
+
   loadautols(){
     zplugin ice load'[[ $isdolphin ]]' lucid
     zplugin load desyncr/auto-ls
@@ -125,7 +125,7 @@ updatelocal(){
       ;;
     * )
       echo "Fetching latest updates..."
-      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done; wait)
+      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | grep -E --color '.*From.*|$' ; wait)
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
