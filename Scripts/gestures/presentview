@@ -6,7 +6,7 @@ DOWNID=$HOME/Scripts/gestures/downid
 if [[ $1 = "--up" ]]; then
   if [[ -e $DOWNID ]]; then
     pkill -f "presentview --down"
-    xdotool windowactivate `xdotool search --pid $(cat $DOWNID) | tail -1`
+    xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)"
     rm $DOWNID
   elif [[ -e $TOGGLE ]]; then
     xdotool key ctrl+F9
@@ -28,7 +28,7 @@ elif [[ $1 = "--down" ]]; then
     xdotool key ctrl+F9
     touch $TOGGLE
   else
-    echo $(xprop -id `xdotool getwindowfocus` | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$') > $DOWNID
+    echo "$(xprop -id "$(xdotool getwindowfocus)" | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$')" > $DOWNID
     xdotool key super+s
     { sleep 1; rm $DOWNID;} &
   fi

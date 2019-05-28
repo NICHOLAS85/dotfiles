@@ -1,27 +1,25 @@
 #!/bin/bash
 
+trap 'exit' SIGINT
+
 excludefile=$HOME/Scripts/LocalDocPusher/dontpush
 pushfiles(){
-        rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/NCSSM/
-        read -p "Press enter to Push";
-        rsync -auv --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/NCSSM
-        read -p "Press enter to close";
+    rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/NCSSM/
+    read -p "Press enter to Push";
+    rsync -auv --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/NCSSM
+    read -p "Press enter to close";
 }
-
-export excludefile
-export -f pushfiles
 
 if [[ $(tty) =~ "not a tty" ]]
 then
     echo "Not running on terminal"
-     konsole -e bash -c 'pushfiles'
+    konsole -e bash "$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 else
     echo "Running on terminal"
-    if [[ $(systemctl show -p SubState --value onedrive) = "running" ]]; then
+    if [[ $(systemctl --user show -p SubState --value onedrive) = "running" ]]; then
         pushfiles
     else
         echo "onedrive.service is $(systemctl show -p SubState --value onedrive)"
         read -p "Press enter to close";
     fi
 fi
-

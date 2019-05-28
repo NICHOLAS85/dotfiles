@@ -2,8 +2,6 @@
 
 case $1/$2 in
 #  pre/*)
-    #akbl --set-profile outerlid
-    #akbl --on
 #    ;;
   post/*)
     echo "Waking up from $2..."
@@ -13,13 +11,10 @@ case $1/$2 in
         ##Charging, Do something
         akbl --on
         echo "Let there be light! akbl on"
-    elif ! on_ac_power; then
+    else
         ##Discharging, Do something
         akbl --off
         echo "You must construct additional pylons! akbl off"
-    else
-        ##Battery not found, Do something
-        echo "Somethings not right..."
     fi
     ;;
 esac
