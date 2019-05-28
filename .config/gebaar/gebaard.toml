@@ -1,7 +1,7 @@
 [commands.swipe.three]
 left_up = ""
 right_up = ""
-up = "./home/nicholas/Scripts/gestures/presentview --up &"
+up = "./home/nicholas/Scripts/gestures/presentview --up"
 #up = "xdotool key ctrl+F9"
 left_down = ""
 right_down = ""
