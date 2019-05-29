@@ -1,3 +1,4 @@
+#Let Atom highlight this: -*- shell-script -*-
 
 # Load zsh-completion-generator when needed and unload when done
 generatecomp(){

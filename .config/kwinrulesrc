@@ -12,13 +12,12 @@ wmclassmatch=1
 
 [2]
 Description=Window settings for synaptic
-clientmachine=nicholas-laptop
+clientmachine=localhost
 clientmachinematch=0
-size=853,548
+size=1362,548
 sizerule=4
 title=Repositories
 titlematch=1
-types=1
 wmclass=synaptic
 wmclasscomplete=false
 wmclassmatch=1
