@@ -33,10 +33,10 @@
 #keystate_scrolllock= enable
 #------------------------------------------------------------------
 
-"WINDOW2=$(xdotool getwindowfocus); eval $(xdotool getmouselocation --shell) && xdotool windowfocus $WINDOW && xdotool key alt+Left && xdotool windowfocus $WINDOW2"
+"WINDOW2=$(xdotool getwindowfocus); eval $(xdotool getmouselocation --shell) && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW && xdotool key alt+Left && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW2"
 b:6
 
-"WINDOW2=$(xdotool getwindowfocus); eval $(xdotool getmouselocation --shell) && xdotool windowfocus $WINDOW && xdotool key alt+Right && xdotool windowfocus $WINDOW2"
+"WINDOW2=$(xdotool getwindowfocus); eval $(xdotool getmouselocation --shell) && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW && xdotool key alt+Right && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW2"
 b:7
 #------------------------------------------------------------------
 

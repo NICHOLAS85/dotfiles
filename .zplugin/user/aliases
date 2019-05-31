@@ -2,7 +2,7 @@
 alias history-stat="fc -ln 0 | awk '{print \$1}' | sort | uniq -c | sort -nr | head"
 
 # Allows leaving from deleted directories
-alias ..='command .. || cd $(dirname $PWD)'
+alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
 alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &!'
@@ -17,14 +17,14 @@ alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 $isdolphin && alias cd='clear -x; cd'
 
 alias rm='rm -I'
-alias ls='lsd'
+alias ls='lsd --group-dirs=first'
 alias apt="apt-fast"
 alias open='xdg-open'
-alias sudo='sudo '
+alias sudo='sudo  '
 alias checkinstall='checkinstall -D --pakdir=/home/nicholas/OneDrive/Linux/installed/debs/built'
 
 unalias zplg
 
 if [[ -n $SSH_CONNECTION ]]; then
-    alias ls="lsd --group-dirs first --icon never"
+    alias ls="lsd --group-dirs=first --icon=never"
 fi

@@ -65,7 +65,7 @@ updatelocal(){
 
   fetchupdates(){
     if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-      git -c color.ui=always fetch -j$(nproc)
+      git fetch -j $cores 2>&1
       echo "Fetching $PWD..."
     fi
   }
@@ -126,7 +126,8 @@ updatelocal(){
       ;;
     * )
       echo "Fetching latest updates..."
-      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | grep -E --color '.*From.*|$' ; wait)
+      cores=$(nproc)
+      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | GREP_COLORS='ms=1;34' grep -E --color '.*From.*|$'; wait)
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
