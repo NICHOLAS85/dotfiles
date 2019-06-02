@@ -27,8 +27,9 @@
 
 
 /* urlbar and searchbar autocomplete popup */
-/* Fix Materialfox search bar shadow */
+/* Fix Materialfox search bar shadow 
 #PopupAutoCompleteRichResult
 {
 	filter: unset !important;
 }
+*/

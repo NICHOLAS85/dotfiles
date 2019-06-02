@@ -23,13 +23,13 @@
 				
         		@media (-moz-windows-accent-color-in-titlebar: 0)
 				{					
-        		  	:root[tabsintitlebar]:not(:-moz-lwtheme)
+        		  	:root[tabsintitlebar]:not(:-moz-lwtheme):not([privatebrowsingmode=temporary])
 					{
         		    	background-color: #dee1e6 !important;
         		    	color: #3c4043 !important;
         		  	}
 					
-					:root[tabsintitlebar]:not(:-moz-lwtheme):-moz-window-inactive
+					:root[tabsintitlebar]:not(:-moz-lwtheme):not([privatebrowsingmode=temporary]):-moz-window-inactive
 					{
         		    	background-color: #e7eaed !important;
         		    	color: #666a6d !important;
@@ -43,6 +43,11 @@
 #navigator-toolbox :-moz-any(toolbar, #nav-bar-customization-target):not(#toolbar-menubar)
 {
 	-moz-box-align: center !important;
+}
+
+.toolbarbutton-icon
+{
+	-moz-context-properties: fill, fill-opacity !important;
 }
 
 #navigator-toolbox :-moz-any(.toolbarbutton-1, toolbarbutton.bookmark-item:not(.subviewbutton), .scrollbutton-up, .scrollbutton-down)
