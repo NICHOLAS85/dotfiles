@@ -1,5 +1,4 @@
-# Shows top used commands
-alias history-stat="fc -ln 0 | awk '{print \$1}' | sort | uniq -c | sort -nr | head"
+#Let Atom highlight this: -*- shell-script -*-
 
 # Allows leaving from deleted directories
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
@@ -20,8 +19,9 @@ alias rm='rm -I'
 alias ls='lsd --group-dirs=first'
 alias apt="apt-fast"
 alias open='xdg-open'
-alias sudo='sudo  '
+alias sudo='sudo  ' #allow sudo to expand aliases (checkinstall for example)
 alias checkinstall='checkinstall -D --pakdir=/home/nicholas/OneDrive/Linux/installed/debs/built'
+alias fuck=" fuck"
 
 unalias zplg
 
