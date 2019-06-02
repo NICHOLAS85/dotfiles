@@ -1,10 +1,13 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=10000
 HISTIGNORE='dots *'
-SAVEHIST=10000
 bindkey -e
 # End of lines configured by zsh-newuser-install
+
+#Install zplugin if not installed
+if [ ! -d "${HOME}/.zplugin" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+fi
 
 ### Added by Zplugin's installer
 source '/home/nicholas/.zplugin/bin/zplugin.zsh'
@@ -12,12 +15,7 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
-setopt promptsubst
 setopt append_history
-setopt hist_ignore_all_dups
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_ignore_space      # ignore commands that start with space
-setopt share_history          # share command history data
 setopt no_beep
 
 # Fuzzy matching of completions for when you mistype them:
@@ -25,12 +23,10 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# menu selection autocompletions and to have the words sorted by time
-#xdvi() { command xdvi ${*:-*.dvi(om[1])}  }
-#zstyle ':completion:*:*:xdvi:*' menu yes select
-#zstyle ':completion:*:*:xdvi:*' file-sort time
-
 # Oh-my-zsh libs
+zplugin ice lucid
+zplugin snippet OMZ::lib/theme-and-appearance.zsh
+
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::lib/history.zsh
 
@@ -40,17 +36,14 @@ zplugin snippet OMZ::lib/directories.zsh
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::lib/git.zsh
 
-zplugin ice wait"0" lucid
-zplugin snippet OMZ::lib/key-bindings.zsh
-
 zplugin ice wait"0" lucid atload"unalias grv"
 zplugin snippet OMZ::plugins/git/git.plugin.zsh
 
 zplugin ice wait"0" lucid
-zplugin snippet OMZ::lib/completion.zsh
+zplugin snippet OMZ::lib/key-bindings.zsh
 
 zplugin ice wait"0" lucid
-zplugin snippet OMZ::lib/theme-and-appearance.zsh
+zplugin snippet OMZ::lib/completion.zsh
 
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::lib/grep.zsh
@@ -65,56 +58,58 @@ zplugin light zdharma/history-search-multi-word
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
-zplugin ice wait"0" has'systemctl' lucid
-zplugin snippet OMZ::plugins/systemd/systemd.plugin.zsh
-
-zplugin ice wait"0" lucid
-zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
-
 zplugin ice wait"0" lucid make'!'
 zplugin light sei40kr/zsh-fast-alias-tips
+
+zplugin ice wait"0" has'systemctl' lucid
+zplugin snippet OMZ::plugins/systemd/systemd.plugin.zsh
 
 zplugin ice wait"0" has'flatpak' lucid
 zplugin light RogueScholar/flatpak-zsh-completion
 
-zplugin ice wait"0" lucid
-zplugin snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
-
-zplugin ice wait"0" lucid
-zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
-
 zplugin ice wait'0' lucid
 zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
 
-zplugin ice wait'0' lucid
-zplugin light hlissner/zsh-autopair
-
 zplugin ice wait'0' has'git' lucid
 zplugin light paulirish/git-open
+
+zplugin ice wait"0" lucid as"program" pick"wd.sh" mv"_wd.sh -> _wd" atload" wd() { source wd.sh }" blockf
+zplugin light mfaerevaag/wd
 
 zplugin ice wait'0' has'git' atload'unalias gi' lucid
 zplugin load 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
 
-#zplugin ice pick'init.zsh' blockf atload'alias gi="cgit-ignore"' wait'0' lucid
-#zplugin light laggardkernel/git-ignore
-#deleted, replaced with local git-ignore plugin
-
-zplugin ice has'git' pick'_local-git-ignore.plugin.zsh' blockf atload'alias gi="cgit-ignore"' wait'0' lucid
-zplugin light _local/_local-git-ignore
-
-zplugin ice wait"0" lucid atload'unalias help; alias rm="rm -I"'
-zplugin snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
-
-#zplugin ice wait'0' lucid
-#zplugin light changyuheng/zsh-interactive-cd
-
-zplugin ice wait"0" blockf lucid
-zplugin light zsh-users/zsh-completions
+zplugin ice has'git' pick'init.zsh' blockf atload'alias gi="cgit-ignore"' wait'0' lucid
+zplugin light NICHOLAS85/_local-git-ignore
 
 #zplugin ice from"gh" wait"0" silent pick"zsh-completion-generator.plugin.zsh" lucid
 #zplugin light RobSis/zsh-completion-generator
 #loaded when needed via function generatecomp
+
+zplugin ice wait"0" lucid
+zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
+
+zplugin ice wait'0a' has'thefuck' atload'zstyle ":prezto:module:thefuck" bindkey "no"; bindkey "^[OP^[OP" fuck-command-line' lucid
+zplugin light laggardkernel/zsh-thefuck
+
+zplugin ice wait"0b" lucid
+zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
+
+zplugin ice wait"0" lucid
+zplugin snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
+
+zplugin ice wait"0" lucid atload'unalias help; alias rm="rm -I"'
+zplugin snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
+
+zplugin ice wait"0" as"program" pick"bin/git-dsf" lucid
+zplugin light zdharma/zsh-diff-so-fancy
+
+zplugin ice wait'0' lucid
+zplugin light hlissner/zsh-autopair
+
+zplugin ice wait"0" blockf lucid
+zplugin light zsh-users/zsh-completions
 
 zplugin ice wait'[[ $isdolphin = false ]]' lucid
 zplugin load desyncr/auto-ls
