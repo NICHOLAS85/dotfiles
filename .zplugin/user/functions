@@ -8,8 +8,11 @@ generatecomp(){
     zplugin unload -q RobSis/zsh-completion-generator;
 }
 
+# Shows top used commands
+history-stat(){ fc -ln 0 | awk '{print $1}' | sort | uniq -c | sort -nr | head; }
+
 auto-ls-modecheck(){
-    if tlp-stat -s | grep -q 'Mode           = battery'; then
+    if [[ $(tlp-stat -s) =~ 'Mode           = battery' ]]; then
         varcache=("${AUTO_LS_COMMANDS[@]}")
         AUTO_LS_COMMANDS=("${AUTO_LS_COMMANDSBAT[@]}")
         auto-ls
@@ -19,7 +22,7 @@ auto-ls-modecheck(){
 }
 
 auto-ls-colorls(){
-    if [[ -d .git ]] && ! [[ -n $SSH_CONNECTION ]]; then
+    if [ -d .git ] && ! [[ -n $SSH_CONNECTION ]]; then
       eval "${colorlsgitcommand[@]}"
     else
       eval "${colorlscommand[@]}"
@@ -27,35 +30,38 @@ auto-ls-colorls(){
 }
 
 dotscheck(){
+  local LC_ALL=C dotsvar1 dotsvar2 dotsvar3 dotsvar4
+
   dotsvar1=("${dotsvar[@]/%/'}")
   dotsvar2=("${dotsvar1[@]/#/-e '}")
   dotsvar3=(grep -v "${dotsvar2[*]}")
   dotsvar4=$(dots status | eval "${dotsvar3[*]}")
-  if echo "$dotsvar4" | grep -q "Changes not staged" && echo "$dotsvar4" | grep -q "modified" || echo "$dotsvar4" | grep -q "Changes to be committed"; then
+  if [[ "$dotsvar4" =~ "Changes not staged" ]] && [[ "$dotsvar4" =~ "modified|Changes to be committed" ]]; then
     echo ""
     dots status -s
-  elif echo "$dotsvar4" | grep -q "ahead of"; then
+  elif [[ "$dotsvar4" =~ "ahead of" ]]; then
     dots status
     dots push
-  elif echo "$dotsvar4" | grep -q "is behind"; then
+  elif [[ "$dotsvar4" =~ "is behind" ]]; then
     dots status
   fi
 }
 
 # Update locally built git projects
 updatelocal(){
-  trap "loadautols; return 0" SIGINT
+  trap 'loadautols; if [[ -n $popit ]]; then cd - 2> /dev/null; fi; return 0' SIGINT
+  local cores cache popit
+  cores=$(nproc)
   $isdolphin || zplugin unload -q desyncr/auto-ls
-  popit=false
   cache=$gdir
 
-  if [[ $gdir != "$PWD" ]]; then popit=true; fi
+  if [[ $gdir != "$PWD" ]]; then popit="set"; fi
   if [[ $1 = "-p" || $1 = "--pwd" || $2 = "-p" || $2 = "--pwd" || $1 = "-r" || $1 = "--repull" ]]; then
-    popit=false
+    unset popit
     gdir=$PWD
   fi
 
-  pushd $gdir || return 1
+  cd $gdir || return 1
   ls
 
   loadautols(){
@@ -64,20 +70,20 @@ updatelocal(){
   }
 
   fetchupdates(){
-    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
+    if [ -d .git ]; then
       git fetch -j $cores 2>&1
       echo "Fetching $PWD..."
     fi
   }
 
   checkupdates(){
-    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
+    if [ -d .git ]; then
       UPSTREAM=${1:-'@{u}'}
       LOCAL=$(git rev-parse @)
       REMOTE=$(git rev-parse "$UPSTREAM" 2>/dev/null)
       BASE=$(git merge-base @ "$UPSTREAM" 2>/dev/null)
 
-      if [[ $BASE = "" ]] || [[ $REMOTE = "" ]]; then
+      if [ -z $BASE ] || [ -z $REMOTE ]; then
         echo -e "\e[00;31mCustom commit checked out $PWD\e[00m"
       elif [ $LOCAL = $REMOTE ]; then
         echo "Up-to-date $PWD"
@@ -92,15 +98,15 @@ updatelocal(){
   }
 
   changelogs(){
-    if [[ $(git rev-parse --show-toplevel 2>/dev/null) = "$PWD" ]]; then
-      upstream=$(git status | grep "On branch " | awk -F"branch " '{print $NF}')
-      if [[ $upstream = "" ]]; then return;  fi
-      changes=$(git log $upstream..origin/$upstream)
+    if [ -d .git ]; then
+      currentbranch=$(git_current_branch)
+      if [ -z "$currentbranch" ] || [ -z "$(UPSTREAM=${1:-'@{u}'}; git rev-parse "$UPSTREAM" 2>/dev/null)" ] ; then return; fi
+      changes=$(git log "$currentbranch"..origin/"$currentbranch")
 
-      if [[ $changes ]]; then echo "BEGIN----------------------------------------------------"
+      if [ $changes ]; then echo "BEGIN===================================================="
       echo "$PWD"; fi
-      git log --color=always --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat $upstream..origin/$upstream
-      if [[ $changes ]]; then echo "$PWD"; echo "------------------------------------------------------END"
+      git log --color=always --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat "$currentbranch"..origin/"$currentbranch"
+      if [ $changes ]; then echo "$PWD"; echo "======================================================END"
       echo ""; fi
     fi
   }
@@ -112,21 +118,22 @@ updatelocal(){
       for d in ./*/ ; do (builtin cd "$d" && changelogs); done } | less -R
       ;;
     --repull | -r )
+      shift 1
+      local UPSTREAM REMOTE
       UPSTREAM=${1:-'@{u}'}
       REMOTE=$(git rev-parse "$UPSTREAM" 2>/dev/null)
-      if [[ $REMOTE = "" ]]; then echo "Commit checked out, pull manually" && return ; fi
+      if [[ -z $REMOTE ]]; then echo "Commit checked out, pull manually"; loadautols; return; fi
 
       echo "Assuming --pwd"
       echo "Are you sure you want to repull $PWD"
-      IFS=
+      local IFS=
       read -n 1 key
       if [ "$key" = "" ]; then
-        git reset --hard; git clean -fdx; git pull -j$(nproc)
+        git reset --hard; git clean -fdx; git pull -j $cores
       fi
       ;;
     * )
       echo "Fetching latest updates..."
-      cores=$(nproc)
       (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | GREP_COLORS='ms=1;34' grep -E --color '.*From.*|$'; wait)
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
@@ -135,6 +142,8 @@ updatelocal(){
   esac
 
   gdir=$cache
-  if $popit; then popd 2> /dev/null; unset popit; fi
+  if [[ -n $popit ]]; then cd - 2> /dev/null; fi
+
   loadautols
+  unfunction loadautols changelogs checkupdates fetchupdates
 }
