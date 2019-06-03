@@ -61,8 +61,9 @@ updatelocal(){
     gdir=$PWD
   fi
 
-  cd $gdir || return 1
+  cd $gdir || { echo "Error cd-ing into '$gdir', is it a real directory?" && return 1; }
   ls
+  echo ""
 
   loadautols(){
     zplugin ice load'[[ $isdolphin ]]' lucid
@@ -72,7 +73,7 @@ updatelocal(){
   fetchupdates(){
     if [ -d .git ]; then
       git fetch -j $cores 2>&1
-      echo "Fetching $PWD..."
+      echo "Fetching $(basename $PWD)..."
     fi
   }
 
@@ -82,17 +83,18 @@ updatelocal(){
       LOCAL=$(git rev-parse @)
       REMOTE=$(git rev-parse "$UPSTREAM" 2>/dev/null)
       BASE=$(git merge-base @ "$UPSTREAM" 2>/dev/null)
+      gitname=$(basename $PWD)
 
       if [ -z $BASE ] || [ -z $REMOTE ]; then
-        echo -e "\e[00;31mCustom commit checked out $PWD\e[00m"
+        echo -e "\e[00;31mCustom commit checked out $gitname\e[00m"
       elif [ $LOCAL = $REMOTE ]; then
-        echo "Up-to-date $PWD"
+        echo "Up-to-date $gitname"
       elif [ $LOCAL = $BASE ]; then
-        echo -e "\e[00;31mNeed to pull $PWD\e[00m"
+        echo -e "\e[00;31mNeed to pull $gitname\e[00m"
       elif [ $REMOTE = $BASE ]; then
-        echo -e "\e[00;31mNeed to push $PWD\e[00m"
+        echo -e "\e[00;31mNeed to push $gitname\e[00m"
       else
-        echo -e "\e[00;31mDiverged $PWD\e[00m"
+        echo -e "\e[00;31mDiverged $gitname\e[00m"
       fi
     fi
   }
@@ -100,12 +102,13 @@ updatelocal(){
   changelogs(){
     if [ -d .git ]; then
       currentbranch=$(git_current_branch)
+      tracked_remote=$(git config "branch.$currentbranch.remote")
       if [ -z "$currentbranch" ] || [ -z "$(UPSTREAM=${1:-'@{u}'}; git rev-parse "$UPSTREAM" 2>/dev/null)" ] ; then return; fi
-      changes=$(git log "$currentbranch"..origin/"$currentbranch")
+      changes=$(git log "$currentbranch".."$tracked_remote"/"$currentbranch")
 
       if [ $changes ]; then echo "BEGIN===================================================="
       echo "$PWD"; fi
-      git log --color=always --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat "$currentbranch"..origin/"$currentbranch"
+      git log --color=always --graph --pretty='''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset''' --stat "$currentbranch".."$tracked_remote"/"$currentbranch"
       if [ $changes ]; then echo "$PWD"; echo "======================================================END"
       echo ""; fi
     fi
