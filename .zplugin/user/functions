@@ -137,6 +137,7 @@ updatelocal(){
       read -n 1 key
       if [ "$key" = "" ]; then
         git reset --hard; git clean -fdx; git pull -j $cores
+        ls
       fi
       ;;
     * )

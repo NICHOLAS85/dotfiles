@@ -11,6 +11,7 @@ panel[type="autocomplete-richlistbox"]:not(#PopupAutoCompleteRichResult)
 {
 	-moz-window-shadow: none !important;
 	background: 0 !important;
+	border: 0 !important;
 	color: var(--arrowpanel-color) !important;
 	margin-left: -14px !important;
 	margin-top: -19px !important;
@@ -86,7 +87,7 @@ menupopup menu[disabled=true],
 /* force regular scrollbar for menus */
 menupopup .arrowscrollbox-scrollbox
 {
-	overflow-y: scroll !important;
+	overflow-y: auto !important;
 }
 
 /* why still use scroll buttons; is this the middle ages? */
@@ -94,6 +95,11 @@ menupopup .scrollbutton-up,
 menupopup .scrollbutton-down
 {
 	display: none !important;
+}
+
+.menu-iconic-left
+{
+	-moz-appearance: none !important;
 }
 
 .menu-iconic-icon
@@ -116,11 +122,25 @@ menupopup .scrollbutton-down
 	margin-inline-start: 16px !important;
 }
 
-menuitem[checked=true] .menu-iconic-icon
+/* padding-inline-start of 30px is enforced in Windows and can't be overriden */
+@media (-moz-windows-compositor)
+{
+	.menu-text
+	{
+		margin-inline-start: -30px !important;
+	}
+}
+
+menuitem[checked="true"] > .menu-iconic-left > .menu-iconic-icon
 {
 	/* checkmark is 18px, not 16px, hence reduced padding */
 	list-style-image: url(checkmark-18dp.svg) !important;
 	padding: 3px !important;
+}
+
+#context-navigation
+{
+	background: 0 !important;
 }
 
 #context-navigation .menuitem-iconic
@@ -182,6 +202,7 @@ panel:not(.tooltip-xul-wrapper) .panel-arrowcontent
 {
 	background: var(--arrowpanel-background) !important;
 	border: 0 !important;
+	border-radius: 4px !important;
 	box-shadow:
 		0 5px 5px -3px rgba(0, 0, 0, .2),
 		0 8px 10px 1px rgba(0, 0, 0, .14),
@@ -415,7 +436,8 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	display: flex !important;
 }
 
-#identity-popup-content-blocking-category-list
+#identity-popup-content-blocking-category-list,
+#identity-popup-permission-list
 {
 	display: flex !important;
 	flex-direction: column !important;
@@ -424,19 +446,43 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	padding-top: 8px !important;
 }
 
-.identity-popup-content-blocking-category
+.identity-popup-permission-item
+{
+	display: flex !important;
+	align-items: center !important;
+}
+
+.identity-popup-permission-label,
+#identity-popup-content-blocking-report-breakage
+{
+	flex: 1 !important;
+	text-decoration: none !important;
+	cursor: auto !important;
+	color: inherit !important;
+}
+
+.identity-popup-content-blocking-category,
+.identity-popup-permission-item
 {
 	height: 32px !important;
 	padding: 0 16px !important;
 }
 
-.identity-popup-content-blocking-category-icon
+.identity-popup-content-blocking-category-icon,
+.identity-popup-permission-icon
 {
 	margin: 0 !important;
 	margin-inline-end: 16px !important;
 }
 
-.identity-popup-content-blocking-category-label
+.popup-notification-icon,
+.identity-popup-permission-icon
+{
+	fill-opacity: 1 !important;
+}
+
+.identity-popup-content-blocking-category-label,
+.identity-popup-permission-label
 {
 	margin: 0 !important;
 }
@@ -453,6 +499,11 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	margin-inline-start: auto !important;
 }
 
+.identity-popup-permission-remove-button
+{
+	opacity: 1 !important;
+}
+
 .tracking-protection-button,
 #identity-popup-content-blocking-report-breakage
 {
@@ -461,9 +512,25 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	padding: 0 16px !important;
 	background: 0 !important;
 	color: inherit !important;
+	line-height: 32px !important;
 }
 
 #identity-popup-content-blocking-report-breakage
+{
+	padding-inline-start: 50px !important;
+}
+
+.tracking-protection-button > .button-box
+{
+	padding: 0 !important;
+}
+
+.tracking-protection-button .button-icon
+{
+	margin: 0 !important;
+}
+
+#identity-popup-content-blocking-report-breakage,
 {
 	padding-inline-start: 48px !important;
 	line-height: 32px !important;
@@ -472,13 +539,15 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 }
 
 .tracking-protection-button:hover:not([disabled=true]),
-#identity-popup-content-blocking-report-breakage:hover
+#identity-popup-content-blocking-report-breakage:hover,
+#blocked-popup-indicator-item:hover
 {
 	background-color: var(--arrowpanel-dimmed) !important;
 }
 
 .tracking-protection-button:hover:active:not([disabled=true]),
-#identity-popup-content-blocking-report-breakage:hover:active
+#identity-popup-content-blocking-report-breakage:hover:active,
+#blocked-popup-indicator-item:hover:active
 {
 	background-color: var(--arrowpanel-dimmed-further) !important;
 }
@@ -520,7 +589,8 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 .identity-popup-security-content > description,
 #identity-popup-content-blocking-content > description,
 #identity-popup-permissions-content > description,
-.identity-popup-content-blocking-category-state-label
+.identity-popup-content-blocking-category-state-label,
+.identity-popup-permission-state-label
 {
 	font-size: 85% !important;
 }
@@ -561,11 +631,29 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	padding-top: 8px !important;
 }
 
+#downloadsListBox .download-state
+{
+	display: flex !important;
+	width: 100% !important;
+	align-items: center !important;
+}
+
 #downloadsListBox .downloadMainArea
 {
-	padding: 16px !important;
+	padding: 0 !important;
+	display: flex !important;
+	flex: 1 !important;
 	margin-inline-end: -48px !important;
 	padding-inline-end: 48px !important;
+	padding-inline-start: 16px !important;
+	height: 100% !important;
+	align-items: center !important;
+}
+
+#downloadsListBox .downloadContainer
+{
+	display: flex !important;
+	flex-direction: column !important;
 }
 
 #downloadsListBox .downloadTypeIcon
@@ -576,12 +664,12 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 
 #downloadsListBox .downloadTarget
 {
-	font-size: 1.2em !important;
+	font-size: 100% !important;
 }
 
 #downloadsListBox .downloadDetails
 {
-	font-size: 1em !important;
+	font-size: 85% !important;
 }
 
 #downloadsListBox > richlistitem > toolbarseparator
@@ -591,14 +679,25 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 
 #downloadsListBox .downloadButton
 {
-	margin: calc((var(--downloads-item-height) - 32px) / 2) 10px !important;
+	margin-inline-end: 16px !important;
+	height: 32px !important;
 	min-width: 32px !important;
 	border-radius: 16px !important;
 	fill: currentColor !important;
 	-moz-context-properties: fill, fill-opacity !important;
+	display: block !important;
 }
 
-#confirmation-hint .panel-arrowcontent
+#downloadsListBox .downloadButton .button-box
+{
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	max-width: 32px !important;
+}
+
+#confirmation-hint .panel-arrowcontent,
+#UITourTooltip .panel-arrowcontent
 {
 	padding: 16px !important;
 }
