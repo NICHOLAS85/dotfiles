@@ -113,6 +113,10 @@ updatelocal(){
       echo ""; fi
     fi
   }
+  
+  connected(){
+    ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` &> /dev/null && return 0 || return 1
+  }
 
   case $1 in
     --changes )
@@ -137,7 +141,7 @@ updatelocal(){
       ;;
     * )
       echo "Fetching latest updates..."
-      (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | GREP_COLORS='ms=1;34' grep -E --color '.*From.*|$'; wait)
+      connected && (for d in ./*/ ; do (builtin cd "$d" && fetchupdates) & done | GREP_COLORS='ms=1;34' grep -E --color '.*From.*|$'; wait) || echo "You're not connected to the internet"
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
