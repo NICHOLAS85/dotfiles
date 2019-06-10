@@ -113,7 +113,29 @@ updatelocal(){
       echo ""; fi
     fi
   }
-  
+
+  recentcommits(){
+    setopt localoptions extendedglob nokshglob noksharrays noshwordsplit
+    local nl=$'\n' escape=$'\x1b['
+    local -a lines
+
+    lines=( ${(f)"$(command git log --color --date=short --pretty=format:'%Cgreen%cd %h %Creset%s %Cred%d%Creset || %b' ..FETCH_HEAD)"} )
+    if (( ${#lines} > 0 )); then
+      # Remove the (origin/master ...) segments, to expect only tags to appear
+      lines=( "${(S)lines[@]//\(([,[:blank:]]#(origin|HEAD|master)[^a-zA-Z]##(HEAD|origin|master)[,[:blank:]]#)#\)/}" )
+      # Remove " ||" if it ends the line (i.e. no additional text from the body)
+      lines=( "${lines[@]/ \|\|[[:blank:]]#(#e)/}" )
+      # If there's no ref-name, 2 consecutive spaces occur - fix this
+      lines=( "${lines[@]/(#b)[[:space:]]#\|\|[[:space:]]#(*)(#e)/|| ${match[1]}}" )
+      lines=( "${lines[@]/(#b)$escape([0-9]##)m[[:space:]]##${escape}m/$escape${match[1]}m${escape}m}" )
+      # Replace what follows "|| ..." with the same thing but with no newlines,
+      # and also only first 10 words (the (w)-flag enables word-indexing)
+      lines=( "${lines[@]/(#b)[[:blank:]]#\|\|(*)(#e)/| ${${match[1]//$nl/ }[(w)1,(w)10]}}" )
+    fi
+    git pull -j $cores
+    builtin print -rl -- "${lines[@]}" | command less -FRXi
+  }
+
   connected(){
     ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` &> /dev/null && return 0 || return 1
   }
@@ -132,11 +154,13 @@ updatelocal(){
       if [[ -z $REMOTE ]]; then echo "Commit checked out, pull manually"; loadautols; return; fi
 
       echo "Assuming --pwd"
-      echo "Are you sure you want to repull $PWD"
-      local IFS=
-      read -n 1 key
-      if [ "$key" = "" ]; then
-        git reset --hard; git clean -fdx; git pull -j $cores
+      echo "Are you sure you want to repull $PWD? [y/n]"
+      read key
+      if [ "$key" = "y" ]; then
+        git reset --hard
+        git clean -fdx
+        recentcommits
+        echo ""
         ls
       fi
       ;;
