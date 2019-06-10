@@ -22,7 +22,7 @@ WD_CONFIG="${ZPLGM[PLUGINS_DIR]}/mfaerevaag---wd/.warprc"
 gdir=~/github/Built
 
 # Strings to ignore when using dotscheck, escape and single quote stuff that could be wild cards (../)
-dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' )
+dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' '\.config/gtk-3\.0/settings\.ini' )
 
 isdolphin=false
 # Export variables when connected via SSH

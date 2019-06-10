@@ -28,7 +28,7 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 zplugin ice lucid
 zplugin snippet OMZ::lib/theme-and-appearance.zsh
 
-zplugin ice wait'0' lucid
+zplugin ice lucid
 zplugin snippet OMZ::lib/history.zsh
 
 zplugin ice wait'0' lucid
@@ -91,10 +91,10 @@ zplugin light NICHOLAS85/_local-git-ignore
 zplugin ice wait'0' lucid
 zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
 
-zplugin ice wait'0a' has'thefuck' atload'zstyle ":prezto:module:thefuck" bindkey "no"; bindkey "^[OP^[OP" fuck-command-line' lucid
+zplugin ice wait'0' has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'  lucid
 zplugin light laggardkernel/zsh-thefuck
 
-zplugin ice wait"0b" lucid
+zplugin ice wait'0' lucid
 zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
 
 zplugin ice wait'0' lucid
