@@ -2,12 +2,13 @@
 # Configs for GTK2 programs 
 
 include "/usr/share/themes/Materia-dark/gtk-2.0/gtkrc"
+include "/etc/gtk-2.0/gtkrc"
 style "user-font" 
 {
-	font_name="Noto Sans Regular"
+	font_name="Fira Sans Regular"
 }
 widget_class "*" style "user-font"
-gtk-font-name="Noto Sans Regular 10"
+gtk-font-name="Fira Sans Regular 10"
 gtk-theme-name="Materia-dark"
 gtk-icon-theme-name="Papirus-Dark"
 gtk-fallback-icon-theme="breeze-dark"
