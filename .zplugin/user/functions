@@ -50,7 +50,7 @@ dotscheck(){
 # Update locally built git projects
 updatelocal(){
   trap 'loadautols; if [[ -n $popit ]]; then cd - 2> /dev/null; fi; return 0' SIGINT
-  local cores cache popit
+  local cores cache popit hidden
   cores=$(nproc)
   $isdolphin || zplugin unload -q desyncr/auto-ls
   cache=$gdir
@@ -88,11 +88,11 @@ updatelocal(){
       if [ -z $BASE ] || [ -z $REMOTE ]; then
         echo -e "\e[00;31mCustom commit checked out $gitname\e[00m"
       elif [ $LOCAL = $REMOTE ]; then
-        echo "Up-to-date $gitname"
+        [ $hidden ] || echo "Up-to-date $gitname"
       elif [ $LOCAL = $BASE ]; then
         echo -e "\e[00;31mNeed to pull $gitname\e[00m"
       elif [ $REMOTE = $BASE ]; then
-        echo -e "\e[00;31mNeed to push $gitname\e[00m"
+        [ $hidden ] || echo -e "\e[00;31mNeed to push $gitname\e[00m"
       else
         echo -e "\e[00;31mDiverged $gitname\e[00m"
       fi
@@ -137,11 +137,12 @@ updatelocal(){
   }
 
   connected(){
-    ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` &> /dev/null && return 0 || { echo "You're not connected to the internet"; return 1; }
+    ping -q -w 1 -c 1 $(ip r | grep default | cut -d ' ' -f 3) &> /dev/null && return 0 || { echo "You're not connected to the internet"; return 1; }
   }
 
   case $1 in
     --changes )
+      hidden=true
       { for d in ./*/ ; do (builtin cd "$d" && checkupdates); done
       echo ""
       for d in ./*/ ; do (builtin cd "$d" && changelogs); done } | less -R
