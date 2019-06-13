@@ -4,6 +4,7 @@ Comment=
 Exec=gebaard -b
 GenericName[en_US]=
 GenericName=
+Hidden=true
 Icon=system-run
 MimeType=
 Name[en_US]=
