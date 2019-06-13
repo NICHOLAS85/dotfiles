@@ -69,11 +69,12 @@ kwin4_effect_translucencyEnabled[$d]
 lattewindowcolorsEnabled=true
 minimizeanimationEnabled=false
 presentwindowsEnabled[$d]
+quicktile-enhancementsEnabled=true
 scaleEnabled=true
 screenedgeEnabled=false
 slideEnabled=true
 slidingpopupsEnabled[$d]
-sticky-window-snappingEnabled=true
+sticky-window-snappingEnabled=false
 zoomEnabled=false
 
 [Script-desktopchangeosd]
