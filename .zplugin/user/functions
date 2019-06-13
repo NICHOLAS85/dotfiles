@@ -72,8 +72,8 @@ updatelocal(){
 
   fetchupdates(){
     if [ -d .git ]; then
-      git fetch -j $cores 2>&1
       echo "Fetching $(basename $PWD)..."
+      git fetch -j $cores 2>&1
     fi
   }
 
