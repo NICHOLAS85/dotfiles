@@ -9,7 +9,8 @@ case $1 in
       xdotool key ctrl+F9
       touch $TOGGLE
       MOUSE_ID=$(xinput --list | grep -i -m 1 'TM3' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-      { trap 'rm $TOGGLE; exit' SIGINT
+      {
+        trap 'rm $TOGGLE; exit' SIGINT
         if on_ac_power; then
           time=0.02
         else
@@ -22,7 +23,8 @@ case $1 in
           break
         fi
         sleep $time
-      done } &
+        done
+      } &
     }
     if [[ -e $DOWNID ]]; then
       xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm $DOWNID || expose
@@ -35,9 +37,9 @@ case $1 in
       pkill -SIGINT -f "presentview --up"
       xdotool key ctrl+F9
     else
-      echo "$(xprop -id "$(xdotool getwindowfocus)" | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$')" > $DOWNID
+      echo "$(xdotool getwindowpid $(xdotool getwindowfocus))" > $DOWNID
       xdotool key super+s
-      { sleep .6; rm $DOWNID; } &
+      { sleep .6; rm $DOWNID 2>/dev/null; } &
     fi
   ;;
 esac
