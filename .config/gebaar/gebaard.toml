@@ -2,23 +2,21 @@
 left_up = ""
 right_up = ""
 up = "~/Scripts/gestures/presentview --up"
-#up = "xdotool key ctrl+F9"
 left_down = ""
 right_down = ""
 down = "~/Scripts/gestures/presentview --down"
-#down = "xdotool key super+s"
 left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
 [commands.swipe.four]
 left_up = ""
 right_up = ""
-up = "xdotool key super+w"
+up = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Maximize\""
 left_down = ""
 right_down = ""
-down = "xdotool key super+shift+d"
-left = "xdotool key super+a"
-right = "xdotool key super+d"
+down = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"MinimizeAll\""
+left = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Quick Tile Left\""
+right = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Quick Tile Right\""
 
 [commands.pinch]
 in = "xdotool key ctrl+shift+t"
