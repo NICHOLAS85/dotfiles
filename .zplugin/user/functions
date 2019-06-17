@@ -1,13 +1,5 @@
 #Let Atom highlight this: -*- shell-script -*-
 
-# Load zsh-completion-generator when needed and unload when done
-generatecomp(){
-    zplugin ice from"gh" silent pick"zsh-completion-generator.plugin.zsh" blockf;
-    zplugin light RobSis/zsh-completion-generator && gencomp $1;
-    zplugin creinstall -q RobSis/zsh-completion-generator;
-    zplugin unload -q RobSis/zsh-completion-generator;
-}
-
 # Shows top used commands
 history-stat(){ fc -ln 0 | awk '{print $1}' | sort | uniq -c | sort -nr | head; }
 
