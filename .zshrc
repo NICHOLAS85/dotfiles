@@ -18,6 +18,9 @@ autoload -Uz _zplugin
 setopt append_history
 setopt hist_ignore_all_dups
 setopt no_beep
+setopt auto_cd
+setopt multios
+setopt prompt_subst
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate
@@ -25,9 +28,6 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # Oh-my-zsh libs
-zplugin ice lucid
-zplugin snippet OMZ::lib/theme-and-appearance.zsh
-
 zplugin ice lucid
 zplugin snippet OMZ::lib/history.zsh
 
@@ -53,6 +53,9 @@ zplugin snippet OMZ::lib/grep.zsh
 zplugin light denysdovhan/spaceship-prompt
 
 # Plugins
+zplugin ice wait'1' atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" atload'LS_COLORS=$LS_COLORS"di=34;5;30:" ; export LS_COLORS' lucid
+zplugin load trapd00r/LS_COLORS
+
 zplugin ice wait'1' lucid
 zplugin light zdharma/history-search-multi-word
 
