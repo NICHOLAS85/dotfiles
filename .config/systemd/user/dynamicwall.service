@@ -1,9 +1,0 @@
-[Unit]
-Description=dynamic-wall unit
-
-[Service]
-Type=oneshot
-ExecStart=dynamicwall
-
-[Install]
-WantedBy=multi-user.target

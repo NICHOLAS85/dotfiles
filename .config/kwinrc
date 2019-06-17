@@ -45,6 +45,9 @@ WobblynessLevel=2
 ComboboxPopups=98
 Menus=98
 
+[ElectricBorders]
+Bottom=None
+
 [ModifierOnlyShortcuts]
 Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 
