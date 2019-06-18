@@ -1,9 +1,3 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTIGNORE='dots *'
-bindkey -e
-# End of lines configured by zsh-newuser-install
-
 #Install zplugin if not installed
 if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
@@ -15,6 +9,8 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
+HISTFILE=~/.histfile
+bindkey -e
 setopt append_history
 setopt hist_ignore_all_dups
 setopt no_beep
@@ -54,7 +50,7 @@ zplugin light denysdovhan/spaceship-prompt
 
 # Plugins
 zplugin ice wait'1' atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" atload'LS_COLORS=$LS_COLORS"di=34;5;30:" ; export LS_COLORS' lucid
-zplugin load trapd00r/LS_COLORS
+zplugin light trapd00r/LS_COLORS
 
 zplugin ice wait'1' lucid
 zplugin light zdharma/history-search-multi-word
@@ -71,28 +67,31 @@ zplugin snippet OMZ::plugins/systemd/systemd.plugin.zsh
 zplugin ice wait'0' has'flatpak' lucid
 zplugin light RogueScholar/flatpak-zsh-completion
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
-
 zplugin ice wait'0' has'git' lucid
 zplugin light paulirish/git-open
 
 zplugin ice wait'0' has'git' atload'unalias gi' lucid
-zplugin load 'wfxr/forgit'
+zplugin light 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
+
+zplugin ice wait'0' lucid
+zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
+
+zplugin ice wait'0' lucid
+zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
 
 zplugin ice wait'0' as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload' wd() { source wd.sh }' blockf lucid
 zplugin light mfaerevaag/wd
+
+zplugin ice wait'0' as'program' pick'updatelocal' atload' updatelocal() { source updatelocal }' lucid
+zplugin light NICHOLAS85/updatelocal
 
 zplugin ice wait'0' has'git' pick'init.zsh' blockf atload'alias gi="cgit-ignore"' lucid
 zplugin light NICHOLAS85/_local-git-ignore
 
 zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh' lucid
 zplugin light RobSis/zsh-completion-generator
-#loaded when needed
-
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
+#loaded when needed via gcomp
 
 zplugin ice wait'1' has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'  lucid
 zplugin light laggardkernel/zsh-thefuck
