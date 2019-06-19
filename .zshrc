@@ -1,4 +1,4 @@
-#Install zplugin if not installed
+# Install zplugin if not installed
 if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
 fi
@@ -23,7 +23,7 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-_null_plug_dir=${ZPLGM[PLUGINS_DIR]}/_local---null
+_null_plug_dir="${ZPLGM[PLUGINS_DIR]}/_local---null"
 if [[ ! -d $_null_plug_dir ]]; then
   echo "Creating zplugin 'null' plugin directory at: $_null_plug_dir"
   mkdir -p -- "$_null_plug_dir"
@@ -35,7 +35,7 @@ zt_a()   { zplugin ice wait"0a" lucid             "${@}"; } # Turbo a
 zt_b()   { zplugin ice wait"0b" lucid             "${@}"; } # Turbo b
 zt_c()   { zplugin ice wait"0c" lucid             "${@}"; } # Turbo c
 zi()     { zplugin ice lucid                      "${@}"; } # zplugin ice
-z()      { zplugin                                "${@}"; } # zplugin shortened
+z()      { zplugin                                "${@}"; } # zplugin
 
 
 # Oh-my-zsh libs
@@ -47,9 +47,6 @@ z snippet OMZ::lib/directories.zsh
 
 zt_a
 z snippet OMZ::lib/git.zsh
-
-zt_a atload'unalias grv'
-z snippet OMZ::plugins/git/git.plugin.zsh
 
 zt_a
 z snippet OMZ::lib/key-bindings.zsh
@@ -64,8 +61,11 @@ z snippet OMZ::lib/grep.zsh
 z light denysdovhan/spaceship-prompt
 
 # Plugins
-zt_b atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" atload'LS_COLORS=$LS_COLORS"di=34;5;30:"; export LS_COLORS'
+zt_b atclone"sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
 z light trapd00r/LS_COLORS
+
+zt_a atload'unalias grv'
+z snippet OMZ::plugins/git/git.plugin.zsh
 
 zt_b
 z light zdharma/history-search-multi-word
@@ -73,7 +73,7 @@ z light zdharma/history-search-multi-word
 zt_b
 z light ael-code/zsh-colored-man-pages
 
-zt_a make'!'
+zt_a make
 z light sei40kr/zsh-fast-alias-tips
 
 zt_a has'systemctl'
@@ -85,7 +85,7 @@ z light RogueScholar/flatpak-zsh-completion
 zt_b has'git' as'command'
 z light paulirish/git-open
 
-zt_a has'git' atload'unalias gi'
+zt_a has'git'
 z light 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
 
@@ -126,7 +126,7 @@ z light zdharma/zsh-diff-so-fancy
 zt_b
 z light hlissner/zsh-autopair
 
-zplugin ice wait'0' blockf lucid
+zt_a blockf
 z light zsh-users/zsh-completions
 
 zi wait'[[ $isdolphin = false ]]'
@@ -138,12 +138,12 @@ z light zsh-users/zsh-autosuggestions
 zt_b atinit'zpcompinit; zpcdreplay'
 z light zdharma/fast-syntax-highlighting
 
-zt_c atinit'unset -f zt_a zt_b zt_c zi z' #use id-as'!cleanup' once that feature has been implemented
+zt_c atinit'unset -f zt_a zt_b zt_c zi z' #use id-as'!' once that feature has been implemented
 z light _local/null 
 
 
-source ~/.zplugin/user/variables
-source ~/.zplugin/user/aliases
-source ~/.zplugin/user/functions
+source "${HOME}/.zplugin/user/variables"
+source "${HOME}/.zplugin/user/aliases"
+source "${HOME}/.zplugin/user/functions"
 
 dotscheck
