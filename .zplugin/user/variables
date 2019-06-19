@@ -30,7 +30,8 @@ if [[ -n $SSH_CONNECTION ]]; then
     colorlscommand=(lsd --group-dirs first --icon never)
     AUTO_LS_COMMANDS=(colorls)
 else
-    if [[ $(xdotool getwindowfocus getwindowname) = *Dolphin* ]]; then
+    # Used to programatically disable plugins when opening the terminal view in dolphin 
+    if [[ $(ps -ocommand= -p $PPID) =~ "dolphin" ]]; then
         isdolphin=true
     fi
 fi
