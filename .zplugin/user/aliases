@@ -4,9 +4,9 @@
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf='${=EDITOR} ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &!'
+alias zshconf='${=EDITOR} ${HOME}/.zplugin/user/aliases ${HOME}/.zplugin/user/functions ${HOME}/.zplugin/user/variables ${HOME}/.zshrc &!'
 
-alias "zshconfatom"='atom ~/.zplugin/user/aliases ~/.zplugin/user/functions ~/.zplugin/user/variables ~/.zshrc &!'
+alias "zshconfatom"='atom ${HOME}/.zplugin/user/aliases ${HOME}/.zplugin/user/functions ${HOME}/.zplugin/user/variables ${HOME}/.zshrc &!'
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
@@ -20,7 +20,8 @@ alias ls='lsd --group-dirs=first'
 alias apt="apt-fast"
 alias open='xdg-open'
 alias sudo='sudo  ' #allow sudo to expand aliases (checkinstall for example)
-alias checkinstall='checkinstall -D --pakdir=/home/nicholas/OneDrive/Linux/installed/debs/built'
+alias checkinstall='checkinstall -D --pakdir=${HOME}/OneDrive/Linux/installed/debs/built'
+alias gencomp='echo "Use gcomp"'
 
 unalias zplg
 

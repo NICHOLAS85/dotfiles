@@ -4,12 +4,12 @@ if [ ! -d "${HOME}/.zplugin" ]; then
 fi
 
 ### Added by Zplugin's installer
-source ~/.zplugin/bin/zplugin.zsh
+source "${HOME}/.zplugin/bin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
-HISTFILE=~/.histfile
+HISTFILE="${HOME}/.histfile"
 bindkey -e
 setopt append_history
 setopt hist_ignore_all_dups
@@ -23,105 +23,124 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
+_null_plug_dir=${ZPLGM[PLUGINS_DIR]}/_local---null
+if [[ ! -d $_null_plug_dir ]]; then
+  echo "Creating zplugin 'null' plugin directory at: $_null_plug_dir"
+  mkdir -p -- "$_null_plug_dir"
+fi
+unset _null_plug_dir
+
+# Functions to make configuration less verbose
+zt_a()   { zplugin ice wait"0a" lucid             "${@}"; } # Turbo a
+zt_b()   { zplugin ice wait"0b" lucid             "${@}"; } # Turbo b
+zt_c()   { zplugin ice wait"0c" lucid             "${@}"; } # Turbo c
+zi()     { zplugin ice lucid                      "${@}"; } # zplugin ice
+z()      { zplugin                                "${@}"; } # zplugin shortened
+
+
 # Oh-my-zsh libs
-zplugin ice lucid
-zplugin snippet OMZ::lib/history.zsh
+zi
+z snippet OMZ::lib/history.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::lib/directories.zsh
+zt_a
+z snippet OMZ::lib/directories.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::lib/git.zsh
+zt_a
+z snippet OMZ::lib/git.zsh
 
-zplugin ice wait'0' lucid atload'unalias grv'
-zplugin snippet OMZ::plugins/git/git.plugin.zsh
+zt_a atload'unalias grv'
+z snippet OMZ::plugins/git/git.plugin.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::lib/key-bindings.zsh
+zt_a
+z snippet OMZ::lib/key-bindings.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::lib/completion.zsh
+zt_a
+z snippet OMZ::lib/completion.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::lib/grep.zsh
+zt_a
+z snippet OMZ::lib/grep.zsh
 
 # Theme
-zplugin light denysdovhan/spaceship-prompt
+z light denysdovhan/spaceship-prompt
 
 # Plugins
-zplugin ice wait'1' atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" atload'LS_COLORS=$LS_COLORS"di=34;5;30:" ; export LS_COLORS' lucid
-zplugin light trapd00r/LS_COLORS
+zt_b atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" atload'LS_COLORS=$LS_COLORS"di=34;5;30:"; export LS_COLORS'
+z light trapd00r/LS_COLORS
 
-zplugin ice wait'1' lucid
-zplugin light zdharma/history-search-multi-word
+zt_b
+z light zdharma/history-search-multi-word
 
-zplugin ice wait'1' lucid
-zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+zt_b
+z light ael-code/zsh-colored-man-pages
 
-zplugin ice wait'0' lucid make'!'
-zplugin light sei40kr/zsh-fast-alias-tips
+zt_a make'!'
+z light sei40kr/zsh-fast-alias-tips
 
-zplugin ice wait'0' has'systemctl' lucid
-zplugin snippet OMZ::plugins/systemd/systemd.plugin.zsh
+zt_a has'systemctl'
+z snippet OMZ::plugins/systemd/systemd.plugin.zsh
 
-zplugin ice wait'0' has'flatpak' lucid
-zplugin light RogueScholar/flatpak-zsh-completion
+zt_a has'flatpak'
+z light RogueScholar/flatpak-zsh-completion
 
-zplugin ice wait'0' has'git' lucid
-zplugin light paulirish/git-open
+zt_b has'git' as'command'
+z light paulirish/git-open
 
-zplugin ice wait'0' has'git' atload'unalias gi' lucid
-zplugin light 'wfxr/forgit'
+zt_a has'git' atload'unalias gi'
+z light 'wfxr/forgit'
 #replaced gi with local git-ignore plugin
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::plugins/debian/debian.plugin.zsh
+zt_a
+z snippet OMZ::plugins/debian/debian.plugin.zsh
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
+zt_a
+z snippet OMZ::plugins/extract/extract.plugin.zsh
 
-zplugin ice wait'0' as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload' wd() { source wd.sh }' blockf lucid
-zplugin light mfaerevaag/wd
+zt_a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload' wd() { source wd.sh }' blockf
+z light mfaerevaag/wd
 
-zplugin ice wait'0' as'program' pick'updatelocal' atload' updatelocal() { source updatelocal }' lucid
-zplugin light NICHOLAS85/updatelocal
+zt_a as'program' pick'updatelocal' atload' updatelocal() { source updatelocal }'
+z light NICHOLAS85/updatelocal
 
-zplugin ice wait'0' has'git' pick'init.zsh' blockf atload'alias gi="cgit-ignore"' lucid
-zplugin light NICHOLAS85/_local-git-ignore
+zt_a has'git' pick'init.zsh' blockf atload'alias gi="cgit-ignore"'
+z light NICHOLAS85/_local-git-ignore
 
-zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh' lucid
-zplugin light RobSis/zsh-completion-generator
+zi wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
+z light RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zplugin ice wait'1' has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'  lucid
-zplugin light laggardkernel/zsh-thefuck
+zt_b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
+z light laggardkernel/zsh-thefuck
 
-zplugin ice wait'0' lucid
-zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
+zt_a
+z snippet OMZ::plugins/sudo/sudo.plugin.zsh
 
-zplugin ice wait'1' lucid
-zplugin snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
+zt_b
+z snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
 
-zplugin ice wait'0' lucid atload'unalias help; alias rm="rm -I"'
-zplugin snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
+zt_a atload'unalias help; alias rm="rm -I"'
+z snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 
-zplugin ice wait'0' as'program' pick'bin/git-dsf' lucid
-zplugin light zdharma/zsh-diff-so-fancy
+zt_a as'program' pick'bin/git-dsf'
+z light zdharma/zsh-diff-so-fancy
 
-zplugin ice wait'1' lucid
-zplugin light hlissner/zsh-autopair
+zt_b
+z light hlissner/zsh-autopair
 
 zplugin ice wait'0' blockf lucid
-zplugin light zsh-users/zsh-completions
+z light zsh-users/zsh-completions
 
-zplugin ice wait'[[ $isdolphin = false ]]' lucid
-zplugin load desyncr/auto-ls
+zi wait'[[ $isdolphin = false ]]'
+z load desyncr/auto-ls
 
-zplugin ice wait'0' atload'_zsh_autosuggest_start' lucid
-zplugin light zsh-users/zsh-autosuggestions
+zt_a atload'_zsh_autosuggest_start'
+z light zsh-users/zsh-autosuggestions
 
-zplugin ice wait'1' lucid atinit'zpcompinit; zpcdreplay'
-zplugin light zdharma/fast-syntax-highlighting
+zt_b atinit'zpcompinit; zpcdreplay'
+z light zdharma/fast-syntax-highlighting
+
+zt_c atinit'unset -f zt_a zt_b zt_c zi z' #use id-as'!cleanup' once that feature has been implemented
+z light _local/null 
+
 
 source ~/.zplugin/user/variables
 source ~/.zplugin/user/aliases
