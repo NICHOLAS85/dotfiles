@@ -25,7 +25,7 @@ setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want th
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
-#zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
 
 bindkey '^[[1;5C' forward-word   # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word  # [Ctrl-LeftArrow] - move backward one word
@@ -57,6 +57,12 @@ z trapd00r/LS_COLORS
 zt 0a svn blockf atload'unalias grv'
 z snippet OMZ::plugins/git
 
+zt 0a has'systemctl'
+z snippet OMZ::plugins/systemd/systemd.plugin.zsh
+
+zt 0a
+z snippet OMZ::plugins/extract/extract.plugin.zsh
+
 zt 0b
 z zdharma/history-search-multi-word
 
@@ -66,9 +72,6 @@ z ael-code/zsh-colored-man-pages
 zt 0a make
 z sei40kr/zsh-fast-alias-tips
 
-zt 0a has'systemctl'
-z snippet OMZ::plugins/systemd/systemd.plugin.zsh
-
 zt 0b has'git' as'command'
 z paulirish/git-open
 
@@ -76,8 +79,8 @@ zt 0b has'git'
 z wfxr/forgit
 #replaced gi with local git-ignore plugin
 
-zt 0a
-z snippet OMZ::plugins/extract/extract.plugin.zsh
+zt 0b has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
+z laggardkernel/git-ignore
 
 zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$PWD/.warprc"' blockf
 z mfaerevaag/wd
@@ -85,15 +88,12 @@ z mfaerevaag/wd
 zt 0a as'command' pick'updatelocal' atload'updatelocal() { source updatelocal }'
 z NICHOLAS85/updatelocal
 
-zt 0b has'git' \
-atclone"git reset --hard; sed -i 's/git-ignore/cgit-ignore/g' init.zsh" \
-mv'bin/git-ignore -> bin/cgit-ignore' atpull'%atclone' \
-pick'init.zsh' atload'alias gi="cgit-ignore"' blockf
-z laggardkernel/git-ignore
-
 zt '[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
+
+zt 0b as'program' pick'rm-trash/rm-trash' atclone"git reset --hard; sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"'
+z nateshmbhat/rm-trash
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
 z laggardkernel/zsh-thefuck
@@ -110,21 +110,18 @@ z snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 zt 0a as'program' pick'bin/git-dsf'
 z zdharma/zsh-diff-so-fancy
 
-zt 0c pick'manydots-magic'
-z knu/zsh-manydots-magic
-
 zt 0b
 z hlissner/zsh-autopair
 
 zt 0a blockf
 z zsh-users/zsh-completions
 
-zt 0b as'program' pick'rm-trash/rm-trash' atclone"git reset --hard; sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"'
-z nateshmbhat/rm-trash
-
-
 zt '[[ $isdolphin = false ]]'
 z load desyncr/auto-ls
+
+zt 0c pick'manydots-magic'
+z knu/zsh-manydots-magic
+
 
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
@@ -132,7 +129,7 @@ z zsh-users/zsh-history-substring-search
 zt 0a atload'_zsh_autosuggest_start'
 z zsh-users/zsh-autosuggestions
 
-zt 0b atinit'zpcompinit; zpcdreplay'
+zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
 
 zt 0c id-as'Cleanup' atinit'unset -f zt z'
