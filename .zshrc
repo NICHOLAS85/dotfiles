@@ -85,7 +85,7 @@ z mfaerevaag/wd
 zt 0a as'command' pick'updatelocal' atload'updatelocal() { source updatelocal }'
 z NICHOLAS85/updatelocal
 
-zt 0a has'git' \
+zt 0b has'git' \
 atclone"git reset --hard; sed -i 's/git-ignore/cgit-ignore/g' init.zsh" \
 mv'bin/git-ignore -> bin/cgit-ignore' atpull'%atclone' \
 pick'init.zsh' atload'alias gi="cgit-ignore"' blockf
