@@ -14,8 +14,7 @@ AUTO_LS_NEWLINE=false
 
 EDITOR=kate
 
-PATH="$HOME/.cargo/bin:$PATH"
-WD_CONFIG="${ZPLGM[PLUGINS_DIR]}/mfaerevaag---wd/.warprc"
+rm_opts=(-I -v)
 
 # Directory checked for locally built projects (plugin updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/Built/"
