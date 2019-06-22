@@ -19,7 +19,7 @@ alias ls='lsd --group-dirs=first'
 alias apt="apt-fast"
 alias open='xdg-open'
 # allow sudo to expand aliases (checkinstall for example) as well as run anything in $PATH
-alias sudo='sudo env PATH=$PATH  '
+alias sudo='sudo env PATH+=:$PATH  '
 alias checkinstall='checkinstall -D --pakdir=${HOME}/OneDrive/Linux/installed/debs/built'
 alias gencomp='echo "Use gcomp"'
 alias -- -='cd -'
