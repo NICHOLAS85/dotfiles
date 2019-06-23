@@ -1,3 +1,5 @@
+# https://github.com/NICHOLAS85/dotfiles/blob/master/.zshrc
+
 # Install zplugin if not installed
 if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
@@ -44,7 +46,7 @@ zt 0a
 z snippet OMZ::lib/completion.zsh
 
 # Theme
-zt "" pick'spaceship.zsh' blockf
+zt "" pick'spaceship.zsh'
 z denysdovhan/spaceship-prompt
 
 # Plugins
@@ -63,7 +65,7 @@ z snippet OMZ::plugins/systemd/systemd.plugin.zsh
 zt 0a
 z snippet OMZ::plugins/extract/extract.plugin.zsh
 
-zt 0b
+zt 0b compile'(hsmw-*)'
 z zdharma/history-search-multi-word
 
 zt 0b
@@ -119,14 +121,13 @@ z zsh-users/zsh-completions
 zt '[[ $isdolphin = false ]]'
 z load desyncr/auto-ls
 
-zt 0c pick'manydots-magic'
-z knu/zsh-manydots-magic
-
-
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
 
-zt 0a atload'_zsh_autosuggest_start'
+zt 0b pick'manydots-magic'
+z knu/zsh-manydots-magic
+
+zt 0a ver'ec43fcfccf5f449697f20303ccd9da000ced3c54' atload'_zsh_autosuggest_start'
 z zsh-users/zsh-autosuggestions
 
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
@@ -134,7 +135,6 @@ z zdharma/fast-syntax-highlighting
 
 zt 0c id-as'Cleanup' atinit'unset -f zt z'
 z zdharma/null 
-
 
 source "${HOME}/.zplugin/user/variables"
 source "${HOME}/.zplugin/user/aliases"
