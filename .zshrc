@@ -41,8 +41,6 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
-ZSH_CACHE_DIR="$HOME/.zcompcache"
-zstyle ':completion::complete:*' cache-path "$ZSH_CACHE_DIR"
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
@@ -51,26 +49,27 @@ zstyle ':completion:*' rehash true
 bindkey '^[[1;5C' forward-word   # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word  # [Ctrl-LeftArrow] - move backward one word
 
-source "${HOME}/.zplugin/user/variables"
-source "${HOME}/.zplugin/user/aliases"
-source "${HOME}/.zplugin/user/functions"
-
+sourcefiles(){
+    source "${HOME}/.zplugin/user/variables"
+    source "${HOME}/.zplugin/user/aliases"
+    source "${HOME}/.zplugin/user/functions"
+}
 # Functions to make configuration less verbose
 zt() { zplugin ice wait"${1}" lucid               "${@:2}"; } # Turbo
 z()  { [ -z $2 ] && zplugin light "${@}" || zplugin "${@}"; } # zplugin
 
-# Oh-my-zsh libs
-z snippet OMZ::lib/history.zsh
+# Theme
+zt "" pick'spaceship.zsh' compile'{spaceship.zsh-theme,lib/*,sections/*,tests/*.zsh}'
+z denysdovhan/spaceship-prompt
 
-zt 0a
-z snippet OMZ::lib/git.zsh
+# Oh-my-zsh libs
+zt "" atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
+z snippet OMZ::lib/history.zsh
 
 zt 0a
 z snippet OMZ::lib/completion.zsh
 
-# Theme
-zt "" pick'spaceship.zsh'
-z denysdovhan/spaceship-prompt
+sourcefiles
 
 # Plugins
 #zt "" atload'ZSH_EVALCACHE_DIR="$PWD/.zsh-evalcache"'
@@ -79,16 +78,13 @@ z denysdovhan/spaceship-prompt
 zt 0b atclone"git reset --hard; sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
 z trapd00r/LS_COLORS
 
-zt 0a svn blockf atload'unalias grv'
-z snippet OMZ::plugins/git
-
 zt 0a has'systemctl'
 z snippet OMZ::plugins/systemd/systemd.plugin.zsh
 
 zt 0a
 z snippet OMZ::plugins/extract/extract.plugin.zsh
 
-zt 0b compile'(hsmw-*)'
+zt 0b compile'{hsmw-*,test/*}'
 z zdharma/history-search-multi-word
 
 zt 0b
@@ -117,7 +113,8 @@ zt '[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zt 0b as'program' pick'rm-trash/rm-trash' atclone"git reset --hard; sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"'
+zt 0b as'program' pick'rm-trash/rm-trash' atclone"git reset --hard; sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
+compile'rm-trash/rm-trash' nocompile'!'
 z nateshmbhat/rm-trash
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
@@ -135,10 +132,10 @@ z snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 zt 0a as'program' pick'bin/git-dsf'
 z zdharma/zsh-diff-so-fancy
 
-zt 0b
+zt 0b nocompletions
 z hlissner/zsh-autopair
 
-zt 0a blockf
+zt 0a blockf atpull'zplugin creinstall -q .'
 z zsh-users/zsh-completions
 
 zt '[[ $isdolphin = false ]]'
@@ -147,11 +144,11 @@ z load desyncr/auto-ls
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
 
-zt 0b pick'manydots-magic'
-z knu/zsh-manydots-magic
-
-zt 0a atload'_zsh_autosuggest_start' ver'fixes/move-cursor-on-accept' 
+zt 0b compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' 
 z zsh-users/zsh-autosuggestions
+
+zt 0b pick'manydots-magic' compile'manydots-magic'
+z knu/zsh-manydots-magic
 
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
