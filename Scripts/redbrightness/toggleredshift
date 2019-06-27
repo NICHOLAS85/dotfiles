@@ -15,9 +15,7 @@ luminance() {
 read -r max < "$backlight_dir"/max_brightness
 
 transition() {
-    eval "$(cat /home/nicholas/Scripts/redbrightness/curtemp)"
-    temp="$(redshift -p -l $location | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
-    temp=${temp%?}
+    source "/home/nicholas/Scripts/redbrightness/curtemp"
     echo "transitioning" > /home/nicholas/Scripts/redbrightness/cache
     extra=1
     if [[ $1 = "turnoff" ]]; then
@@ -31,11 +29,13 @@ transition() {
             fi
             echo "$curtemp + $interval + $extra"
             curtemp=$(($curtemp + interval + extra))
-            redshift -P -O $curtemp -b $(luminance)
+            redshift -P -O $curtemp -b "$(luminance)"
             echo "New temp $curtemp"
         done
     elif [[ $1 = "turnon" ]]; then
-      if [[ $2 = "startup" ]]; then
+      if [[ $2 != "skip" ]]; then
+        temp="$(redshift -p -l $location | grep -oP '(?<=Color temperature: )[0-9]+')"
+      elif [[ $2 = "startup" ]]; then
         xrandr --output eDP-1 --brightness 1
         brillo -S 100
         curtemp=6500
@@ -51,7 +51,7 @@ transition() {
           fi
           echo "$curtemp - $interval - $extra"
           curtemp=$((curtemp - interval - extra))
-          redshift -P -O $curtemp -b $(luminance)
+          redshift -P -O $curtemp -b "$(luminance)"
           echo "New temp $curtemp"
       done
       while [[ $curtemp -lt $temp ]]; do
@@ -62,7 +62,7 @@ transition() {
             fi
             echo "$curtemp + $interval + $extra"
             curtemp=$(($curtemp + interval + extra))
-            redshift -P -O $curtemp -b $(luminance)
+            redshift -P -O $curtemp -b "$(luminance)"
             echo "New temp $curtemp"
       done
     fi
@@ -83,13 +83,13 @@ if [[ $1 = "--on" ]]; then
   pkill -f "toggleredshift --off"
   transition turnon $2
   inotifywait -me modify --format '' "$backlight_dir"/actual_brightness | while read; do
-    temp="$(redshift -p -l $location | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
-    if [[ ${temp%?} != "$curtemp" ]]; then
-    transition turnon
+    temp="$(redshift -p -l $location | grep -oP '(?<=Color temperature: )[0-9]+')"
+    if [[ $temp != "$curtemp" ]]; then
+      transition turnon skip
+    else
+      redshift -o -P -l $location -b "$(luminance)"
     fi
-    redshift -o -P -l $location -b $(luminance)
-    temp="$(redshift -p -l $location | grep -i 'Color' | sed 's/.*\(.....\)/\1/')"
-    echo "curtemp=${temp%?}" > /home/nicholas/Scripts/redbrightness/curtemp
+    echo "curtemp=$temp" > /home/nicholas/Scripts/redbrightness/curtemp
   done
 elif [[ $1 = "--off" ]]; then
   pkill -f "toggleredshift --on"
