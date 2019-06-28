@@ -34,8 +34,6 @@ z snippet OMZ::lib/history.zsh
 zt 0a
 z snippet OMZ::lib/completion.zsh
 
-source "$ZPLGM[HOME_DIR]/user/personal"
-
 # Plugins
 
 #zt "" atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
@@ -72,7 +70,7 @@ z laggardkernel/git-ignore
 zt 0a as'program' atpull'!git reset --hard' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$ZPFX/.warprc"' blockf
 z mfaerevaag/wd
 
-zt 0a as'command' pick'updatelocal' atload'updatelocal() { source updatelocal }'
+zt 0a ver'plugin'
 z NICHOLAS85/updatelocal
 
 zt '[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
@@ -115,6 +113,8 @@ z zsh-users/zsh-autosuggestions
 
 zt 0b pick'manydots-magic' compile'manydots-magic'
 z knu/zsh-manydots-magic
+
+source "$ZPLGM[HOME_DIR]/user/personal"
 
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
