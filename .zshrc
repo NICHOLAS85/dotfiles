@@ -19,6 +19,10 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
+# Autoload personal functions
+fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
+autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
+
 # Functions to make configuration less verbose
 zt() { zplugin ice wait"${1}" lucid               "${@:2}"; } # Turbo
 z()  { [ -z $2 ] && zplugin light "${@}" || zplugin "${@}"; } # zplugin
@@ -96,7 +100,7 @@ z snippet OMZ::plugins/common-aliases/common-aliases.plugin.zsh
 zt 0a as'program' pick'bin/git-dsf'
 z zdharma/zsh-diff-so-fancy
 
-zt 0b nocompletions
+zt 0b pick'autopair.zsh' nocompletions
 z hlissner/zsh-autopair
 
 zt 0a blockf atpull'zplugin creinstall -q .'
@@ -114,12 +118,12 @@ z zsh-users/zsh-autosuggestions
 zt 0b pick'manydots-magic' compile'manydots-magic'
 z knu/zsh-manydots-magic
 
-source "$ZPLGM[HOME_DIR]/user/personal"
-
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
 
 zt 0c id-as'Cleanup' atinit'unset -f zt z'
-z zdharma/null 
+z zdharma/null
+
+source "$ZPLGM[HOME_DIR]/user/personal"
 
 dotscheck
