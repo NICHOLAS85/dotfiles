@@ -3,14 +3,6 @@
 # Install zplugin if not installed
 if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
-    if [[ ! -d "$ZPFX" ]]; then
-    mkdir -v $ZPFX
-    fi
-    if [[ ! -d "$ZPLGM[HOME_DIR]/user" ]]; then
-    mkdir -v "$ZPLGM[HOME_DIR]/user"
-    curl -fsSL https://raw.githubusercontent.com/NICHOLAS85/dotfiles/master/.zplugin/user/personal -o "$ZPLGM[HOME_DIR]/user/personal"
-    curl -fsSL https://raw.githubusercontent.com/NICHOLAS85/dotfiles/master/.zplugin/user/theme -o "$ZPLGM[HOME_DIR]/user/theme"
-    fi
 fi
 
 ### Added by Zplugin's installer
@@ -19,20 +11,29 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
+if [[ ! -d "$ZPFX" ]]; then
+    mkdir -v $ZPFX
+fi
+if [[ ! -d "$ZPLGM[HOME_DIR]/user" ]]; then
+    curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/master | \
+  tar -xz --strip=2 dotfiles-master/.zplugin/user; mv user "$ZPLGM[HOME_DIR]/"
+fi
+
 # Autoload personal functions
 fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
 autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
 
 # Functions to make configuration less verbose
 zt() { zplugin ice wait"${1}" lucid               "${@:2}"; } # Turbo
+zi() { zplugin ice lucid                            "${@}"; } # Regular Ice
 z()  { [ -z $2 ] && zplugin light "${@}" || zplugin "${@}"; } # zplugin
 
 # Theme
-zt "" pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atload'source $ZPLGM[HOME_DIR]/user/theme'
+zi pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atload'source $ZPLGM[HOME_DIR]/user/theme'
 z denysdovhan/spaceship-prompt
 
 # Oh-my-zsh libs
-zt "" atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
+zi atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
 z snippet OMZ::lib/history.zsh
 
 zt 0a
@@ -40,7 +41,7 @@ z snippet OMZ::lib/completion.zsh
 
 # Plugins
 
-#zt "" atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
+#zi atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
 #z mroth/evalcache
 
 zt 0b atclone"git reset --hard; sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
@@ -127,3 +128,4 @@ z zdharma/null
 source "$ZPLGM[HOME_DIR]/user/personal"
 
 dotscheck
+
