@@ -9,7 +9,7 @@ case $1 in
     expose(){
       invoke "Expose"
       touch $TOGGLE
-      MOUSE_ID=$(xinput list --id-only "Synaptics TM3044-002")
+      MOUSE_ID=$(xinput list --id-only "DLL077A:01 06CB:76AF Touchpad")
       {
         trap 'rm $TOGGLE; exit' SIGINT
         if on_ac_power; then

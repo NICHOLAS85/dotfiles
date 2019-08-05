@@ -1,0 +1,20 @@
+@import "global/variables.css";
+@import "global/global.css";
+@import "icons/icons.css";
+@import "tabbar/tabbar.css";
+@import "navbar/navbar.css";
+@import "personalbar/personalbar.css";
+@import "popup/popup.css";
+@import "popup/urlbar-results.css";
+
+@import "manual/findbar.css";
+@import "manual/manual.css";
+@import "manual/roomy.css";
+@import "manual/simpleMenuWizard.css";
+
+/*Below adds custom js loading*/
+/*
+toolbarbutton#alltabs-button {
+    -moz-binding: url("userChrome.xml#js");
+}*/
+

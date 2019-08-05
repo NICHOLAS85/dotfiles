@@ -198,22 +198,22 @@ SessionManagementScreen {
                 }
             }
 
-//            style: TextFieldStyle {
-//                /* textColor: passwordFieldOutlined ? "white" : "black" */
-//                /* placeholderTextColor: passwordFieldOutlined ? "white" : "black" */
-//                /* passwordCharacter: config.PasswordFieldCharacter == "" ? "●" : config.PasswordFieldCharacter */
-//
-//                background: Rectangle {
-//                    radius: 3
-//                    /* implicitWidth: mainBlock.width * 0.13 */
-//                    /* implicitWidth: units.gridUnit * 12 */
-//                    implicitHeight: units.gridUnit * 1.5
-//                    /* border.color: "white" */
-//                    /* border.width: 1 */
-//                    /* color: passwordFieldOutlined ? "transparent" : "white" */
-//                }
-//
-//            }
+            style: TextFieldStyle {
+                /* textColor: passwordFieldOutlined ? "white" : "black" */
+                /* placeholderTextColor: passwordFieldOutlined ? "white" : "black" */
+                /* passwordCharacter: config.PasswordFieldCharacter == "" ? "●" : config.PasswordFieldCharacter */
+
+                background: Rectangle {
+                    radius: 3
+                    /* implicitWidth: mainBlock.width * 0.13 */
+                    /* implicitWidth: units.gridUnit * 12 */
+                    implicitHeight: units.gridUnit * 1.5
+                    /* border.color: "white" */
+                    /* border.width: 1 */
+                    /* color: passwordFieldOutlined ? "transparent" : "white" */
+                }
+
+            }
 
             //if empty and left or right is pressed change selection in user switch
             //this cannot be in keys.onLeftPressed as then it doesn't reach the password box

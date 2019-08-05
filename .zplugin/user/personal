@@ -60,13 +60,26 @@ $isdolphin && alias cd='clear -x; cd'
 
 alias g='git'
 alias ls='lsd --group-dirs=first'
-alias apt="apt-fast"
+#alias apt="apt-fast"
 alias open='xdg-open'
 # allow sudo to expand aliases (checkinstall for example) as well as run anything in $PATH
 alias sudo='sudo env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"  '
 alias checkinstall='checkinstall -D --pakdir=${HOME}/OneDrive/Linux/installed/debs/built'
 alias gencomp='echo "Use gcomp"'
 alias -- -='cd -'
+
+#sud(){
+#  local -a first
+#  for arg in "$@"
+#  do
+#    if [[ ${arg:0:1} == "-" ]]; then
+#      first=("${first[@]}" "$arg")
+#    else
+#      second=("${second[@]}" "$arg")
+#    fi
+#  done
+#  sudo ${first[@]} env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" ${second[@]}
+#}
 
 unalias zplg
 

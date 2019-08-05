@@ -47,12 +47,11 @@
       "one-dark-syntax"
     ]
   editor:
-    fontFamily: "Fira Code"
     preferredLineLength: 200
     showIndentGuide: true
     softWrap: true
   "exception-reporting":
-    userId: "58e2e8e6-4bc6-4061-a119-2c82a1d28c91"
+    userId: "7ae3d57e-5be1-4594-ac5c-7890318c4cd2"
   "file-icons":
     onChanges: true
   "git-blame":
