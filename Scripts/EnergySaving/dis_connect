@@ -1,0 +1,11 @@
+#!/bin/bash
+if [[ $(tlp-stat -s) =~ "(manual)" ]]; then
+  case $1 in
+    connected_ac )
+      sudo tlp start
+    ;;
+    disconnected_ac )
+      sudo tlp start
+    ;;
+  esac
+fi
