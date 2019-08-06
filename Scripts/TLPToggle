@@ -3,12 +3,14 @@
 CMode=$(tlp-stat -s | grep -oP 'Mode           = \K.*')
 Wrongpass=0 #first time run
 
-if [ "$CMode" = "battery" ]; then
+if [[ "$CMode" =~ "battery" ]]; then
     CMode="BAT" #changes battery to BAT when checking TLP mode
+else
+    CMode="AC"
 fi
 
 while true; do  #Loop makes sure password dialog appears every time a failed attempt occurs
-    if ! sudo -n true; then
+    if ! sudo true; then
         if [[ $Wrongpass = 0 ]]; then
             password=$(kdialog --title "Toggle($CMode)" --password "Enter password")
         else
@@ -17,9 +19,9 @@ while true; do  #Loop makes sure password dialog appears every time a failed att
     fi
     if [[ $? = 0 ]]; then #checks if ok or cancel was selected
         echo "Selected: OK"
-        if tlp-stat -s | grep -q 'Mode           = AC'; then    #Checks for the current mode and toggles it in the following statements
+        if [[ $CMode = "AC" ]]; then    #Checks for the current mode and toggles it in the following statements
             echo "Changing TLP to BAT mode"
-            if echo "$password" | sudo -S tlp BAT; then
+            if echo "$password" | sudo -S tlp bat; then
                 kdialog --title "TLP mode BAT" --passivepopup "Power Savings on" 3
                 break
             else
@@ -28,7 +30,7 @@ while true; do  #Loop makes sure password dialog appears every time a failed att
             fi
         else
             echo "Changing TLP to AC mode"
-            if echo "$password" | sudo -S tlp AC; then
+            if echo "$password" | sudo -S tlp ac; then
                 kdialog --title "TLP mode AC" --passivepopup "Power Savings off" 3
                 break
             else
