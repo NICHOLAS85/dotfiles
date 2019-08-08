@@ -1,3 +1,6 @@
+module_path+=( "/home/nicholas/.zplugin/bin/zmodules/Src" )
+zmodload zdharma/zplugin
+
 # https://github.com/NICHOLAS85/dotfiles/blob/master/.zshrc
 
 # Install zplugin if not installed
@@ -15,8 +18,8 @@ if [[ ! -d "$ZPFX" ]]; then
     mkdir -v $ZPFX
 fi
 if [[ ! -d "$ZPLGM[HOME_DIR]/user" ]]; then
-    curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/master | \
-  tar -xz --strip=2 dotfiles-master/.zplugin/user; mv user "$ZPLGM[HOME_DIR]/"
+    curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
+  tar -xz --strip=2 dotfiles-xps_13_9365/.zplugin/user; mv user "$ZPLGM[HOME_DIR]/"
 fi
 
 # Autoload personal functions

@@ -1,23 +1,25 @@
 #!/bin/sh
 
-# Do stuff before locking...
-(
-    inactive=true
-    sleep 4
-    while $inactive
-    do
-        idletime=$(qdbus org.freedesktop.ScreenSaver /ScreenSaver GetSessionIdleTime)
-        if [ $idletime -lt 500 ]; then
-            xdotool key Return
-            xdotool key Return
-            inactive=false
-        else
-            sleep .2
-        fi
-    done
-) &
+if ! pgrep original_kscree; then
+    # Do stuff before locking...
+    (
+        inactive=true
+        sleep 4
+        while $inactive
+        do
+            idletime=$(qdbus org.freedesktop.ScreenSaver /ScreenSaver GetSessionIdleTime)
+            if [ $idletime -lt 500 ]; then
+                xdotool key Return
+                xdotool key Return
+                inactive=false
+            else
+                sleep .2
+            fi
+        done
+    ) &
 
-# Lock
-/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet_original $@
+    # Lock
+    /lib/x86_64-linux-gnu/libexec/original_kscreenlocker_greet $@
 
-# Do stuff after unlocking...
+    # Do stuff after unlocking...
+fi

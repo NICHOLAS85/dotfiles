@@ -67,6 +67,8 @@ alias sudo='sudo env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/b
 alias checkinstall='checkinstall -D --pakdir=${HOME}/OneDrive/Linux/installed/debs/built'
 alias gencomp='echo "Use gcomp"'
 alias -- -='cd -'
+alias atom='atom-beta --disable-gpu'
+alias apm='apm-beta'
 
 #sud(){
 #  local -a first
