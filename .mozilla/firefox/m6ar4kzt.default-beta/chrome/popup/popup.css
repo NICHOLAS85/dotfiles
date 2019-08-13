@@ -25,6 +25,7 @@ panel[type="autocomplete-richlistbox"]:not(#PopupAutoCompleteRichResult)
 	padding: 0 !important;
 	box-shadow: none !important;
 	font: -moz-pull-down-menu !important;
+	border: 0 !important;
 }
 
 .popup-internal-box,
@@ -102,14 +103,27 @@ menupopup .scrollbutton-down
 	-moz-appearance: none !important;
 }
 
+/* hide icon if no image (default on macOS but not Windows) */
+.subviewbutton:not(:-moz-any([image], [targetURI], .bookmark-item)) > .menu-iconic-left
+{
+    display: none;
+}
+
 .menu-iconic-icon
 {
 	fill: currentColor !important;
 	-moz-context-properties: fill, fill-opacity, stroke, stroke-opacity !important;
+	margin-inline-start: 0 !important;
 	margin-inline-end: 16px !important;
 	width: 24px !important;
 	height: 24px !important;
 	padding: 4px !important;
+}
+
+.menu-text
+{
+	-moz-appearance: none !important;
+	padding: 0 !important;
 }
 
 .menu-right
@@ -122,20 +136,18 @@ menupopup .scrollbutton-down
 	margin-inline-start: 16px !important;
 }
 
-/* padding-inline-start of 30px is enforced in Windows and can't be overriden */
-@media (-moz-windows-compositor)
+menuitem[type="checkbox"] > .menu-iconic-left > .menu-iconic-icon,
+menuitem[checked="true"] > .menu-iconic-left > .menu-iconic-icon,
+menuitem[type="radio"] > .menu-iconic-left > .menu-iconic-icon
 {
-	.menu-text
-	{
-		margin-inline-start: -30px !important;
-	}
+	display: -moz-box !important;
+	padding: 3px !important;
 }
 
 menuitem[checked="true"] > .menu-iconic-left > .menu-iconic-icon
 {
 	/* checkmark is 18px, not 16px, hence reduced padding */
 	list-style-image: url(checkmark-18dp.svg) !important;
-	padding: 3px !important;
 }
 
 #context-navigation
@@ -217,13 +229,15 @@ panel:not(.tooltip-xul-wrapper) .panel-arrowbox,
 /* .subview-subheader, */
 panelview .toolbarbutton-1,
 .subviewbutton,
-.widget-overflow-list .toolbarbutton-1
+.widget-overflow-list .toolbarbutton-1,
+.panel-banner-item
 {
 	min-height: 32px !important;
 	padding: 0 16px !important;
 }
 
-.subviewbutton .toolbarbutton-icon
+.subviewbutton .toolbarbutton-icon,
+.panel-banner-item .toolbarbutton-icon
 {
 	margin-inline-end: 16px !important;
 	width: 24px !important;
@@ -231,7 +245,8 @@ panelview .toolbarbutton-1,
 	padding: 4px !important;
 }
 
-.subviewbutton .toolbarbutton-text
+.subviewbutton label,
+.panel-banner-item label
 {
 	padding-inline-start: 0 !important;
 }
@@ -257,24 +272,40 @@ panelview .toolbarbutton-1,
 	padding: 0 !important;
 }
 
-/* this is actually a button... */
-#appMenu-fxa-label
+.panel-banner-item
 {
-	padding-inline-start: 50px !important;
-	margin-inline-start: -34px !important;
-	border-radius: 0 16px 16px 0 !important;
+	border: 0 !important;
 }
 
-#appMenu-fxa-status + toolbarseparator
+#appMenu-addon-banners:not(:empty) ~ #appMenu-fxa-status,
+.panel-banner-item:not([hidden]) + #appMenu-fxa-status
+{
+	border-top: 1px solid var(--panel-separator-color) !important;
+	margin-top: 5px !important;
+	padding-top: 5px !important;
+}
+
+#appMenu-fxa-avatar
 {
 	display: none !important;
 }
 
-#appMenu-fxa-icon
+:root[fxastatus="signedin"] #appMenu-fxa-label
 {
-	border-radius: 16px !important;
-	padding: 0 !important;
-	width: 32px !important;
+	list-style-image: var(--avatar-image-url) !important;
+	margin: 0 !important;
+}
+
+:root[fxastatus="signedin"] #appMenu-fxa-label > .toolbarbutton-icon
+{
+	display: -moz-box !important;
+	border-radius: 99px !important;
+	padding: 2px !important;
+}
+
+.panel-banner-item[notificationid="update-restart"]::after
+{
+	display: none !important;
 }
 
 .toolbaritem-combined-buttons:-moz-any(:not([cui-areatype="toolbar"]),
@@ -705,17 +736,20 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 
 #confirmation-hint .panel-arrowcontent,
 #UITourTooltip .panel-arrowcontent,
-#customization-lwtheme-menu .panel-arrowcontent
+#customization-lwtheme-menu .panel-arrowcontent,
+#customization-uidensity-menu .panel-arrowcontent
 {
 	padding: 16px !important;
 }
 
+#customization-uidensity-menu .panel-arrowcontent,
 #customization-lwtheme-menu .panel-arrowcontent
 {
 	padding-top: 8px !important;
 }
 
-.customization-lwtheme-menu-theme
+.customization-lwtheme-menu-theme,
+.customization-uidensity-menuitem
 {
 	padding: 0 16px !important;
 	margin: 0 -16px !important;
@@ -723,18 +757,24 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	height: 48px !important;
 }
 
-.customization-lwtheme-menu-theme .toolbarbutton-icon
+.customization-lwtheme-menu-theme .toolbarbutton-icon,
+.customization-uidensity-menuitem .menu-iconic-icon
 {
 	margin: 0 !important;
 	margin-inline-end: 16px !important;
+	padding: 0 !important;
+	width: 24px !important;
+	height: 24px !important;
 }
 
-.customization-lwtheme-menu-theme[active]:not(:hover):not(:active)
+.customization-lwtheme-menu-theme[active]:not(:hover):not(:active),
+.customization-uidensity-menuitem[active]:not(:hover):not(:active)
 {
 	background: 0 !important;
 }
 
-.customization-lwtheme-menu-theme[active]::after
+.customization-lwtheme-menu-theme[active]::after,
+.customization-uidensity-menuitem[active]::after
 {
 	content: url(checkmark-18dp.svg) !important;
 	-moz-context-properties: fill, fill-opacity !important;
@@ -742,6 +782,7 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 	display: -moz-box !important;
 	width: 18px !important;
 	height: 18px !important;
+	margin-inline-start: 16px !important;
 }
 
 #customization-lwtheme-menu-footer
@@ -791,6 +832,7 @@ panelmultiview .toolbaritem-combined-buttons > spacer.after-label
 
 .panel-footer button > .button-box
 {
+	-moz-appearance: none !important;
 	position: relative !important;
 	padding-inline-end: 16px !important;
 }
