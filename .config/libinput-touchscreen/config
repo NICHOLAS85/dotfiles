@@ -2,8 +2,8 @@
 BORDER S 1
     dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
 
-BORDER N 1
-    xdotool key ctrl+alt+l
+#BORDER N 1
+#    xdotool key ctrl+alt+l
 
 # left and right are swapped
 MOVEMENT E 2
@@ -14,3 +14,9 @@ MOVEMENT W 2
 
 TAP X 2
     xdotool click 3
+
+MOVEMENT N 3
+    qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Expose"
+
+MOVEMENT S 3
+    qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Minimize"
