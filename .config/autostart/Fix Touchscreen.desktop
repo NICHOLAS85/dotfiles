@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=xsetwacom --set 13 Gesture off
+Exec=xsetwacom --set "Wacom HID 4833 Finger touch" Gesture off
 GenericName[en_US]=
 GenericName=
 Icon=system-run

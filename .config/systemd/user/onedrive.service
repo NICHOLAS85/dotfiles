@@ -1,0 +1,21 @@
+[Unit]
+Description=OneDrive (rclone)
+AssertPathIsDirectory=/home/nicholas/OneDrive
+After=network-online.target
+ 
+[Service]
+Type=simple
+ExecStart=/usr/bin/rclone mount \
+        --allow-non-empty \
+        --vfs-cache-mode full \
+        --no-modtime \
+        --stats=0 \
+        --bwlimit=40M \
+        --dir-cache-time=60m \
+        --cache-info-age=60m onedrive:/ /home/nicholas/OneDrive
+ExecStop=/bin/fusermount -zu /home/nicholas/OneDrive
+Restart=always
+RestartSec=10
+ 
+[Install]
+WantedBy=default.target
