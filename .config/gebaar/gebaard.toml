@@ -11,12 +11,12 @@ right = "xdotool key alt+Left"
 [commands.swipe.four]
 left_up = ""
 right_up = ""
-up = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Maximize\""
+up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
 left_down = ""
 right_down = ""
-down = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"MinimizeAll\""
-left = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Quick Tile Left\""
-right = "qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Window Quick Tile Right\""
+down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
+left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
+right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
 [commands.pinch]
 in = "xdotool key ctrl+shift+t"
