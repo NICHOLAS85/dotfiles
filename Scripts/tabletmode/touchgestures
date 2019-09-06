@@ -1,0 +1,48 @@
+#!/bin/bash
+
+orientation=$(xrandr -q | grep eDP1 | cut -d ' ' -f5)
+
+if [[ $1 = "m" ]]; then
+  o_up=("" "" 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Expose"')
+  o_down=("" "" 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Minimize"' 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"')
+  o_left=("" 'xdotool key alt+Right' "")
+  o_right=("" 'xdotool key alt+Left' "")
+elif [[ $1 = "b" ]]; then
+  o_up=("" "" "")
+  o_down=("dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible" "" '')
+  o_left=("" '' "")
+  o_right=("" '' "")
+else
+  exit
+fi
+
+case $orientation in
+  "(normal" )
+    up=("${o_up[@]}")
+    right=("${o_right[@]}")
+    down=("${o_down[@]}")
+    left=("${o_left[@]}")
+    ;;
+  "right" )
+    up=("${o_left[@]}")
+    right=("${o_up[@]}")
+    down=("${o_right[@]}")
+    left=("${o_down[@]}")
+    ;;
+  "inverted" )
+    up=("${o_down[@]}")
+    right=("${o_left[@]}")
+    down=("${o_up[@]}")
+    left=("${o_right[@]}")
+    ;;
+  "left" )
+    up=("${o_right[@]}")
+    right=("${o_down[@]}")
+    down=("${o_left[@]}")
+    left=("${o_up[@]}")
+    ;;
+esac
+
+input="${2}[(($3 - 1))]"
+
+eval "${!input}"
