@@ -25,11 +25,8 @@
 	}
 }
 
+/* Fix broken search popup in v70 */
 
-/* urlbar and searchbar autocomplete popup */
-/* Fix Materialfox search bar shadow 
-#PopupAutoCompleteRichResult
-{
-	filter: unset !important;
-}
-*/
+.search-one-offs { display: none !important; }
+ 
+.search-panel-one-offs { border-radius: 0 0 8px 8px !important; margin-bottom: 18px !important; display: none !important; }
