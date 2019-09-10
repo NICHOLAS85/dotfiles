@@ -47,7 +47,7 @@ z snippet OMZ::lib/completion.zsh
 #zi atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
 #z mroth/evalcache
 
-zt 0b atclone"git reset --hard; sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
+zt 0b atclone"sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!' reset
 z trapd00r/LS_COLORS
 
 zt 0a has'systemctl'
@@ -65,17 +65,17 @@ z ael-code/zsh-colored-man-pages
 zt 0a make
 z sei40kr/zsh-fast-alias-tips
 
-zt 0b has'git' as'command'
+zt '[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' as'command'
 z paulirish/git-open
 
-zt 0b has'git'
+zt '[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git'
 z wfxr/forgit
 #replaced gi with local git-ignore plugin
 
-zt 0b has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
+zt '[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
 z laggardkernel/git-ignore
 
-zt 0a as'program' atpull'!git reset --hard' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$ZPFX/.warprc"' blockf
+zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$ZPFX/.warprc"' blockf reset
 z mfaerevaag/wd
 
 zt 0a ver'plugin'
@@ -85,8 +85,8 @@ zt '[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zt 0b as'program' pick'rm-trash/rm-trash' atclone"git reset --hard; sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
-compile'rm-trash/rm-trash' nocompile'!'
+zt 0b as'program' pick'rm-trash/rm-trash' atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
+compile'rm-trash/rm-trash' nocompile'!' reset
 z nateshmbhat/rm-trash
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
@@ -116,8 +116,8 @@ z load desyncr/auto-ls
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
 
-zt 0b compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' 
-z zsh-users/zsh-autosuggestions
+zt 0b compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' wrap-track'_zsh_autosuggest_start'
+z load zsh-users/zsh-autosuggestions
 
 zt 0b pick'manydots-magic' compile'manydots-magic'
 z knu/zsh-manydots-magic
@@ -125,7 +125,7 @@ z knu/zsh-manydots-magic
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
 
-zt 0c id-as'Cleanup' atinit'unset -f zt z'
+zt 0c id-as'Cleanup' atinit'unset -f zt zi z'
 z zdharma/null
 
 source "$ZPLGM[HOME_DIR]/user/personal"
