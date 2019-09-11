@@ -10,7 +10,7 @@ else
 fi
 
 while true; do  #Loop makes sure password dialog appears every time a failed attempt occurs
-    if ! sudo true; then
+    if ! sudo true || ! sudo -n true; then
         if [[ $Wrongpass = 0 ]]; then
             password=$(kdialog --title "Toggle($CMode)" --password "Enter password")
         else
