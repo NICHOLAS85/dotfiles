@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
 
-xinput map-to-output "Wacom HID 4833 Finger touch" eDP1 
+xinput map-to-output "Wacom HID 4833 Finger touch" eDP1
+
+if [[ $AUTORANDR_CURRENT_PROFILE = "docked" ]]; then
+    kwriteconfig5 --file kwinrc --group Windows --key ClickRaise "false"
+    kwriteconfig5 --file kwinrc --group MouseBindings --key CommandWindowWheel "Activate and scroll"
+    qdbus org.kde.KWin /KWin reconfigure
+else
+    kwriteconfig5 --file kwinrc --group Windows --key ClickRaise "true"
+    kwriteconfig5 --file kwinrc --group MouseBindings --key CommandWindowWheel "Scroll"
+    qdbus org.kde.KWin /KWin reconfigure
+fi
