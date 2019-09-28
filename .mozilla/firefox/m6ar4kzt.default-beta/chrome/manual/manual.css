@@ -30,3 +30,15 @@
 .search-one-offs { display: none !important; }
  
 .search-panel-one-offs { border-radius: 0 0 8px 8px !important; margin-bottom: 18px !important; display: none !important; }
+
+/* Change Arrow used for dragging tabs between windows*/
+
+.tab-drop-indicator {
+    list-style-image: url("chrome://global/skin/icons/arrow-up-12.svg") !important;
+    -moz-context-properties: fill, fill-opacity, stroke, stroke-opacity !important;
+    fill: var(--lwt-toolbarbutton-icon-fill, currentColor) !important;
+    margin-bottom: -10px !important;
+    z-index: 6 !important;
+    width: 17px !important;
+    max-width: 17px !important;
+}
