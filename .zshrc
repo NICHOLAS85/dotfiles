@@ -30,34 +30,31 @@ autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck histor
 zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
 z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
 
-zth() { zt load'[[ ${MYPROMPT} = "'$1'" ]]' unload'[[ ${MYPROMPT} != "'$1'" ]]' \
-atinit'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"' "${@:2}"; }
+zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
+atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'     "${@:2}"; } # Conditional theming
 
 # Initial Prompt and config source
-zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' silent atload'MYPROMPT="spaceship-async"'
-z load maximbaz/spaceship-prompt
-
-zt src'themes/spaceship-async'
-z "$ZPLGM[HOME_DIR]/user/"
-
 zt pick'async.zsh'
 z mafredri/zsh-async
 
-# Conditional themes
-zth spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
+zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
+atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'
 z load maximbaz/spaceship-prompt
 
-zth spaceship pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
+z "${ZPLGM[HOME_DIR]}/user/"
+
+# Conditional themes
+zct spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
+z load maximbaz/spaceship-prompt
+
+zct spaceship pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
 z load denysdovhan/spaceship-prompt
 
-zth pure pick"async.zsh" src"pure.zsh"
+zct dolphin pick"/dev/null" multisrc"{async,pure}.zsh" reset-prompt
 z load sindresorhus/pure
 
-zth dolphin pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
-z load maximbaz/spaceship-prompt
-
 # Oh-my-zsh libs
-zt atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
+zt atinit'ZSH_CACHE_DIR="${HOME}/.zcompcache"'
 z snippet OMZ::lib/history.zsh
 
 zt 0a
@@ -96,13 +93,13 @@ z wfxr/forgit
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
 z laggardkernel/git-ignore
 
-zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$ZPFX/.warprc"' blockf reset
+zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="${ZPFX}/.warprc"' blockf reset
 z mfaerevaag/wd
 
 zt 0a
 z NICHOLAS85/updatelocal
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
+zt wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp ${1} && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
@@ -131,7 +128,7 @@ z hlissner/zsh-autopair
 zt 0a blockf atpull'zplugin creinstall -q .'
 z zsh-users/zsh-completions
 
-zt wait'[[ $isdolphin != true ]]'
+zt wait'[[ ${isdolphin} != true ]]'
 z load desyncr/auto-ls
 
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'

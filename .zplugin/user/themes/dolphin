@@ -1,67 +1,79 @@
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stamps section
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-#  git           # Git section (git_branch + git_status)
-  git_branch
-  git_status
-#  hg            # Mercurial section (hg_branch  + hg_status)
-  package       # Package version
-#  ruby          # Ruby section
-#  elixir        # Elixir section
-#  xcode         # Xcode section
-#  swift         # Swift section
-#  golang        # Go section
-#  php           # PHP section
-#  rust          # Rust section
-#  haskell       # Haskell Stack section
-#  julia         # Julia section
-  docker        # Docker section
-#  aws           # Amazon Web Services section
-  venv          # virtualenv section
-  conda         # conda virtualenv section
-  pyenv         # Pyenv section
-#  dotnet        # .NET section
-#  ember         # Ember.js section
-#  kubecontext   # Kubectl context section
-#  terraform     # Terraform workspace section
-  exec_time     # Execution time
-  line_sep      # Line break
-  battery       # Battery level and status
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  char          # Prompt character
-)
-SPACESHIP_RPROMPT_ORDER=(exit_code)
+prompt_newline='%666v'
+PROMPT=" $PROMPT"
+PURE_PROMPT_SYMBOL='➜'
 
-#SPACESHIP_DIR_COLOR=117
-SPACESHIP_DIR_COLOR=blue
-SPACESHIP_NODE_SHOW=false
-SPACESHIP_EXIT_CODE_SHOW=true
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_DIR_SHOW=false
+# Add exit code to RPROMPT
+precmd_pipestatus() {
+	RPROMPT="${(j.|.)pipestatus}"
+       if [[ ${(j.|.)pipestatus} = 0 ]]; then
+              RPROMPT=""
+       fi
+}
+add-zsh-hook precmd precmd_pipestatus
 
-SPACESHIP_GIT_STATUS_SHOW=true
-SPACESHIP_GIT_STATUS_PREFIX="["
-SPACESHIP_GIT_STATUS_SUFFIX="] "
-SPACESHIP_GIT_STATUS_UNTRACKED="?"
-SPACESHIP_GIT_STATUS_ADDED="+"
-SPACESHIP_GIT_STATUS_MODIFIED="!"
-SPACESHIP_GIT_STATUS_RENAMED="»"
-SPACESHIP_GIT_STATUS_DELETED="✘"
-SPACESHIP_GIT_STATUS_STASHED="$"
-SPACESHIP_GIT_STATUS_UNMERGE="="
-SPACESHIP_GIT_STATUS_AHEAD="⇡"
-SPACESHIP_GIT_STATUS_BEHIND="⇣"
-SPACESHIP_GIT_STATUS_DIVERGED="⇕"
-SPACESHIP_GIT_STATUS_STASHED_COLOR="cyan"
-SPACESHIP_GIT_STATUS_UNMERGED_COLOR="magenta"
-SPACESHIP_GIT_STATUS_DELETED_COLOR="red"
-SPACESHIP_GIT_STATUS_MODIFIED_COLOR="yellow"
-SPACESHIP_GIT_STATUS_UNTRACKED_COLOR="blue"
-SPACESHIP_GIT_STATUS_ADDED_COLOR="green"
-SPACESHIP_GIT_STATUS_AHEAD_COLOR="yellow"
-SPACESHIP_GIT_STATUS_BEHIND_COLOR="yellow"
-SPACESHIP_GIT_STATUS_DIVERGED_COLOR="yellow"
+# Removed directory from preprompt_parts variable
+prompt_pure_preprompt_render() {
+	setopt localoptions noshwordsplit
+
+	# Set color for git branch/dirty status, change color if dirty checking has
+	# been delayed.
+	local git_color=242
+	[[ -n ${prompt_pure_git_last_dirty_check_timestamp+x} ]] && git_color=red
+
+	# Initialize the preprompt array.
+	local -a preprompt_parts
+
+	# Set the path.
+	preprompt_parts+=('%F%f')
+
+	# Add git branch and dirty status info.
+	typeset -gA prompt_pure_vcs_info
+	if [[ -n $prompt_pure_vcs_info[branch] ]]; then
+		preprompt_parts+=("%F{$git_color}"'${prompt_pure_vcs_info[branch]}${prompt_pure_git_dirty}%f')
+	fi
+	# Git pull/push arrows.
+	if [[ -n $prompt_pure_git_arrows ]]; then
+		preprompt_parts+=('%F{cyan}${prompt_pure_git_arrows}%f')
+	fi
+
+	# Username and machine, if applicable.
+	[[ -n $prompt_pure_state[username] ]] && preprompt_parts+=('${prompt_pure_state[username]}')
+	# Execution time.
+	[[ -n $prompt_pure_cmd_exec_time ]] && preprompt_parts+=('%F{yellow}${prompt_pure_cmd_exec_time}%f')
+
+	local cleaned_ps1=$PROMPT
+	local -H MATCH MBEGIN MEND
+	if [[ $PROMPT = *$prompt_newline* ]]; then
+		# Remove everything from the prompt until the newline. This
+		# removes the preprompt and only the original PROMPT remains.
+		cleaned_ps1=${PROMPT##*${prompt_newline}}
+	fi
+	unset MATCH MBEGIN MEND
+
+	# Construct the new prompt with a clean preprompt.
+	local -ah ps1
+	ps1=(
+		${(j. .)preprompt_parts}  # Join parts, space separated.
+		$prompt_newline           # Separate preprompt and prompt.
+		$cleaned_ps1
+	)
+
+	PROMPT="${(j..)ps1}"
+
+	# Expand the prompt for future comparision.
+	local expanded_prompt
+	expanded_prompt="${(S%%)PROMPT}"
+
+	if [[ $1 == precmd ]]; then
+		# Initial newline, for spaciousness.
+		print
+	elif [[ $prompt_pure_last_prompt != $expanded_prompt ]]; then
+		# Redraw the prompt.
+		zle && zle .reset-prompt
+	fi
+
+	typeset -g prompt_pure_last_prompt=$expanded_prompt
+}
+
+# Hide error messages from previous prompt loading too quick
+clear -x
