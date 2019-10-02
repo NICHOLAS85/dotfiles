@@ -10,10 +10,10 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
 colorlscommand=(lsd --group-dirs first)
-colorlsgitcommand=(colorls --gs -A)
+colorlsgitcommand=(colorls --sd --gs -A)
 
-AUTO_LS_COMMANDS=(modecheck colorls)
-AUTO_LS_COMMANDSBAT=(ls)
+AUTO_LS_COMMANDS=(colorls)
+#AUTO_LS_COMMANDSBAT=(ls)
 AUTO_LS_NEWLINE=false
 
 EDITOR=kate
@@ -47,9 +47,9 @@ fi
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf='${=EDITOR} $ZPLGM[HOME_DIR]/user/theme $ZPLGM[HOME_DIR]/user/personal ${HOME}/.zshrc &!'
+alias zshconf='${=EDITOR} $ZPLGM[HOME_DIR]/user/themes/${MYPROMPT} $ZPLGM[HOME_DIR]/user/personal.zsh ${HOME}/.zshrc &!'
 
-alias "zshconfatom"='atom $ZPLGM[HOME_DIR]/user/theme $ZPLGM[HOME_DIR]/user/personal ${HOME}/.zshrc &!'
+alias "zshconfatom"='atom $ZPLGM[HOME_DIR]/user/themes/${MYPROMPT} $ZPLGM[HOME_DIR]/user/personal.zsh ${HOME}/.zshrc &!'
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
@@ -89,6 +89,7 @@ setopt interactive_comments # Allow comments even in interactive shells (especia
 setopt pushd_ignore_dups    # don't push multiple copies of the same directory onto the directory stack
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
+setopt correct_all          # autocorrect commands
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate

@@ -1,6 +1,5 @@
 # https://github.com/NICHOLAS85/dotfiles/blob/xps_13_9365/.zshrc
 
-
 # Install zplugin if not installed
 if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
@@ -28,12 +27,29 @@ fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
 autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
 
 # Functions to make configuration less verbose
-zt() { zplugin ice lucid ${1/#[0-9][a-c]/wait"$1"}            "${@:2}"; } # Smart Turbo
+zt() { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
 z()  { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
 
-# Theme
-zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atload'source $ZPLGM[HOME_DIR]/user/theme'
-z denysdovhan/spaceship-prompt
+# Initial Prompt and config source
+zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' silent atload'MYPROMPT="spaceship-async"'
+z load maximbaz/spaceship-prompt
+
+zt src'themes/spaceship-async'
+z "$ZPLGM[HOME_DIR]/user/"
+
+zt pick'async.zsh'
+z mafredri/zsh-async
+
+# Conditional themes
+zt load'[[ ${MYPROMPT} = "spaceship-async" ]]' unload'[[ ${MYPROMPT} != "spaceship-async" ]]' \
+pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
+atload'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"'
+z load maximbaz/spaceship-prompt
+
+zt load'[[ ${MYPROMPT} = "spaceship" ]]' unload'[[ ${MYPROMPT} != "spaceship" ]]' \
+pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
+atload'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"'
+z load denysdovhan/spaceship-prompt
 
 # Oh-my-zsh libs
 zt atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
@@ -68,7 +84,7 @@ z sei40kr/zsh-fast-alias-tips
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' as'command'
 z paulirish/git-open
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git'
+zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' atinit'forgit_ignore="/dev/null"'
 z wfxr/forgit
 #replaced gi with local git-ignore plugin
 
@@ -78,7 +94,7 @@ z laggardkernel/git-ignore
 zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="$ZPFX/.warprc"' blockf reset
 z mfaerevaag/wd
 
-zt 0a ver'plugin'
+zt 0a
 z NICHOLAS85/updatelocal
 
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp $1 && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
@@ -128,7 +144,5 @@ z zdharma/fast-syntax-highlighting
 zt 0c id-as'Cleanup' atinit'unset -f zt z'
 z zdharma/null
 
-source "$ZPLGM[HOME_DIR]/user/personal"
-
 dotscheck
-
+echo
