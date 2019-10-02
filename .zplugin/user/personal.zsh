@@ -36,6 +36,7 @@ else
     # Used to programatically disable plugins when opening the terminal view in dolphin 
     if [[ $(ps -ocommand= -p $PPID) =~ "dolphin" ]]; then
         isdolphin=true
+        MYPROMPT=dolphin
     fi
 fi
 

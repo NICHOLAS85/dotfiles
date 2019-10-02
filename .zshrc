@@ -27,8 +27,11 @@ fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
 autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
 
 # Functions to make configuration less verbose
-zt() { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
-z()  { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
+zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
+z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
+
+zth() { zt load'[[ ${MYPROMPT} = "'$1'" ]]' unload'[[ ${MYPROMPT} != "'$1'" ]]' \
+atinit'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"' "${@:2}"; }
 
 # Initial Prompt and config source
 zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' silent atload'MYPROMPT="spaceship-async"'
@@ -41,15 +44,17 @@ zt pick'async.zsh'
 z mafredri/zsh-async
 
 # Conditional themes
-zt load'[[ ${MYPROMPT} = "spaceship-async" ]]' unload'[[ ${MYPROMPT} != "spaceship-async" ]]' \
-pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
-atload'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"'
+zth spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
 z load maximbaz/spaceship-prompt
 
-zt load'[[ ${MYPROMPT} = "spaceship" ]]' unload'[[ ${MYPROMPT} != "spaceship" ]]' \
-pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
-atload'zplugin ice pick"${MYPROMPT}"; zplugin light "$ZPLGM[HOME_DIR]/user/themes/"'
+zth spaceship pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
 z load denysdovhan/spaceship-prompt
+
+zth pure pick"async.zsh" src"pure.zsh"
+z load sindresorhus/pure
+
+zth dolphin pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
+z load maximbaz/spaceship-prompt
 
 # Oh-my-zsh libs
 zt atinit'ZSH_CACHE_DIR="$HOME/.zcompcache"'
