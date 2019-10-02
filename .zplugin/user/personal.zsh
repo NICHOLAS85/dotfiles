@@ -1,11 +1,16 @@
 #Let Atom highlight this: -*- shell-script -*-
 
+# Autoload personal functions
+fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
+autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
+
 #########################
 #       Variables       #
 #########################
 
 HISTFILE="${HOME}/.histfile"
 
+ZSH_CACHE_DIR="${HOME}/.zcompcache"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
@@ -17,6 +22,10 @@ AUTO_LS_COMMANDS=(colorls)
 AUTO_LS_NEWLINE=false
 
 EDITOR=kate
+
+forgit_ignore="/dev/null"
+
+WD_CONFIG="${ZPFX}/.warprc"
 
 rm_opts=(-I -v)
 
@@ -31,7 +40,6 @@ isdolphin=false
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
     colorlscommand=(lsd --group-dirs first --icon never)
-    AUTO_LS_COMMANDS=(colorls)
 else
     # Used to programatically disable plugins when opening the terminal view in dolphin 
     if [[ $(ps -ocommand= -p $PPID) =~ "dolphin" ]]; then

@@ -22,16 +22,12 @@ if [[ ! -d "$ZPLGM[HOME_DIR]/user" ]]; then
     tar -xz --strip=2 dotfiles-xps_13_9365/.zplugin/user; mv user "$ZPLGM[HOME_DIR]/"
 fi
 
-# Autoload personal functions
-fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
-autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
-
 # Functions to make configuration less verbose
 zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
 z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
 
 zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
-atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'     "${@:2}"; } # Conditional theming
+atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'   "${@:2}"; } # Conditional theming
 
 # Initial Prompt and config source
 zt pick'async.zsh'
@@ -41,7 +37,8 @@ zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="
 atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'
 z load maximbaz/spaceship-prompt
 
-z "${ZPLGM[HOME_DIR]}/user/"
+zt blockf
+z load "${ZPLGM[HOME_DIR]}/user/"
 
 # Conditional themes
 zct spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
@@ -54,7 +51,6 @@ zct dolphin pick"/dev/null" multisrc"{async,pure}.zsh" reset-prompt
 z load sindresorhus/pure
 
 # Oh-my-zsh libs
-zt atinit'ZSH_CACHE_DIR="${HOME}/.zcompcache"'
 z snippet OMZ::lib/history.zsh
 
 zt 0a
@@ -86,14 +82,14 @@ z sei40kr/zsh-fast-alias-tips
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' as'command'
 z paulirish/git-open
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' atinit'forgit_ignore="/dev/null"'
+zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git'
 z wfxr/forgit
 #replaced gi with local git-ignore plugin
 
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
 z laggardkernel/git-ignore
 
-zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }; WD_CONFIG="${ZPFX}/.warprc"' blockf reset
+zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }' blockf reset
 z mfaerevaag/wd
 
 zt 0a
@@ -134,8 +130,8 @@ z load desyncr/auto-ls
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
 
-zt 0b compile'{src/*.zsh,src/strategies/*}' atload'!_zsh_autosuggest_start'
-z load zsh-users/zsh-autosuggestions
+zt 0b compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start'
+z zsh-users/zsh-autosuggestions
 
 zt 0b pick'manydots-magic' compile'manydots-magic'
 z knu/zsh-manydots-magic
