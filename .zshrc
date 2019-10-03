@@ -31,12 +31,12 @@ zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" 
 atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'   "${@:2}"; } # Conditional theming
 
 # Initial Prompt and config source
+zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' silent
+z load maximbaz/spaceship-prompt
+
 zt pick'async.zsh'
 z mafredri/zsh-async
-
-zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
-atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'
-z load maximbaz/spaceship-prompt
 
 zt blockf
 z _local/config-files
