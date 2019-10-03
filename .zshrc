@@ -28,15 +28,15 @@ zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Sma
 z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
 
 zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
-atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'   "${@:2}"; } # Conditional theming
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' "${@:2}"; } # Conditional theming
 
 # Initial Prompt and config source
+zt pick'async.zsh'
+z mafredri/zsh-async
+
 zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
 atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' silent
 z load maximbaz/spaceship-prompt
-
-zt pick'async.zsh'
-z mafredri/zsh-async
 
 zt blockf
 z _local/config-files
@@ -62,7 +62,8 @@ z snippet OMZ::lib/completion.zsh
 #zt atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
 #z mroth/evalcache
 
-zt 0b atclone"sed -i '/DIR/c\DIR                   34;5;30' LS_COLORS; dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!' reset
+zt 0b atclone"sed -i '/DIR/c\DIR                   1;34' LS_COLORS; dircolors -b LS_COLORS > c.zsh" \
+atpull'%atclone' pick"c.zsh" nocompile'!' reset atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 z trapd00r/LS_COLORS
 
 zt 0a has'systemctl'
@@ -100,8 +101,9 @@ zt wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp ${1} && z
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zt 0b as'program' pick'rm-trash/rm-trash' atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
-compile'rm-trash/rm-trash' nocompile'!' reset
+zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
+compile'rm-trash/rm-trash' nocompile'!' reset \
+atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" 
 z nateshmbhat/rm-trash
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'

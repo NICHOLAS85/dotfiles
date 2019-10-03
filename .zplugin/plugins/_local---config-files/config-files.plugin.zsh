@@ -32,7 +32,7 @@ EDITOR=kate
 
 forgit_ignore="/dev/null"
 
-WD_CONFIG="${ZPFX}/.warprc"
+WD_CONFIG="${ZPFX}/warprc"
 
 rm_opts=(-I -v)
 
