@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CMode=$(tlp-stat -s | grep -oP 'Mode           = \K.*')
+CMode=$(cat /run/tlp/manual_mode || cat /run/tlp/last_pwr)
 Wrongpass=0 #first time run
 
-if [[ "$CMode" =~ "battery" ]]; then
+if [[ $CMode = 1 ]]; then
     CMode="BAT" #changes battery to BAT when checking TLP mode
 else
     CMode="AC"

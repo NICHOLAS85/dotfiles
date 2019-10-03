@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ $(tlp-stat -s) =~ "(manual)" ]]; then
+if [[ -e /run/tlp/manual_mode ]]; then
   case $1 in
     connected_ac )
       sudo tlp start

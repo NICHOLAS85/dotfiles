@@ -38,7 +38,7 @@ atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'
 z load maximbaz/spaceship-prompt
 
 zt blockf
-z load "${ZPLGM[HOME_DIR]}/user/"
+z "${ZPLGM[HOME_DIR]}/user/"
 
 # Conditional themes
 zct spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'

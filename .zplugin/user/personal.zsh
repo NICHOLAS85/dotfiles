@@ -10,7 +10,6 @@ autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck histor
 
 HISTFILE="${HOME}/.histfile"
 
-ZSH_CACHE_DIR="${HOME}/.zcompcache"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
