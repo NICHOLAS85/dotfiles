@@ -17,9 +17,10 @@ autoload -Uz _zplugin
 if [[ ! -d "$ZPFX" ]]; then
     mkdir -v $ZPFX
 fi
-if [[ ! -d "$ZPLGM[HOME_DIR]/user" ]]; then
+if [[ ! -d "${ZPLGM[PLUGINS_DIR]}/_local---config-files" ]]; then
     curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
-    tar -xz --strip=2 dotfiles-xps_13_9365/.zplugin/user; mv user "$ZPLGM[HOME_DIR]/"
+    tar -xz --strip=2 dotfiles-xps_13_9365/.zplugin/plugins/_local---config-files
+    mv _local---config-files "${ZPLGM[PLUGINS_DIR]}/"
 fi
 
 # Functions to make configuration less verbose
@@ -27,18 +28,18 @@ zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Sma
 z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
 
 zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
-atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'   "${@:2}"; } # Conditional theming
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'   "${@:2}"; } # Conditional theming
 
 # Initial Prompt and config source
 zt pick'async.zsh'
 z mafredri/zsh-async
 
 zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
-atload'!source "${ZPLGM[HOME_DIR]}/user/themes/${MYPROMPT}"'
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'
 z load maximbaz/spaceship-prompt
 
 zt blockf
-z "${ZPLGM[HOME_DIR]}/user/"
+z _local/config-files
 
 # Conditional themes
 zct spaceship-async pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'

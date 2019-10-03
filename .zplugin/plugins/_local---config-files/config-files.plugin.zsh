@@ -1,7 +1,15 @@
 #Let Atom highlight this: -*- shell-script -*-
 
+# According to the Zsh Plugin Standard:
+# http://zdharma.org/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html
+
+0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+0="${${(M)0:#/*}:-$PWD/$0}"
+
+# Then ${0:h} to get plugin's directory
+
 # Autoload personal functions
-fpath=("$ZPLGM[HOME_DIR]/user/functions" "${fpath[@]}")
+fpath=("${0:h}/functions" "${fpath[@]}")
 autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
 
 #########################
@@ -55,9 +63,9 @@ fi
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf='${=EDITOR} $ZPLGM[HOME_DIR]/user/themes/${MYPROMPT} $ZPLGM[HOME_DIR]/user/personal.zsh ${HOME}/.zshrc &!'
+alias zshconf="${=EDITOR} ${0:h}/themes/\${MYPROMPT} ${0:h}/config-files.plugin.zsh ${HOME}/.zshrc &!"
 
-alias "zshconfatom"='atom $ZPLGM[HOME_DIR]/user/themes/${MYPROMPT} $ZPLGM[HOME_DIR]/user/personal.zsh ${HOME}/.zshrc &!'
+alias zshconfatom="atom ${0:h}/themes/\${MYPROMPT} ${0:h}/config-files.plugin.zsh ${HOME}/.zshrc &!"
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
