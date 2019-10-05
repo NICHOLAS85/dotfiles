@@ -47,12 +47,16 @@ isdolphin=false
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
     colorlscommand=(lsd --group-dirs first --icon never)
+    alias ls="lsd --group-dirs=first --icon=never"
 else
     # Used to programatically disable plugins when opening the terminal view in dolphin 
     if [[ $(ps -ocommand= -p $PPID) =~ "dolphin" ]]; then
         isdolphin=true
         MYPROMPT=dolphin
+        # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
+        alias cd='clear -x; cd'
     fi
+    alias ls='lsd --group-dirs=first'
 fi
 
 #########################
@@ -63,19 +67,15 @@ fi
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf="${=EDITOR} ${0:h}/themes/\${MYPROMPT} ${0:h}/config-files.plugin.zsh ${HOME}/.zshrc &!"
+alias zshconf="${=EDITOR} ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT} &!"
 
-alias zshconfatom="atom ${0:h}/themes/\${MYPROMPT} ${0:h}/config-files.plugin.zsh ${HOME}/.zshrc &!"
+alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT} &!"
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
 
-# Aesthetic function for Dolphin, clear -x if cd while in Dolphin
-$isdolphin && alias cd='clear -x; cd'
-
 alias g='git'
-alias ls='lsd --group-dirs=first'
 alias open='xdg-open'
 # allow sudo to expand aliases as well as run anything in $PATH
 alias sudo='sudo env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"  '
@@ -85,10 +85,6 @@ alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
 
 unalias zplg
-
-if [[ -n $SSH_CONNECTION ]]; then
-    alias ls="lsd --group-dirs=first --icon=never"
-fi
 
 #########################
 #         Other         #
