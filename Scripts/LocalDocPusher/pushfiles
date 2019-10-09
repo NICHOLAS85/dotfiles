@@ -12,14 +12,15 @@ pushfiles(){
 
 if [[ $(tty) =~ "not a tty" ]]
 then
-    echo "Not running on terminal"
+    # Not running on terminal
     konsole -e bash "$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 else
-    echo "Running on terminal"
-    if [[ $(systemctl --user show -p SubState --value onedrive) = "running" ]]; then
+    # Running on terminal
+    status=$(systemctl --user show -p SubState --value onedrive)
+    if [[ $status = "running" ]]; then
         pushfiles
     else
-        echo "onedrive.service is $(systemctl show -p SubState --value onedrive)"
+        echo "onedrive.service is $status"
         read -p "Press enter to close";
     fi
 fi

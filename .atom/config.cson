@@ -49,6 +49,7 @@
     ]
   editor:
     fontFamily: "Fira Code, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontSize: 15
     preferredLineLength: 200
     showIndentGuide: true
     softWrap: true
@@ -67,6 +68,12 @@
       disableWhenNoEslintConfig: false
     global:
       globalNodePath: "/usr/local"
+  "linter-gcc":
+    gccDebug: true
+    gccLintOnTheFly: true
+  "linter-gcc2":
+    gccIncludePaths: " ./src/public.h"
+    gccLintOnTheFly: true
   "linter-shellcheck":
     userParameters: "-x"
   "linter-stylelint":
@@ -81,6 +88,8 @@
     vnuUrl: "http://localhost:8844"
   "markdown-preview":
     useGitHubStyle: true
+  "markdown-preview-plus":
+    syntaxThemeName: "atom-dark-syntax"
   minimap:
     plugins:
       bookmarks: true

@@ -21,6 +21,8 @@ HISTFILE="${HOME}/.histfile"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
+HISTORY_SUBSTRING_SEARCH_FUZZY=set
+
 colorlscommand=(lsd --group-dirs first)
 colorlsgitcommand=(colorls --sd --gs -A)
 
