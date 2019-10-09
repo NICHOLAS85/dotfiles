@@ -50,15 +50,16 @@ if [[ -n $SSH_CONNECTION ]]; then
     colorlscommand=(lsd --group-dirs first --icon never)
     alias ls="lsd --group-dirs=first --icon=never"
 else
-    # Used to programatically disable plugins when opening the terminal view in dolphin 
-    if [[ $MYPROMPT = dolphin ]]; then
-        # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
-        isdolphin=true
-        alias cd='clear -x; cd'
-    else
-        isdolphin=false
-    fi
     alias ls='lsd --group-dirs=first'
+fi
+
+# Used to programatically disable plugins when opening the terminal view in dolphin 
+if [[ $MYPROMPT = dolphin ]]; then
+    isdolphin=true
+    # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
+    alias cd='clear -x; cd'
+else
+    isdolphin=false
 fi
 
 #########################

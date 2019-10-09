@@ -19,16 +19,19 @@ if [[ ! -d "$ZPFX" ]]; then
 fi
 if [[ ! -d "${ZPLGM[PLUGINS_DIR]}/_local---config-files" ]]; then
     curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
-    tar -xz --strip=2 dotfiles-xps_13_9365/.zplugin/plugins/_local---config-files
+    tar -xz --strip=3 dotfiles-xps_13_9365/.zplugin/plugins/_local---config-files
     mv _local---config-files "${ZPLGM[PLUGINS_DIR]}/"
 fi
 
 # Functions to make configuration less verbose
-zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; } # Smart Turbo
-z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; } # zplugin
+# z()  : Loads plugin using light mode unless otherwise specified in first argument
+# zt() : First argument is a wait time and suffix eg "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'1' and lucid.
+# zct(): First argument determines value $MYPROMPT is checked against in load'' and unload'' ices. On load sources a config file with tracking using the first argument as it's name for easy unloading.
 
+z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; }
+zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; }
 zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
-atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' "${@:2}"; } # Conditional theming
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' "${@:2}"; }
 
 # Initial Prompt and config source
 zt pick'async.zsh'
