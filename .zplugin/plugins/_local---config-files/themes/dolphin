@@ -74,6 +74,3 @@ prompt_pure_preprompt_render() {
 
 	typeset -g prompt_pure_last_prompt=$expanded_prompt
 }
-
-# Hide error messages from previous prompt loading too quick
-clear -x

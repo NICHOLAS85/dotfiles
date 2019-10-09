@@ -44,7 +44,6 @@ UPDATELOCAL_GITDIR="${HOME}/github/Built"
 # Strings to ignore when using dotscheck, escape and single quote stuff that could be wild cards (../)
 dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' '\.config/gtk-3\.0/settings\.ini' )
 
-isdolphin=false
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
@@ -52,11 +51,12 @@ if [[ -n $SSH_CONNECTION ]]; then
     alias ls="lsd --group-dirs=first --icon=never"
 else
     # Used to programatically disable plugins when opening the terminal view in dolphin 
-    if [[ $(ps -ocommand= -p $PPID) =~ "dolphin" ]]; then
-        isdolphin=true
-        MYPROMPT=dolphin
+    if [[ $MYPROMPT = dolphin ]]; then
         # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
+        isdolphin=true
         alias cd='clear -x; cd'
+    else
+        isdolphin=false
     fi
     alias ls='lsd --group-dirs=first'
 fi

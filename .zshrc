@@ -34,7 +34,8 @@ atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"'
 zt pick'async.zsh'
 z mafredri/zsh-async
 
-zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' atinit'MYPROMPT="spaceship-async"' \
+MYPROMPT="${MYPROMPT:-spaceship-async}"
+zt if'[[ $MYPROMPT = "spaceship-async"  ]]' pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
 atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' silent
 z load maximbaz/spaceship-prompt
 
@@ -145,5 +146,5 @@ z zdharma/fast-syntax-highlighting
 zt 0c id-as'Cleanup' atinit'unset -f zt z'
 z zdharma/null
 
-dotscheck
+$isdolphin || dotscheck
 echo
