@@ -31,3 +31,6 @@ right_down = ""
 down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
 left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
 right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
+
+[gesture.type]
+type = "TOUCH"

@@ -23,3 +23,6 @@ right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick
 [commands.pinch]
 in = "xdotool key ctrl+shift+t"
 out = "~/Scripts/gestures/firefoxorbust"
+
+[gesture.type]
+type = "GESTURE"

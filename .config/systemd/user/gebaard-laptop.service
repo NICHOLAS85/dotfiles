@@ -1,10 +1,11 @@
 [Unit]
 Description=Gebaar Daemon
 Documentation=https://github.com/Coffee2CodeNL/gebaar-libinput
+Before=gebaard-tablet.service
 Conflicts=gebaard-tablet.service
 
 [Service]
-ExecStartPre=/usr/bin/cp -f %h/.config/gebaar/gebaard.toml-laptop %h/.config/gebaar/gebaard.toml
+ExecStartPre=/usr/bin/cp -f %h/.config/gebaar/gebaard-laptop.toml %h/.config/gebaar/gebaard.toml
 ExecStart=/usr/local/bin/gebaard
 Environment=DISPLAY=:0
 Restart=always
