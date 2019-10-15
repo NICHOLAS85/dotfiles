@@ -3,8 +3,8 @@ Description=Gebaar Daemon
 Documentation=https://github.com/Coffee2CodeNL/gebaar-libinput
 
 [Service]
-ExecStartPre=/usr/bin/cp -f %h/.config/gebaar/gebaard.toml-laptop %h/.config/gebaar/gebaard.toml
-ExecStart=/usr/local/bin/gebaard
+ExecStartPre=/usr/bin/cp -f %h/.config/gebaar/gebaard.toml-tablet %h/.config/gebaar/gebaard.toml
+ExecStart=%h/github/gebaar-libinput/build/gebaard-tablet -v
 Environment=DISPLAY=:0
 Restart=always
 

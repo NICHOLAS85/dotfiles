@@ -1,5 +1,7 @@
 #!/bin/bash
 
+xrandr -o normal
+
 device_list=("DLL077A:01 06CB:76AF Touchpad" "Wacom HID 4833 Pen eraser" "Virtual core pointer" "Virtual core XTEST pointer" "Wacom HID 4833 Pen stylus")
 
 for device in "${device_list[@]}"
@@ -7,4 +9,4 @@ do
     xinput set-prop "$device" 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1
 done
 
-xinput set-prop "Wacom HID 4833 Finger touch" 'Coordinate Transformation Matrix' 1.00102214650766609880 0 -.00374787052810902896 0 1.00440796473628210974 -.00942392460860313117 0 0 1
+#xinput set-prop "Wacom HID 4833 Finger touch" 'Coordinate Transformation Matrix' 1.00102214650766609880 0 -.00374787052810902896 0 1.00440796473628210974 -.00942392460860313117 0 0 1

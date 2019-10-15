@@ -1,17 +1,13 @@
 input_device: /dev/input/by-path/pci-0000:00:1f.0-platform-INT33D6:00-event
 modes:
   laptop:
-    # - xinput enable "Wacom Pen and multitouch sensor Finger"
-    #- xinput enable "AT Translated Set 2 keyboard"
-    #- xinput enable "SynPS/2 Synaptics TouchPad"
-    #- xinput enable "TPPS/2 IBM TrackPoint"
-     - pkill libinput-touchs
      - pkill onboard
      - pkill screenrotator
-     - xrandr -o normal
+     - systemctl --user stop gebaard-tablet
+     - systemctl --user start gebaard
      - /bin/bash /home/nicholas/Scripts/tabletmode/landscape
   tablet:
-    # - xinput disable "Wacom Pen and multitouch sensor Finger"
      - screenrotator &
      - onboard &
-     - /home/nicholas/github/libinput-touchscreen/libinput-touchscreen &
+     - systemctl --user stop gebaard
+     - systemctl --user start gebaard-tablet

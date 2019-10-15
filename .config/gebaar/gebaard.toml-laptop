@@ -1,0 +1,25 @@
+[[command-swipe]]
+fingers = 3
+left_up = ""
+right_up = ""
+up = "~/Scripts/gestures/presentview --up"
+left_down = ""
+right_down = ""
+down = "~/Scripts/gestures/presentview --down"
+left = "xdotool key alt+Right"
+right = "xdotool key alt+Left"
+
+[[command-swipe]]
+fingers = 4
+left_up = ""
+right_up = ""
+up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
+left_down = ""
+right_down = ""
+down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
+left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
+right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
+
+[commands.pinch]
+in = "xdotool key ctrl+shift+t"
+out = "~/Scripts/gestures/firefoxorbust"
