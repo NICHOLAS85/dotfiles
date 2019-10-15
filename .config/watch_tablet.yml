@@ -3,11 +3,9 @@ modes:
   laptop:
      - pkill onboard
      - pkill screenrotator
-     - systemctl --user stop gebaard-tablet
      - systemctl --user start gebaard
      - /bin/bash /home/nicholas/Scripts/tabletmode/landscape
   tablet:
      - screenrotator &
      - onboard &
-     - systemctl --user stop gebaard
      - systemctl --user start gebaard-tablet

@@ -1,6 +1,7 @@
 [Unit]
 Description=Gebaar Daemon
 Documentation=https://github.com/Coffee2CodeNL/gebaar-libinput
+Conflicts=gebaard.service
 
 [Service]
 ExecStartPre=/usr/bin/cp -f %h/.config/gebaar/gebaard.toml-tablet %h/.config/gebaar/gebaard.toml
