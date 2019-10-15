@@ -38,7 +38,7 @@ zt pick'async.zsh'
 z mafredri/zsh-async
 
 MYPROMPT="${MYPROMPT:-spaceship-async}"
-zt if'[[ $MYPROMPT = "spaceship-async"  ]]' pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
+zt if'[[ $MYPROMPT = "spaceship-async" ]]' pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
 atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' silent
 z load maximbaz/spaceship-prompt
 
@@ -95,8 +95,11 @@ z wfxr/forgit
 zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
 z laggardkernel/git-ignore
 
-zt 0a as'program' pick'wd.sh' mv'_wd.sh -> _wd' atload'wd() { source wd.sh }' blockf reset
-z mfaerevaag/wd
+zt 0a blockf
+z agkozak/zsh-z
+
+zt 0a pick'fz.sh'
+z changyuheng/fz
 
 zt 0a
 z NICHOLAS85/updatelocal
@@ -146,7 +149,7 @@ z knu/zsh-manydots-magic
 zt 0b atinit'_zpcompinit_fast; zpcdreplay'
 z zdharma/fast-syntax-highlighting
 
-zt 0c id-as'Cleanup' atinit'unset -f zt z'
+zt 0c id-as'Cleanup' atinit'unset -f zct zt z'
 z zdharma/null
 
 $isdolphin || dotscheck

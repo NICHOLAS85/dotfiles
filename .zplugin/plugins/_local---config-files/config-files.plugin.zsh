@@ -19,7 +19,7 @@ autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck histor
 HISTFILE="${HOME}/.histfile"
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
@@ -32,9 +32,12 @@ AUTO_LS_NEWLINE=false
 
 EDITOR=kate
 
+FZ_HISTORY_CD_CMD=zshz
+
 forgit_ignore="/dev/null"
 
 WD_CONFIG="${ZPFX}/warprc"
+ZSHZ_DATA="${ZPFX}/z"
 
 rm_opts=(-I -v)
 
