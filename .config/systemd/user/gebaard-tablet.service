@@ -1,6 +1,6 @@
 [Unit]
 Description=Gebaar Daemon
-Documentation=https://github.com/Coffee2CodeNL/gebaar-libinput
+Documentation=https://github.com/NICHOLAS85/gebaar-libinput
 After=gebaard-laptop.service
 Conflicts=gebaard-laptop.service
 

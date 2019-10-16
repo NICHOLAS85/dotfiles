@@ -7,7 +7,6 @@ pushfiles(){
     rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/
     read -p "Press enter to Push";
     rsync -auv --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/
-    read -p "Press enter to close";
 }
 
 if [[ $(tty) =~ "not a tty" ]]
@@ -21,6 +20,6 @@ else
         pushfiles
     else
         echo "onedrive.service is $status"
-        read -p "Press enter to close";
     fi
+    read -p "Press enter to close"
 fi
