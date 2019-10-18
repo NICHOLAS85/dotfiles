@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=if ! pgrep -a ruby | grep -q watch_tablet; then /home/nicholas/github/built/linux_detect_tablet_mode/watch_tablet & disown; fi
+Exec=if ! pgrep -a ruby | grep -q watch_tablet; then /home/nicholas/github/Built/linux_detect_tablet_mode/watch_tablet & disown; fi
 GenericName[en_US]=
 GenericName=
 Icon=system-run
