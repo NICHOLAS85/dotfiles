@@ -151,5 +151,4 @@ z zdharma/fast-syntax-highlighting
 zt 0c id-as'Cleanup' atinit'unset -f zct zt z'
 z zdharma/null
 
-$isdolphin || dotscheck
-echo
+$isdolphin || { dotscheck && echo; }
