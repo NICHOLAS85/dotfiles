@@ -43,5 +43,5 @@ out = "xdotool key ctrl+shift+t"
 laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/Scripts/tabletmode/landscape"
 tablet = "screenrotator & onboard &"
 
-[interact.type]
+[interact-type]
 type = "GESTURE"
