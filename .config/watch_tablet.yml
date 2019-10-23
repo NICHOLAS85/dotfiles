@@ -1,9 +1,0 @@
-input_device: /dev/input/by-path/pci-0000:00:1f.0-platform-INT33D6:00-event
-modes:
-  laptop:
-     - pkill onboard
-     - pkill screenrotator
-     - /bin/bash /home/nicholas/Scripts/tabletmode/landscape
-  tablet:
-     - screenrotator &
-     - onboard &
