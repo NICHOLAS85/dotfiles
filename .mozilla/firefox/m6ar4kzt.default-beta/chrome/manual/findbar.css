@@ -23,6 +23,7 @@
 }
 
 findbar {
+        display: block !important;
 	animation: 0.2s scale-in;
 	transform-origin: top center;
 	background: var(--toolbar-bgcolor) !important;

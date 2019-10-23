@@ -12,9 +12,3 @@
 @import "manual/roomy.css";
 @import "manual/simpleMenuWizard.css";
 
-/*Below adds custom js loading*/
-/*
-toolbarbutton#alltabs-button {
-    -moz-binding: url("userChrome.xml#js");
-}*/
-
