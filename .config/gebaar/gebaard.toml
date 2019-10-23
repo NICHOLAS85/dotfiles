@@ -1,0 +1,40 @@
+[[command-swipe-gesture]]
+fingers = 3
+#left_up = ""
+#right_up = ""
+up = "~/Scripts/gestures/presentview --up"
+#left_down = ""
+#right_down = ""
+down = "~/Scripts/gestures/presentview --down"
+left = "xdotool key alt+Right"
+right = "xdotool key alt+Left"
+
+[[command-swipe-gesture]]
+fingers = 4
+up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
+down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
+left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
+right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
+
+[[command-swipe-touch]]
+fingers = 2
+up = "dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible"
+left = "xdotool key alt+Right"
+right = "xdotool key alt+Left"
+
+
+[[command-swipe-touch]]
+fingers = 3
+up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Expose"'
+down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Minimize"'
+
+[[command-swipe-touch]]
+fingers = 4
+up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
+down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
+left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
+right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
+
+[command-pinch]
+in = "~/Scripts/gestures/firefoxorbust"
+out = "xdotool key ctrl+shift+t"
