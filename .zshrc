@@ -31,14 +31,15 @@ fi
 z()   { [ -z $2 ] && { zplugin light "${@}"; ((1)); } || zplugin "${@}"; }
 zt()  { zplugin ice depth'1' lucid ${1/#[0-9][a-c]/wait"$1"}   "${@:2}"; }
 zct() { zt load'[[ ${MYPROMPT} = "'${1}'" ]]' unload'[[ ${MYPROMPT} != "'${1}'" ]]' \
-atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' "${@:2}"; }
+        atinit'source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}-pre"' \
+        atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}-post"' "${@:2}"; }
 
 # Initial Prompt and config source
 zt pick'async.zsh'
 z mafredri/zsh-async
 
 zt if"[[ ${MYPROMPT=spaceship-async} = "spaceship-async" ]]" pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' \
-atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}"' silent
+atload'!source "${ZPLGM[PLUGINS_DIR]}/_local---config-files/themes/${MYPROMPT}-post"' silent
 z load maximbaz/spaceship-prompt
 
 zt blockf
@@ -51,7 +52,7 @@ z load maximbaz/spaceship-prompt
 zct spaceship pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}'
 z load denysdovhan/spaceship-prompt
 
-zct dolphin pick"/dev/null" multisrc"{async,pure}.zsh" reset-prompt
+zct dolphin pick"pure.zsh" reset-prompt
 z load sindresorhus/pure
 
 # Oh-my-zsh libs

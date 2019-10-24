@@ -10,7 +10,7 @@
 
 # Autoload personal functions
 fpath=("${0:h}/functions" "${fpath[@]}")
-autoload -Uz _zpcompinit_fast auto-ls-colorls auto-ls-modecheck dotscheck history-stat
+autoload -Uz _zpcompinit_fast auto-ls-colorls dotscheck history-stat
 
 #########################
 #       Variables       #
@@ -27,12 +27,16 @@ colorlscommand=(lsd --group-dirs first)
 colorlsgitcommand=(colorls --sd --gs -A)
 
 AUTO_LS_COMMANDS=(colorls)
-#AUTO_LS_COMMANDSBAT=(ls)
 AUTO_LS_NEWLINE=false
 
 EDITOR=kate
 
 FZ_HISTORY_CD_CMD=zshz
+
+FZF_DEFAULT_COMMAND="fd --type file --color=always"
+FZF_DEFAULT_OPTS="--ansi"
+
+ZSHZ_EXCLUDE_DIRS=( "/" )
 
 forgit_ignore="/dev/null"
 
@@ -73,9 +77,9 @@ fi
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf="${=EDITOR} ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT} &!"
+alias zshconf="${=EDITOR} ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
 
-alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT} &!"
+alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
 
 # dot file management
 alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
