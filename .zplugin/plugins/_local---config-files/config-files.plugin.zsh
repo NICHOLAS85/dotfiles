@@ -29,14 +29,14 @@ colorlsgitcommand=(colorls --sd --gs -A)
 AUTO_LS_COMMANDS=(colorls)
 AUTO_LS_NEWLINE=false
 
-EDITOR=kate
+export EDITOR=micro
 
 FZ_HISTORY_CD_CMD=zshz
 
 FZF_DEFAULT_COMMAND="fd --type file --color=always"
 FZF_DEFAULT_OPTS="--ansi"
 
-ZSHZ_EXCLUDE_DIRS=( "/" )
+ZSHZ_EXCLUDE_DIRS=( '/' )
 
 forgit_ignore="/dev/null"
 
@@ -77,7 +77,7 @@ fi
 alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
-alias zshconf="${=EDITOR} ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
+alias zshconf="kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
 
 alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
 

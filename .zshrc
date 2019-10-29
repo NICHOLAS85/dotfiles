@@ -66,7 +66,7 @@ z snippet OMZ::lib/completion.zsh
 #zt atload'ZSH_EVALCACHE_DIR="$ZPFX/.zsh-evalcache"'
 #z mroth/evalcache
 
-zt 0b atclone"sed -i '/DIR/c\DIR                   1;34' LS_COLORS; dircolors -b LS_COLORS > c.zsh" \
+zt 0b atclone"sed -i '/DIR/c\DIR                  01;34' LS_COLORS; dircolors -b LS_COLORS > c.zsh" \
 atpull'%atclone' pick"c.zsh" nocompile'!' reset atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 z trapd00r/LS_COLORS
 
@@ -100,6 +100,9 @@ z agkozak/zsh-z
 
 zt 0a pick'fz.sh'
 z changyuheng/fz
+
+zt from"gh-r" as"program" pick'micro*/micro' bpick'*linux64*'
+z zyedidia/micro
 
 zt 0a
 z NICHOLAS85/updatelocal
