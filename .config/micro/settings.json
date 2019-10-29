@@ -18,8 +18,8 @@
     "keymenu": false,
     "linter": true,
     "literate": true,
-    "matchbrace": false,
-    "matchbraceleft": false,
+    "matchbrace": true,
+    "matchbraceleft": true,
     "mouse": true,
     "pluginchannels": [
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
@@ -30,7 +30,7 @@
     "savecursor": false,
     "savehistory": true,
     "saveundo": false,
-    "scrollbar": false,
+    "scrollbar": true,
     "scrollmargin": 3,
     "scrollspeed": 2,
     "smartpaste": true,

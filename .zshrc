@@ -101,9 +101,6 @@ z agkozak/zsh-z
 zt 0a pick'fz.sh'
 z changyuheng/fz
 
-zt from"gh-r" as"program" pick'micro*/micro' bpick'*linux64*'
-z zyedidia/micro
-
 zt 0a
 z NICHOLAS85/updatelocal
 
@@ -115,6 +112,9 @@ zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias rm="rm-t
 compile'rm-trash/rm-trash' nocompile'!' reset \
 atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" 
 z nateshmbhat/rm-trash
+
+zt 0b from"gh-r" as"program" pick'micro*/micro' bpick'*linux64*'
+z zyedidia/micro
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
 z laggardkernel/zsh-thefuck
