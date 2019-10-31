@@ -1,4 +1,8 @@
 {
 	"CtrlLeft": "WordLeft",
-	"CtrlRight": "WordRight"
+	"CtrlRight": "WordRight",
+	"CtrlUp": "ParagraphPrevious",
+	"CtrlDown": "ParagraphNext",
+	"CtrlShiftRight": "SelectWordRight",
+	"CtrlShiftLeft": "SelectWordLeft"
 }
