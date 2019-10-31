@@ -1,0 +1,13 @@
+local -a first
+local pos=1 second
+for arg in "$@"
+do
+    if [[ ${arg:0:1} == "-" ]]; then
+        ((++pos))
+        first=("${first[@]}" "$arg")
+    else
+        command sudo ${first[@]} env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" ${@:$pos}
+        return
+    fi
+done
+command sudo "${@}"

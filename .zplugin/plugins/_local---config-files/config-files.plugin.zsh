@@ -10,7 +10,7 @@
 
 # Autoload personal functions
 fpath=("${0:h}/functions" "${fpath[@]}")
-autoload -Uz _zpcompinit_fast auto-ls-colorls dotscheck history-stat
+autoload -Uz _zpcompinit_fast auto-ls-colorls dotscheck history-stat sudo
 
 #########################
 #       Variables       #
@@ -36,7 +36,7 @@ FZ_HISTORY_CD_CMD=zshz
 FZF_DEFAULT_COMMAND="fd --type file --color=always"
 FZF_DEFAULT_OPTS="--ansi"
 
-ZSHZ_EXCLUDE_DIRS=( '/' )
+ZSHZ_EXCLUDE_DIRS=( / )
 
 forgit_ignore="/dev/null"
 
@@ -48,8 +48,8 @@ rm_opts=(-I -v)
 # Directory checked for locally built projects (plugin updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/Built"
 
-# Strings to ignore when using dotscheck, escape and single quote stuff that could be wild cards (../)
-dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' '\.config/gtk-3\.0/settings\.ini' )
+# Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
+dotsvar=( gtkrc-2.0 kwinrulesrc \.\./ \.config/gtk-3\.0/settings\.ini )
 
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
@@ -58,6 +58,11 @@ if [[ -n $SSH_CONNECTION ]]; then
     alias ls="lsd --group-dirs=first --icon=never"
 else
     alias ls='lsd --group-dirs=first'
+fi
+
+# Set variables if on ac mode
+if [[ $(cat /run/tlp/last_pwr) = 0 ]]; then
+    alias micro="\micro -fastdirty false"
 fi
 
 # Used to programatically disable plugins when opening the terminal view in dolphin 
@@ -86,10 +91,10 @@ alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
 
 alias g='git'
+alias gi="git-ignore"
 alias open='xdg-open'
-# allow sudo to expand aliases as well as run anything in $PATH
-alias sudo='sudo env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"  '
-alias gencomp='echo "Use gcomp"'
+
+
 alias -- -='cd -'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'

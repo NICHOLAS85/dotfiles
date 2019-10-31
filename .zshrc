@@ -85,35 +85,35 @@ z ael-code/zsh-colored-man-pages
 zt 0a make
 z sei40kr/zsh-fast-alias-tips
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' as'command'
+zt trigger-load'!git'
 z paulirish/git-open
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git'
+zt trigger-load'!ga;!gcf;!gclean;!gd;!gd;!glo;!grh;!gss'
 z wfxr/forgit
 #replaced gi with local git-ignore plugin
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)g*]} ]]' has'git' pick'init.zsh' atload'alias gi="git-ignore"' blockf
+zt trigger-load'!git-ignore' pick'init.zsh' blockf
 z laggardkernel/git-ignore
 
-zt 0a blockf
+zt trigger-load'!zshz' blockf
 z agkozak/zsh-z
 
 zt 0a pick'fz.sh'
 z changyuheng/fz
 
-zt 0a
+zt trigger-load'!updatelocal' blockf
 z NICHOLAS85/updatelocal
 
-zt wait'[[ -n ${ZLAST_COMMANDS[(r)gcom*]} ]]' atload'gcomp(){ \gencomp ${1} && zplugin creinstall -q RobSis/zsh-completion-generator; }' pick'zsh-completion-generator.plugin.zsh'
+zt trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' atload'zplugin creinstall -q "$PWD"'
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
+zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias -g rm="rm-trash ${rm_opts}"' \
 compile'rm-trash/rm-trash' nocompile'!' reset \
 atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" 
 z nateshmbhat/rm-trash
 
-zt 0b from"gh-r" as"program" pick'*/micro' bpick'*linux64*'
+zt 0b from"gh-r" as"program" pick'*/micro' bpick'*linux64*' atpull'!rm -f -r ._backup'
 z zyedidia/micro
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
@@ -134,7 +134,7 @@ z zdharma/zsh-diff-so-fancy
 zt 0b pick'autopair.zsh' nocompletions
 z hlissner/zsh-autopair
 
-zt 0a blockf atpull'zplugin creinstall -q .'
+zt 0a blockf atpull'zplugin creinstall -q "$PWD"'
 z zsh-users/zsh-completions
 
 zt wait'[[ ${isdolphin} != true ]]'
