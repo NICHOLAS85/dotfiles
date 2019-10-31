@@ -4,7 +4,6 @@
  *
  * Contributor(s): Timvde
  */
-
 .tabbrowser-tab:not([selected]):not([pinned]) .tab-close-button {
   display: none !important;
 }
@@ -14,7 +13,6 @@
 }
 
 /* Hide forward and back buttons when not used */
-
 #forward-button[disabled="true"] { display: none; }
 #back-button[disabled="true"] { display: none; }
 
@@ -26,7 +24,6 @@
 }
 
 /* Change Arrow used for dragging tabs between windows*/
-
 .tab-drop-indicator {
     list-style-image: url("chrome://global/skin/icons/arrow-up-12.svg") !important;
     -moz-context-properties: fill, fill-opacity, stroke, stroke-opacity !important;
@@ -37,3 +34,7 @@
     max-width: 17px !important;
 }
 
+/* Fix large url bar */
+#urlbar-background {
+	display: none !important;
+}
