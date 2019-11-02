@@ -33,8 +33,3 @@
     width: 17px !important;
     max-width: 17px !important;
 }
-
-/* Fix large url bar */
-#urlbar-background {
-	display: none !important;
-}
