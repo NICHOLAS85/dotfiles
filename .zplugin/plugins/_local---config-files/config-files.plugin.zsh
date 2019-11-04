@@ -10,7 +10,7 @@
 
 # Autoload personal functions
 fpath=("${0:h}/functions" "${fpath[@]}")
-autoload -Uz _zpcompinit_fast auto-ls-colorls dotscheck history-stat sudo
+autoload -Uz $fpath[1]/*(.:t)
 
 #########################
 #       Variables       #
@@ -39,6 +39,7 @@ FZF_DEFAULT_OPTS="--ansi"
 ZSHZ_EXCLUDE_DIRS=( / )
 
 forgit_ignore="/dev/null"
+ZSHZ_CMD="/dev/null"
 
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"

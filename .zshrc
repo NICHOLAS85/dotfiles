@@ -14,9 +14,6 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
-if [[ ! -d "$ZPFX" ]]; then
-    mkdir -v $ZPFX
-fi
 if [[ ! -d "${ZPLGM[PLUGINS_DIR]}/_local---config-files" ]]; then
     curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
     tar -xz --strip=3 dotfiles-xps_13_9365/.zplugin/plugins/_local---config-files
@@ -73,13 +70,13 @@ z trapd00r/LS_COLORS
 zt 0a has'systemctl'
 z snippet OMZ::plugins/systemd/systemd.plugin.zsh
 
-zt 0a
+zt trigger-load'!x'
 z snippet OMZ::plugins/extract/extract.plugin.zsh
 
 zt 0b compile'{hsmw-*,test/*}'
 z zdharma/history-search-multi-word
 
-zt 0b
+zt trigger-load'!man'
 z ael-code/zsh-colored-man-pages
 
 zt 0a make
@@ -108,12 +105,12 @@ zt trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' atload'zplug
 z RobSis/zsh-completion-generator
 #loaded when needed via gcomp
 
-zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias -g rm="rm-trash ${rm_opts}"' \
+zt 0b as'program' pick'rm-trash/rm-trash' atpull'%atclone' atload'alias rm="rm-trash ${rm_opts}"' \
 compile'rm-trash/rm-trash' nocompile'!' reset \
 atclone"sed -i '2 i [[ \$EUID = 0 ]] && { echo \"Root detected, running builtin rm\"; command rm -I -v \"\${@}\"; exit; }' rm-trash/rm-trash" 
 z nateshmbhat/rm-trash
 
-zt 0b from"gh-r" as"program" pick'*/micro' bpick'*linux64*' atpull'!rm -f -r ._backup'
+zt 0b from"gh-r" as"program" pick'*/micro' bpick'*linux64*' reset
 z zyedidia/micro
 
 zt 0b has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh'
@@ -143,7 +140,7 @@ z load desyncr/auto-ls
 zt 0c atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down'
 z zsh-users/zsh-history-substring-search
 
-zt 0b compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start'
+zt 0a compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start'
 z zsh-users/zsh-autosuggestions
 
 zt 0b pick'manydots-magic' compile'manydots-magic'
