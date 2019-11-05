@@ -4,5 +4,6 @@
 	"CtrlUp": "ParagraphPrevious",
 	"CtrlDown": "ParagraphNext",
 	"CtrlShiftRight": "SelectWordRight",
-	"CtrlShiftLeft": "SelectWordLeft"
+	"CtrlShiftLeft": "SelectWordLeft",
+	"Ctrlx": "Redo"
 }
