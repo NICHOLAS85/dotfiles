@@ -35,7 +35,8 @@ down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
 left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
 right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
-[command-pinch]
+[[command-pinch]]
+fingers = 2
 in = "~/Scripts/gestures/firefoxorbust"
 out = "xdotool key ctrl+shift+t"
 
@@ -43,5 +44,5 @@ out = "xdotool key ctrl+shift+t"
 laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/Scripts/tabletmode/landscape"
 tablet = "screenrotator & onboard &"
 
-[interact-type]
-type = "GESTURE"
+[settings]
+interact.type = "GESTURE"
