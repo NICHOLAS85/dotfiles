@@ -108,7 +108,7 @@
 
 #urlbar-container
 {
-	max-height: 37px !important;
+	max-height: 36px !important;
 }
 
 #urlbar,
@@ -179,14 +179,15 @@
 	display: none !important;
 }
 
-#urlbar-input-container
+#urlbar-input-container,
+#searchbar
 {
-	width: 100% !important;
 	display: flex !important;
 	align-items: center !important;
 }
 
-.urlbar-input-box
+.urlbar-input-box,
+.searchbar-textbox
 {
 	flex: 1 !important;
 }
@@ -233,7 +234,7 @@
 #searchbar-container
 {
 	overflow: visible !important;
-	padding: 0 5px !important;
+	padding: 0 6px !important;
 }
 
 .searchbar-textbox
@@ -243,14 +244,13 @@
 	min-height: auto !important;
 }
 
-#urlbar[pageproxystate=valid] > #identity-box:not(.no-hover) > #identity-icon
+#identity-icon
 {
 	fill-opacity: 1 !important;
 }
 
 #identity-icon-labels
 {
-	transform: translateY(-3px) !important;
 	color: inherit !important;
 	opacity: 1 !important;
 	padding: 0 !important;
@@ -258,22 +258,32 @@
 	display: none !important;
 }
 
-#identity-box,
-#urlbar-display-box
+/* fix text alignment */
+#identity-icon-label,
+#urlbar-label-box
+{
+	transform: translateY(-1px) !important;
+}
+
+#identity-box
 {
 	display: flex !important;
 	position: relative !important;
 }
 
+#urlbar-label-box
+{
+	border: 0 !important;
+	padding: 0 !important;
+}
+
 /* separator */
-#urlbar[pageproxystate=valid]:not([open]) #identity-box:-moz-any(.notSecureText, .verifiedIdentity, .chromeUI, .extensionPage, .certUserOverridden)::after,
-#urlbar-display-box::after
+#identity-icon-labels::after
 {
 	content: "" !important;
-	display: -moz-box !important;
+	display: block !important;
 	position: absolute !important;
-	top: 4px !important;
-	bottom: 4px !important;
+	height: 16px !important;
 	right: 0 !important;
 	background: #9d9e9f !important;
 	width: 1px !important;
@@ -281,7 +291,7 @@
 }
 
 #urlbar[pageproxystate=valid]:not([open]) #identity-box:-moz-any(.notSecureText, .verifiedIdentity, .chromeUI, .extensionPage, .certUserOverridden),
-#urlbar-display-box
+#urlbar-label-box
 {
 	margin-inline-end: 8px !important;
 }
@@ -292,8 +302,7 @@
 }
 
 
-#urlbar[pageproxystate=valid] #identity-box:-moz-any(.notSecureText, .verifiedIdentity, .chromeUI, .extensionPage, .certUserOverridden):hover:not(.no-hover)::after,
-#urlbar[pageproxystate=valid] #identity-box:-moz-any(.notSecureText, .verifiedIdentity, .chromeUI, .extensionPage, .certUserOverridden)[open]::after
+#urlbar[pageproxystate=valid] #identity-box:-moz-any(.notSecureText, .verifiedIdentity, .chromeUI, .extensionPage, .certUserOverridden):not(.no-hover):-moz-any([open], :hover) #identity-icon-labels::after
 {
 	opacity: 0 !important;
 }
@@ -335,6 +344,22 @@
 	background: 0 !important;
 	box-shadow: none !important;
 	margin: 0 !important;
+	-moz-appearance: none !important;
+}
+
+.searchbar-search-icon
+{
+	margin: 0 !important;
+	fill-opacity: 1 !important;
+}
+
+.searchbar-search-icon-overlay
+{
+	margin-inline-start: -11px !important;
+	margin-inline-end: 0 !important;
+	
+	/* not really useful anyway */
+	display: none !important;
 }
 
 #page-action-buttons > #pageActionSeparator,
@@ -354,6 +379,7 @@
 }
 
 .urlbar-icon,
+.searchbar-search-button,
 #identity-box,
 #tracking-protection-icon-container
 {
@@ -367,6 +393,12 @@
 	transition: background-color .2s var(--ease-basic) !important;
 	background: 0 !important;
 	background-color: transparent !important;
+}
+
+#tracking-protection-icon-box
+{
+	position: relative !important;
+	display: block !important;
 }
 
 #identity-box #notification-popup-box
@@ -386,6 +418,7 @@
 }
 
 .urlbar-icon:hover:not([disabled]),
+.searchbar-search-button:hover,
 #identity-box:hover:not(.no-hover),
 #tracking-protection-icon-container:hover
 {
@@ -394,6 +427,7 @@
 
 .urlbar-icon:hover:active:not([disabled]),
 .urlbar-icon[open],
+.searchbar-search-button:hover:active,
 #identity-box:hover:active:not(.no-hover),
 #identity-box[open]:not(.no-hover),
 #tracking-protection-icon-container[open]
@@ -504,15 +538,31 @@
 }
 
 #urlbar[open] #urlbar-go-button,
-#searchbar[open] #search-go-button
+#searchbar[open] #search-go-button,
+/* < 71 */
+#urlbar[open] .urlbar-go-button,
+#searchbar[open] .search-go-button
 {
 	height: 32px !important;
 }
 
 #urlbar-go-button,
-#search-go-button
+#search-go-button,
+/* < 71 */
+.urlbar-go-button,
+.search-go-button
 {
 	list-style-image: url(go.svg) !important;
+}
+
+.search-go-container
+{
+	display: flex !important;
+}
+
+#searchbar .textbox-input
+{
+	padding: 0 !important;
 }
 
 /* icons 1x */
@@ -567,8 +617,9 @@
 		transform: translate(.5px, .5px) !important;
 	}
 	
-	#identity-icon-labels,
-	.urlbar-input,
+	#urlbar-input,
+	#searchbar-input,
+	/* < 71 */
 	.searchbar-textbox
 	{
 		transform: translateY(-.5px) !important;
