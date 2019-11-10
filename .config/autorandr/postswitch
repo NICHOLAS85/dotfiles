@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-xinput map-to-output "Wacom HID 4833 Finger touch" eDP1
+xinput map-to-output "Wacom HID 4833 Finger touch" eDP-1
 
 if [[ $AUTORANDR_CURRENT_PROFILE = "docked" ]]; then
     kwriteconfig5 --file kwinrc --group Windows --key ClickRaise "false"
