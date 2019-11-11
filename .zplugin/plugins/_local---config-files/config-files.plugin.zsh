@@ -16,7 +16,13 @@ autoload -Uz $fpath[1]/*(.:t)
 #       Variables       #
 #########################
 
+pchf="/${0:h}/patches"
+thmf="/${0:h}/themes"
+
 HISTFILE="${HOME}/.histfile"
+
+# Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
+UPDATELOCAL_GITDIR="${HOME}/github/Built"
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
@@ -32,22 +38,19 @@ AUTO_LS_NEWLINE=false
 export EDITOR=micro
 
 FZ_HISTORY_CD_CMD=zshz
+ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
 
 FZF_DEFAULT_COMMAND="fd --type file --color=always"
 FZF_DEFAULT_OPTS="--ansi"
 
 ZSHZ_EXCLUDE_DIRS=( / )
 
-forgit_ignore="/dev/null"
-ZSHZ_CMD="/dev/null"
+forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
 
-rm_opts=(-I -v)
-
-# Directory checked for locally built projects (plugin updatelocal)
-UPDATELOCAL_GITDIR="${HOME}/github/Built"
+export rm_opts=(-I -v)
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
 dotsvar=( gtkrc-2.0 kwinrulesrc \.\./ \.config/gtk-3\.0/settings\.ini )
