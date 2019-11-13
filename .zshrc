@@ -35,58 +35,61 @@ zct() { -zplg-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1}
 ##################
 
 zt for \
-    pick'async.zsh' light-mode mafredri/zsh-async \
-\
+    pick'async.zsh' light-mode \
+        mafredri/zsh-async \
     if'[[ ${MYPROMPT=spaceship-async} = "spaceship-async" ]]' \
     compile'{lib/*,sections/*,tests/*.zsh}' pick'spaceship.zsh' silent \
     atload'!source "../_local---config-files/themes/${MYPROMPT}-post"' \
-    maximbaz/spaceship-prompt \
-\
-    blockf nocompletions light-mode _local/config-files
+        maximbaz/spaceship-prompt \
+    blockf nocompletions light-mode \
+        _local/config-files
 
 ###########
 # Annexes #
 ###########
 
-zt light-mode for zplugin/z-a-patch-dl
+zt light-mode for \
+        zplugin/z-a-patch-dl
 
 ############################
 # Conditional themes block #
 ############################
 
 zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' for \
-    if'zct spaceship-async' maximbaz/spaceship-prompt \
-\
-    if'zct spaceship' denysdovhan/spaceship-prompt
+    if'zct spaceship-async' \
+        maximbaz/spaceship-prompt \
+    if'zct spaceship' \
+        denysdovhan/spaceship-prompt
 
-zt  if'zct dolphin' pick"pure.zsh" patch"$pchf/pure.patch" nocompile'!' reset-prompt for sindresorhus/pure
+zt pick"pure.zsh" patch"$pchf/pure.patch" nocompile'!' reset reset-prompt for \
+    if'zct dolphin' \
+        sindresorhus/pure
 
 # Plugins
 
-zt for OMZ::lib/history.zsh
+zt for  OMZ::lib/history.zsh
 
 ##################
 # Wait'0a' block #
 ##################
 
 zt 0a light-mode for \
-    pick'fz.sh' changyuheng/fz \
-\
-    OMZ::lib/completion.zsh \
-\
-    has'systemctl' OMZ::plugins/systemd/systemd.plugin.zsh \
-\
-    make sei40kr/zsh-fast-alias-tips \
-\
-    OMZ::plugins/sudo/sudo.plugin.zsh \
-\
-    atload'unalias help; unalias rm' OMZ::plugins/common-aliases/common-aliases.plugin.zsh \
-\
-    as'program' pick'bin/git-dsf' zdharma/zsh-diff-so-fancy \
-\
-    blockf atpull'zplugin creinstall -q "$PWD"' zsh-users/zsh-completions \
-\
-    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' zsh-users/zsh-autosuggestions
+    pick'fz.sh' \
+        changyuheng/fz \
+        OMZ::lib/completion.zsh \
+    has'systemctl' patch"$pchf/systemd.patch" nocompile'!' \
+        OMZ::plugins/systemd/systemd.plugin.zsh \
+    make \
+        sei40kr/zsh-fast-alias-tips \
+        OMZ::plugins/sudo/sudo.plugin.zsh \
+    atload'unalias help; unalias rm' \
+        OMZ::plugins/common-aliases/common-aliases.plugin.zsh \
+    as'program' pick'bin/git-dsf' \
+        zdharma/zsh-diff-so-fancy \
+    blockf atpull'zplugin creinstall -q "$PWD"' \
+        zsh-users/zsh-completions \
+    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
+        zsh-users/zsh-autosuggestions
 
 ##################
 # Wait'0b' block #
@@ -96,53 +99,52 @@ zt 0b light-mode for \
     patch"$pchf/LS_COLORS.patch" atclone"dircolors -b LS_COLORS > c.zsh" \
     atpull'%atclone' pick"c.zsh" nocompile'!' reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”' \
-    trapd00r/LS_COLORS \
-\
-    compile'{hsmw-*,test/*}' zdharma/history-search-multi-word \
-\
+        trapd00r/LS_COLORS \
+    compile'{hsmw-*,test/*}' \
+        zdharma/history-search-multi-word \
     as'program' pick'rm-trash/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' \
     patch"$pchf/rm-trash.patch" compile'rm-trash/rm-trash' nocompile'!' reset \
-    nateshmbhat/rm-trash \
-\
-    from"gh-r" as"program" pick'*/micro' bpick'*linux64*' reset zyedidia/micro \
-\
-    has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' laggardkernel/zsh-thefuck \
-\
-    OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
-\
-    pick'autopair.zsh' nocompletions hlissner/zsh-autopair \
-\
-    pick'manydots-magic' compile'manydots-magic' knu/zsh-manydots-magic \
-\
-    atinit'_zpcompinit_fast; zpcdreplay' zdharma/fast-syntax-highlighting \
-\
+        nateshmbhat/rm-trash \
+    from"gh-r" as"program" pick'*/micro' bpick'*linux64*' reset \
+        zyedidia/micro \
+    has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' \
+        laggardkernel/zsh-thefuck \
+        OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
+    pick'autopair.zsh' nocompletions \
+        hlissner/zsh-autopair \
+    pick'manydots-magic' compile'manydots-magic' \
+        knu/zsh-manydots-magic \
+    atinit'_zpcompinit_fast; zpcdreplay' \
+        zdharma/fast-syntax-highlighting \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down' \
-    zsh-users/zsh-history-substring-search
+        zsh-users/zsh-history-substring-search
 
-zt 0b if'[[ ${isdolphin} != true ]]' for desyncr/auto-ls
+zt 0b if'[[ ${isdolphin} != true ]]' for \
+        desyncr/auto-ls
 
-zt 0c id-as'Cleanup' atinit'unset -f zct zt' as'null' nocd light-mode for zdharma/null 
+zt 0c id-as'Cleanup' atinit'unset -f zct zt' as'null' nocd light-mode for \
+        zdharma/null 
 
 ######################
 # Trigger-load block #
 ######################
 
 zt light-mode for \
-    trigger-load'!x' OMZ::plugins/extract/extract.plugin.zsh \
-\
-    trigger-load'!man' ael-code/zsh-colored-man-pages \
-\
-    trigger-load'!git' paulirish/git-open \
-\
-    trigger-load'!ga;!gcf;!gclean;!gd;!gd;!glo;!grh;!gss' wfxr/forgit \
-\
-    trigger-load'!git-ignore' pick'init.zsh' blockf laggardkernel/git-ignore \
-\
-    trigger-load'!zshz' blockf agkozak/zsh-z \
-\
-    trigger-load'!updatelocal' blockf NICHOLAS85/updatelocal \
-\
+    trigger-load'!x' \
+        OMZ::plugins/extract/extract.plugin.zsh \
+    trigger-load'!man' \
+        ael-code/zsh-colored-man-pages \
+    trigger-load'!git' \
+        paulirish/git-open \
+    trigger-load'!ga;!gcf;!gclean;!gd;!gd;!glo;!grh;!gss' \
+        wfxr/forgit \
+    trigger-load'!git-ignore' pick'init.zsh' blockf \
+        laggardkernel/git-ignore \
+    trigger-load'!zshz' blockf \
+        agkozak/zsh-z \
+    trigger-load'!updatelocal' blockf \
+        NICHOLAS85/updatelocal \
     trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' atload'zplugin creinstall -q "$PWD"' \
-    RobSis/zsh-completion-generator
+        RobSis/zsh-completion-generator
 
 $isdolphin || dotscheck

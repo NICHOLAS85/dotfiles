@@ -41,7 +41,6 @@ FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
 
 FZF_DEFAULT_COMMAND="fd --type file --color=always"
-FZF_DEFAULT_OPTS="--ansi"
 
 ZSHZ_EXCLUDE_DIRS=( / )
 
@@ -97,8 +96,6 @@ alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 alias g='git'
 alias gi="git-ignore"
 alias open='xdg-open'
-
-
 alias -- -='cd -'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'

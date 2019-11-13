@@ -53,5 +53,5 @@ do
         return
     fi
 done
-noglob _do_sudo "${@}"
+command sudo "${@}"
 unset -f _do_sudo
