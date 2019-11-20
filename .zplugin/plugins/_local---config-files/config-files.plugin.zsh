@@ -16,10 +16,12 @@ autoload -Uz $fpath[1]/*(.:t)
 #       Variables       #
 #########################
 
-pchf="/${0:h}/patches"
-thmf="/${0:h}/themes"
-
+pchf="${0:h}/patches"
+thmf="${0:h}/themes"
+GENCOMPL_FPATH="${0:h}/completions"
 HISTFILE="${HOME}/.histfile"
+WD_CONFIG="${ZPFX}/warprc"
+ZSHZ_DATA="${ZPFX}/z"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/Built"
@@ -29,27 +31,21 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
+FZF_DEFAULT_COMMAND="fd --type file --color=always"
 colorlscommand=(lsd --group-dirs first)
 colorlsgitcommand=(colorls --sd --gs -A)
 
 AUTO_LS_COMMANDS=(colorls)
 AUTO_LS_NEWLINE=false
 
-export EDITOR=micro
+ZSHZ_EXCLUDE_DIRS=( / )
 
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
-
-FZF_DEFAULT_COMMAND="fd --type file --color=always"
-
-ZSHZ_EXCLUDE_DIRS=( / )
-
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
-WD_CONFIG="${ZPFX}/warprc"
-ZSHZ_DATA="${ZPFX}/z"
-
 export rm_opts=(-I -v)
+export EDITOR=micro
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
 dotsvar=( gtkrc-2.0 kwinrulesrc \.\./ \.config/gtk-3\.0/settings\.ini )

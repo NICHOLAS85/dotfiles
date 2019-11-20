@@ -21,9 +21,9 @@ if [[ ! -d "${ZPLGM[PLUGINS_DIR]}/_local---config-files" ]]; then
 fi
 
 # Functions to make configuration less verbose
-# zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'1' and lucid
+# zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
 # zct(): First argument provides $MYPROMPT value used in load'' and unload'' ices. Sources a config file with tracking for easy unloading using $MYPROMPT value. Small hack to function in for-syntax
-zt()  { zplugin depth'1' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
+zt()  { zplugin depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
 zct() { -zplg-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" \
         atinit'[ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
         atload'![ -f "${thmf}/${MYPROMPT}-post" ] && source "${thmf}/${MYPROMPT}-post"'; \
@@ -41,7 +41,7 @@ zt for \
     compile'{lib/*,sections/*,tests/*.zsh}' pick'spaceship.zsh' silent \
     atload'!source "../_local---config-files/themes/${MYPROMPT}-post"' \
         maximbaz/spaceship-prompt \
-    blockf nocompletions light-mode \
+    blockf light-mode \
         _local/config-files
 
 ###########
@@ -49,7 +49,8 @@ zt for \
 ###########
 
 zt light-mode for \
-        zplugin/z-a-patch-dl
+        zplugin/z-a-patch-dl \
+        zplugin/z-a-bin-gem-node
 
 ############################
 # Conditional themes block #
@@ -79,13 +80,11 @@ zt 0a light-mode for \
         OMZ::lib/completion.zsh \
     has'systemctl' patch"$pchf/systemd.patch" nocompile'!' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
-    make \
+    ver \
         sei40kr/zsh-fast-alias-tips \
         OMZ::plugins/sudo/sudo.plugin.zsh \
-    atload'unalias help; unalias rm' \
+    atload'unalias help; unalias rm; unalias fd' \
         OMZ::plugins/common-aliases/common-aliases.plugin.zsh \
-    as'program' pick'bin/git-dsf' \
-        zdharma/zsh-diff-so-fancy \
     blockf atpull'zplugin creinstall -q "$PWD"' \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
@@ -96,17 +95,12 @@ zt 0a light-mode for \
 ##################
 
 zt 0b light-mode for \
-    patch"$pchf/LS_COLORS.patch" atclone"dircolors -b LS_COLORS > c.zsh" \
-    atpull'%atclone' pick"c.zsh" nocompile'!' reset \
+    atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' \
+    patch"$pchf/LS_COLORS.patch" pick"c.zsh" nocompile'!' reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”' \
         trapd00r/LS_COLORS \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
-    as'program' pick'rm-trash/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' \
-    patch"$pchf/rm-trash.patch" compile'rm-trash/rm-trash' nocompile'!' reset \
-        nateshmbhat/rm-trash \
-    from"gh-r" as"program" pick'*/micro' bpick'*linux64*' reset \
-        zyedidia/micro \
     has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' \
         laggardkernel/zsh-thefuck \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
@@ -114,16 +108,41 @@ zt 0b light-mode for \
         hlissner/zsh-autopair \
     pick'manydots-magic' compile'manydots-magic' \
         knu/zsh-manydots-magic \
-    atinit'_zpcompinit_fast; zpcdreplay' \
+    atinit'zpcompinit_fast; zpcdreplay' \
         zdharma/fast-syntax-highlighting \
-    atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down' \
+    atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
+    bindkey "$terminfo[kcud1]" history-substring-search-down' \
         zsh-users/zsh-history-substring-search
 
 zt 0b if'[[ ${isdolphin} != true ]]' for \
         desyncr/auto-ls
 
-zt 0c id-as'Cleanup' atinit'unset -f zct zt' as'null' nocd light-mode for \
-        zdharma/null 
+##################
+# Wait'0c' block #
+##################
+
+zt 0c light-mode pick'/dev/null' for \
+    sbin'fd*/fd; fd*/fd -> fdfind' from"gh-r" \
+         @sharkdp/fd \
+    sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"' \
+        laggardkernel/git-ignore
+
+zt 0c light-mode as'null' for \
+    sbin"bin/git-dsf;bin/diff-so-fancy" \
+        zdharma/zsh-diff-so-fancy \
+    sbin \
+        paulirish/git-open \
+    sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset'\rm -rf ._backup' \
+        zyedidia/micro \
+    sbin'rm-trash/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' \
+    patch"$pchf/rm-trash.patch" compile'rm-trash/rm-trash' nocompile'!' reset \
+        nateshmbhat/rm-trash \
+    sbin from'gh-r' \
+        junegunn/fzf-bin \
+    sbin'def-matcher' from'gh-r' \
+        sei40kr/fast-alias-tips-bin \
+    id-as'Cleanup' atinit'unset -f zct zt' nocd \
+        zdharma/null
 
 ######################
 # Trigger-load block #
@@ -134,17 +153,16 @@ zt light-mode for \
         OMZ::plugins/extract/extract.plugin.zsh \
     trigger-load'!man' \
         ael-code/zsh-colored-man-pages \
-    trigger-load'!git' \
-        paulirish/git-open \
     trigger-load'!ga;!gcf;!gclean;!gd;!gd;!glo;!grh;!gss' \
         wfxr/forgit \
-    trigger-load'!git-ignore' pick'init.zsh' blockf \
-        laggardkernel/git-ignore \
     trigger-load'!zshz' blockf \
         agkozak/zsh-z \
     trigger-load'!updatelocal' blockf \
         NICHOLAS85/updatelocal \
-    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' atload'zplugin creinstall -q "$PWD"' \
+    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' \
+    atload'zplugin creinstall -q _local/config-files' blockf \
         RobSis/zsh-completion-generator
 
 $isdolphin || dotscheck
+cd "$(cat $TMPDIR/olddir 2>/dev/null)"
+trap @shexit EXIT
