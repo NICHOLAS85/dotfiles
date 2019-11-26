@@ -96,7 +96,7 @@ menupopup menuseparator
 	background: currentColor !important;
 	opacity: .12 !important;
 }
-
+/*
 menupopup menuitem,
 menupopup menu,
 .autocomplete-richlistitem
@@ -107,6 +107,18 @@ menupopup menu,
 	background: 0 !important;
 	color: inherit !important;
 	fill-opacity: initial !important;
+} Smaller popup below*/
+
+menupopup menuitem,
+menupopup menu,
+.autocomplete-richlistitem
+{
+    /*height: 32px !important;*/
+    padding: 4px 16px !important;
+    border: 0 !important;
+    background: 0 !important;
+    color: inherit !important;
+    fill-opacity: initial !important;
 }
 
 menupopup menuitem:hover:not([disabled=true]),
