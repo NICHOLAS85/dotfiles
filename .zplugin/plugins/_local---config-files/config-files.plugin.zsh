@@ -31,7 +31,21 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
-FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export rm_opts=(-I -v)
+export EDITOR=micro
+FZF_DEFAULT_OPTS="
+--border
+--height 80%
+--extended
+--ansi
+--reverse
+--cycle
+--bind ctrl-s:toggle-sort
+--bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
+--preview \"(bat --color=always {} || ls -l --color=always {}) 2>/dev/null | head -200\"
+--preview-window right:50%:hidden
+"
+FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
 colorlscommand=(lsd --group-dirs first)
 colorlsgitcommand=(colorls --sd --gs -A)
 
@@ -43,9 +57,6 @@ ZSHZ_EXCLUDE_DIRS=( / )
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
-
-export rm_opts=(-I -v)
-export EDITOR=micro
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
 dotsvar=( gtkrc-2.0 kwinrulesrc \.\./ \.config/gtk-3\.0/settings\.ini )

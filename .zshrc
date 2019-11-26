@@ -80,7 +80,6 @@ zt 0a light-mode for \
         OMZ::lib/completion.zsh \
     has'systemctl' patch"$pchf/systemd.patch" nocompile'!' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
-    ver \
         sei40kr/zsh-fast-alias-tips \
         OMZ::plugins/sudo/sudo.plugin.zsh \
     atload'unalias help; unalias rm; unalias fd' \
@@ -134,12 +133,12 @@ zt 0c light-mode as'null' for \
         paulirish/git-open \
     sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset'\rm -rf ._backup' \
         zyedidia/micro \
-    sbin'rm-trash/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' \
-    patch"$pchf/rm-trash.patch" compile'rm-trash/rm-trash' nocompile'!' reset \
+    sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
+    patch"$pchf/rm-trash.patch" \
         nateshmbhat/rm-trash \
     sbin from'gh-r' \
         junegunn/fzf-bin \
-    sbin'def-matcher' from'gh-r' \
+    sbin from'gh-r' \
         sei40kr/fast-alias-tips-bin \
     id-as'Cleanup' atinit'unset -f zct zt' nocd \
         zdharma/null
@@ -153,16 +152,16 @@ zt light-mode for \
         OMZ::plugins/extract/extract.plugin.zsh \
     trigger-load'!man' \
         ael-code/zsh-colored-man-pages \
-    trigger-load'!ga;!gcf;!gclean;!gd;!gd;!glo;!grh;!gss' \
+    trigger-load'!ga;!gcf;!gclean;!gd;!glo;!grh;!gss' \
         wfxr/forgit \
     trigger-load'!zshz' blockf \
         agkozak/zsh-z \
     trigger-load'!updatelocal' blockf \
         NICHOLAS85/updatelocal \
-    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' \
-    atload'zplugin creinstall -q _local/config-files' blockf \
+    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' blockf \
+    atload'alias gencomp="zpl lucid nocd as\"null\" wait\"1\" atload\"zpl creinstall -q _local/config-files; zpcompinit\" for /dev/null; gencomp"' \
         RobSis/zsh-completion-generator
 
 $isdolphin || dotscheck
-cd "$(cat $TMPDIR/olddir 2>/dev/null)"
+[[ $PWD = ~ ]] && { cd "$(cat $TMPDIR/olddir)" } 2>/dev/null || true
 trap @shexit EXIT
