@@ -6,7 +6,6 @@ After=network-online.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/rclone mount \
-        --allow-non-empty \
         --vfs-cache-mode full \
         --no-modtime \
         --stats=0 \
