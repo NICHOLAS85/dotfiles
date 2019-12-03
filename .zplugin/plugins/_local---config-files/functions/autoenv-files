@@ -1,0 +1,1 @@
+kate $({ sed -e 's/:\(.*\):/\1/' $AUTOENV_AUTH_FILE } | sed 's/:.*//')

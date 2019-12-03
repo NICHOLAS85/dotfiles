@@ -5,7 +5,7 @@ if [ ! -d "${HOME}/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
 fi
 
-module_path+=( "/home/nicholas/.zplugin/bin/zmodules/Src" )
+module_path+=( "${HOME}/.zplugin/bin/zmodules/Src" )
 zmodload zdharma/zplugin
 
 ### Added by Zplugin's installer
@@ -107,6 +107,8 @@ zt 0b light-mode for \
         hlissner/zsh-autopair \
     pick'manydots-magic' compile'manydots-magic' \
         knu/zsh-manydots-magic \
+    pick'autoenv.zsh' \
+        Tarrasch/zsh-autoenv \
     atinit'zpcompinit_fast; zpcdreplay' \
         zdharma/fast-syntax-highlighting \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
@@ -162,6 +164,8 @@ zt light-mode for \
     atload'alias gencomp="zpl lucid nocd as\"null\" wait\"1\" atload\"zpl creinstall -q _local/config-files; zpcompinit\" for /dev/null; gencomp"' \
         RobSis/zsh-completion-generator
 
-$isdolphin || dotscheck
+$isdolphin || {
+dotscheck
 [[ $PWD = ~ ]] && { cd "$(cat $TMPDIR/olddir)" } 2>/dev/null || true
 trap @shexit EXIT
+}

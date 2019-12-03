@@ -48,7 +48,7 @@ do
         ((++pos))
         first=("${first[@]}" "$arg")
     else
-        noglob _do_sudo ${first[@]} env PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" ${@:$pos}
+        noglob _do_sudo ${first[@]} env PATH="$ZPFX/bin:/bedrock/cross/pin/bin:/bedrock/bin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/snap/bin:/bedrock/cross/bin" ${@:$pos}
         unset -f _do_sudo
         return
     fi
