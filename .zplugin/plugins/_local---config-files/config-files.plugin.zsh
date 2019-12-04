@@ -27,8 +27,8 @@ AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/Built"
 UL_Acond='! $isdolphin' # Condition checked before running UL_Acomm
-UL_Acomm='chpwd_functions[$chpwd_functions[(i)auto-ls]]=()' # Command run if UL_Acond true
-UL_Bcomm="chpwd_functions+=(auto-ls)" # Command run after updatelocal finishes if UL_Acond was true
+UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acond true
+UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" || print -n "No yay updates\n\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
@@ -63,7 +63,7 @@ ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
-dotsvar=( gtkrc-2.0 kwinrulesrc \.\./ \.config/gtk-3\.0/settings\.ini )
+dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' \.config/gtk-3\.0/settings\.ini )
 
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
@@ -101,7 +101,7 @@ alias zshconf="kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/
 alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}* &!"
 
 # dot file management
-alias dots=' /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
 
 alias g='git'
