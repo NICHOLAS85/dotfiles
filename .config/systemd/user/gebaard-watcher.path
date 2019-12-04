@@ -1,0 +1,5 @@
+[Path]
+PathChanged=%h/.config/gebaar/gebaard.toml
+
+[Install]
+WantedBy=default.target

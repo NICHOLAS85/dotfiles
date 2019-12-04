@@ -1,0 +1,9 @@
+[Unit]
+Description=Gebaar restarter
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user restart gebaard.service
+
+[Install]
+WantedBy=default.target
