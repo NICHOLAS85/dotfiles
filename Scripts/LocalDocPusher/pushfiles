@@ -2,21 +2,21 @@
 
 trap 'exit' SIGINT
 
-excludefile=$HOME/Scripts/LocalDocPusher/dontpush
+excludefile="$HOME/Scripts/LocalDocPusher/dontpush"
 pushfiles(){
     rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/
     read -p "Press enter to Push";
     rsync -auv --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/
 }
 
-if [[ $(tty) =~ "not a tty" ]]
+if [ $(tty) = "not a tty" ]
 then
     # Not running on terminal
-    konsole -e bash "$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+    konsole -e bash "$(test -L "$0" && readlink "$0" || echo "$0")"
 else
     # Running on terminal
     status=$(systemctl --user show -p SubState --value onedrive)
-    if [[ $status = "running" ]]; then
+    if [ $status = "running" ]; then
         pushfiles
     else
         echo "onedrive.service is $status"

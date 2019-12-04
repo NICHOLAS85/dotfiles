@@ -21,6 +21,6 @@ pkill original_kscree 2>/dev/null
 ) &
 
 # Lock
-/lib/x86_64-linux-gnu/libexec/original_kscreenlocker_greet $@
+/bedrock/strata/debian/lib/x86_64-linux-gnu/libexec/original_kscreenlocker_greet $@
 
 # Do stuff after unlocking...
