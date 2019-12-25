@@ -82,8 +82,6 @@ zt 0a light-mode for \
         OMZ::plugins/systemd/systemd.plugin.zsh \
         sei40kr/zsh-fast-alias-tips \
         OMZ::plugins/sudo/sudo.plugin.zsh \
-    atload'unalias help; unalias rm; unalias fd' \
-        OMZ::plugins/common-aliases/common-aliases.plugin.zsh \
     blockf atpull'zplugin creinstall -q "$PWD"' \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
@@ -133,7 +131,7 @@ zt 0c light-mode as'null' for \
         zdharma/zsh-diff-so-fancy \
     sbin \
         paulirish/git-open \
-    sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset'\rm -rf ._backup' \
+    sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset \
         zyedidia/micro \
     sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
     patch"$pchf/rm-trash.patch" \

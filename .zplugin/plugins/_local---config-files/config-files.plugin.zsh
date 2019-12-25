@@ -28,13 +28,15 @@ AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 UPDATELOCAL_GITDIR="${HOME}/github/Built"
 UL_Acond='! $isdolphin' # Condition checked before running UL_Acomm
 UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acond true
-UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" || print -n "No yay updates\n\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
+UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
+LD_PRELOAD=/bedrock/strata/arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
+export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
 FZF_DEFAULT_OPTS="
