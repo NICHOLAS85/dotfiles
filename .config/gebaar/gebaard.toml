@@ -46,4 +46,5 @@ tablet = "screenrotator & onboard &"
 
 [settings]
 interact.type = "GESTURE"
+pinch.threshold = 0.2
 gesture.threshold = 0.7
