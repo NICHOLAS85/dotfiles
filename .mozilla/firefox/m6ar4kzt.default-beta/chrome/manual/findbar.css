@@ -122,3 +122,7 @@ window[lwtheme="true"] findbar .findbar-button[checked="true"] {
 window[lwtheme="true"] findbar .findbar-find-status, window[lwtheme="true"] findbar .found-matches {
 	color: var(--lwt-text-color) !important;
 }
+
+findbar .findbar-find-status {
+  display: none !important;
+}
