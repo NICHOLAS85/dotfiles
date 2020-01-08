@@ -22,8 +22,9 @@ menupopup
 	margin: -19px -14px 0 !important;
 }
 
-/* needs to align with textbox but can't overlap it */
-panel[type="autocomplete-richlistbox"]
+/* needs to align with textbox/bookmark-button but can't overlap it */
+panel[type="autocomplete-richlistbox"],
+.bookmark-item:not(menu) > menupopup[placespopup]
 {
 	padding: 1px 14px 18px !important;
 	margin: 0 -14px 0 !important;
@@ -96,29 +97,17 @@ menupopup menuseparator
 	background: currentColor !important;
 	opacity: .12 !important;
 }
-/*
-menupopup menuitem,
-menupopup menu,
-.autocomplete-richlistitem
-{
-	height: 32px !important;
-	padding: 0 16px !important;
-	border: 0 !important;
-	background: 0 !important;
-	color: inherit !important;
-	fill-opacity: initial !important;
-} Smaller popup below*/
 
 menupopup menuitem,
 menupopup menu,
 .autocomplete-richlistitem
 {
-    /*height: 32px !important;*/
-    padding: 4px 16px !important;
-    border: 0 !important;
-    background: 0 !important;
-    color: inherit !important;
-    fill-opacity: initial !important;
+	/*height: 32px !important;*/
+        padding: 4px 16px !important;
+	border: 0 !important;
+	background: 0 !important;
+	color: inherit !important;
+	fill-opacity: initial !important;
 }
 
 menupopup menuitem:hover:not([disabled=true]),
