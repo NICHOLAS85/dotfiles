@@ -35,7 +35,10 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
-LD_PRELOAD=/bedrock/strata/arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
+(){ local stratum strata=( arch bedrock debian hijacked init )
+for stratum in ${strata}; do hash -d "${stratum}"="/bedrock/strata/${stratum}"; done }
+
+LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
@@ -106,6 +109,7 @@ alias zshconfatom="atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/the
 alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
 
+alias t='tail -f'
 alias g='git'
 alias gi="git-ignore"
 alias open='xdg-open'
