@@ -26,6 +26,7 @@
     "matchbraceleft": true,
     "mkparents": false,
     "mouse": true,
+    "paste": false,
     "pluginchannels": [
         "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
     ],
@@ -43,6 +44,7 @@
     "softwrap": true,
     "splitbottom": true,
     "splitright": true,
+    "status": true,
     "statusformatl": "$(filename) $(modified)($(line),$(col)) | ft:$(opt:filetype) | $(opt:fileformat) | $(opt:encoding)",
     "statusformatr": "$(bind:ToggleKeyMenu): bindings, $(bind:ToggleHelp): help",
     "statusline": true,

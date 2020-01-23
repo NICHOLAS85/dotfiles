@@ -38,6 +38,19 @@ b:6
 
 "WINDOW2=$(xdotool getwindowfocus); eval $(xdotool getmouselocation --shell) && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW && xdotool key alt+Right && [[ $WINDOW2 = $WINDOW ]] || xdotool windowfocus $WINDOW2"
 b:7
+
+#"kdialog --title Dynamic-Wallpaper --passivepopup oneclick 4"
+#    m:0x40 + c:198
+#    Mod4 + XF86AudioMicMute
+
+#"kdialog --title Dynamic-Wallpaper --passivepopup hold 4"
+#    m:0x40 + c:196
+#    Mod4 + XF86Launch9
+    
+#"kdialog --title Dynamic-Wallpaper --passivepopup twoclick 4"
+#    m:0x40 + c:197
+#    Mod4 + NoSymbol
+    
 #------------------------------------------------------------------
 
 # Examples of commands:
