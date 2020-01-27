@@ -19,6 +19,7 @@ module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
 zmodload zdharma/zplugin &>/dev/null
 
 if [[ ! -d "${ZINIT[PLUGINS_DIR]}/_local---config-files" ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing local config-files…%f"
     curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
     tar -xz --strip=3 dotfiles-xps_13_9365/.zinit/plugins/_local---config-files
     mv _local---config-files "${ZINIT[PLUGINS_DIR]}/"
@@ -41,10 +42,10 @@ zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1
 zt for \
     pick'async.zsh' light-mode \
         mafredri/zsh-async \
-    if'[[ ${MYPROMPT=spaceship-async} = "spaceship-async" ]]' \
+    if'[[ ${MYPROMPT=spaceship-async2} = "spaceship-async2" ]]' \
     compile'{lib/*,sections/*,tests/*.zsh}' pick'spaceship.zsh' silent \
-    atload'!source "../_local---config-files/themes/${MYPROMPT}-post"' \
-        maximbaz/spaceship-prompt \
+    atinit'source "../_local---config-files/themes/${MYPROMPT}-pre"' \
+        laggardkernel/spaceship-prompt \
     blockf light-mode \
         _local/config-files
 
@@ -52,7 +53,7 @@ zt for \
 # Annexes #
 ###########
 
-zt light-mode for \
+zt light-mode compile'*handler' for \
         zinit-zsh/z-a-patch-dl \
         zinit-zsh/z-a-bin-gem-node
 
@@ -64,7 +65,9 @@ zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' for \
     if'zct spaceship-async' \
         maximbaz/spaceship-prompt \
     if'zct spaceship' \
-        denysdovhan/spaceship-prompt
+        denysdovhan/spaceship-prompt \
+    if'zct spaceship-async2' \
+        laggardkernel/spaceship-prompt
 
 zt pick"pure.zsh" patch"$pchf/%PLUGIN%.patch" nocompile'!' reset reset-prompt for \
     if'zct dolphin' \
@@ -124,13 +127,16 @@ zt 0b if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" for \
 # Wait'0c' block #
 ##################
 
+zt 0c light-mode pack'bgn-binary' for \
+        junegunn/fzf
+
 zt 0c light-mode pick'/dev/null' for \
     sbin'fd*/fd; fd*/fd -> fdfind' from"gh-r" \
          @sharkdp/fd \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"' \
         laggardkernel/git-ignore
 
-zt 0c light-mode as'null' sbin for \
+zt 0c light-mode as'null'  for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
         paulirish/git-open \
@@ -139,9 +145,7 @@ zt 0c light-mode as'null' sbin for \
     sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
-    from'gh-r' \
-        junegunn/fzf-bin \
-    from'gh-r' \
+    sbin from'gh-r' \
         sei40kr/fast-alias-tips-bin \
     id-as'Cleanup' nocd atinit'unset -f zct zt' \
         zdharma/null
