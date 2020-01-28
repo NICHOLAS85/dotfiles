@@ -115,7 +115,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
-    atinit'zpcompinit_fast; zpcdreplay' \
+    atinit'zicompinit_fast; zicdreplay' \
         zdharma/fast-syntax-highlighting \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
     bindkey "$terminfo[kcud1]" history-substring-search-down' \
