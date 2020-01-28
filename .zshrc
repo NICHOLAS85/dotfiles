@@ -91,7 +91,8 @@ zt 0a light-mode for \
         OMZ::plugins/sudo/sudo.plugin.zsh \
     blockf atpull'zinit creinstall -q "$PWD"' \
         zsh-users/zsh-completions \
-    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
+    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start;
+    SPACESHIP_PROMPT_ADD_NEWLINE=true' \
         zsh-users/zsh-autosuggestions
 
 ##################
