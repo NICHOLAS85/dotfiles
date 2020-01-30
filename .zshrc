@@ -42,10 +42,10 @@ zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1
 zt for \
     pick'async.zsh' light-mode \
         mafredri/zsh-async \
-    if'[[ ${MYPROMPT=spaceship-async2} = "spaceship-async2" ]]' \
-    compile'{lib/*,sections/*,tests/*.zsh}' pick'spaceship.zsh' silent \
-    atinit'source "../_local---config-files/themes/${MYPROMPT}-pre"' \
-        laggardkernel/spaceship-prompt \
+    if'[[ ${MYPROMPT=spaceship-async2} = "spaceship-async2" ]]' pick'spacezsh.zsh' \
+    compile'{presets/^(*.zwc),lib/**/^(*.zwc),sections/^(*.zwc)}' \
+    atload'!source "../_local---config-files/themes/${MYPROMPT}-post"' silent \
+        laggardkernel/spacezsh-prompt \
     blockf light-mode \
         _local/config-files
 
@@ -66,8 +66,10 @@ zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' for \
         maximbaz/spaceship-prompt \
     if'zct spaceship' \
         denysdovhan/spaceship-prompt \
-    if'zct spaceship-async2' \
-        laggardkernel/spaceship-prompt
+
+zt pick'spacezsh.zsh' if'zct spaceship-async2' for \
+    compile'{presets/^(*.zwc),lib/**/^(*.zwc),sections/^(*.zwc)}' \
+        laggardkernel/spacezsh-prompt
 
 zt pick"pure.zsh" patch"$pchf/%PLUGIN%.patch" nocompile'!' reset reset-prompt for \
     if'zct dolphin' \
