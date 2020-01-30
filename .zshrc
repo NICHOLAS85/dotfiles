@@ -87,6 +87,8 @@ zt 0a light-mode for \
     pick'fz.sh' \
         changyuheng/fz \
         OMZ::lib/completion.zsh \
+    as'completion' mv'*.zsh -> _git' is-snippet \
+        https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh \
     has'systemctl' patch"$pchf/systemd.patch" nocompile'!' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
         sei40kr/zsh-fast-alias-tips \
