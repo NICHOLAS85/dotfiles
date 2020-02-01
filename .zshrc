@@ -125,7 +125,7 @@ zt 0b light-mode for \
     bindkey "$terminfo[kcud1]" history-substring-search-down' \
         zsh-users/zsh-history-substring-search
 
-zt 0b if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" for \
+zt 0b if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" nocompile'!' for \
         desyncr/auto-ls
 
 ##################
