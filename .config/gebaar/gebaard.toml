@@ -2,10 +2,10 @@
 fingers = 3
 #left_up = ""
 #right_up = ""
-up = "~/Scripts/gestures/presentview --up"
+up = "~/Scripts/ConvertibleLaptop/gestures/presentview --up"
 #left_down = ""
 #right_down = ""
-down = "~/Scripts/gestures/presentview --down"
+down = "~/Scripts/ConvertibleLaptop/gestures/presentview --down"
 left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
@@ -37,11 +37,11 @@ right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick
 
 [[command-pinch]]
 fingers = 2
-in = "~/Scripts/gestures/firefoxorbust"
+in = "~/Scripts/ConvertibleLaptop/gestures/firefoxorbust"
 out = "xdotool key ctrl+shift+t"
 
 [command-switch]
-laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/Scripts/tabletmode/landscape"
+laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/Scripts/ConvertibleLaptop/switch/landscape"
 tablet = "screenrotator & onboard &"
 
 [settings]

@@ -1,0 +1,32 @@
+#!/usr/bin/sh
+
+if [ $(cat /run/tlp/last_pwr) = 1 ]; then
+    CMode="BAT" # Current mode
+    NMode="ac"  # Next mode for tlp
+    NModec="AC"
+    state="off" # Next mode for kdialog text
+else
+    CMode="AC"
+    NMode="bat"
+    Nmodec="BAT"
+    state="on"
+fi
+if [ -e /run/tlp/manual_mode ]; then
+    AMode="start"
+fi
+        
+while true; do  # Loop makes sure password dialog appears every time a failed attempt occurs
+    if [ -z $dialog ] && ! sudo true || ! sudo -n true; then
+        password=$(kdialog --title "Toggle($CMode)" --password "${dialog:-Enter Password}")
+    fi
+    if [ $? = 0 ]; then # Checks if ok or cancel was selected
+        if echo "$password" | sudo -S tlp "${AMode:-$NMode}"; then
+            kdialog --title "TLP mode ${NModec}" --passivepopup "Power Savings $state" 3
+            break
+        else
+            dialog="Try Again"
+        fi
+    else
+        break
+    fi
+done
