@@ -35,13 +35,18 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
-(){ local stratum strata=( arch bedrock debian hijacked init )
-for stratum in ${strata}; do hash -d "${stratum}"="/bedrock/strata/${stratum}"; done }
+(){ local stratum strata=( /bedrock/strata/* )
+for stratum in ${${${strata:t}//local/}//init/}; do
+hash -d "${stratum}"="/bedrock/strata/${stratum}"
+alias "${stratum}"="strat ${stratum}"
+alias "r${stratum}"="strat -r ${stratum}"
+done }
 
 LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=true # etckeeper on bedrock
 FZF_DEFAULT_OPTS="
 --border
 --height 80%
@@ -61,7 +66,7 @@ colorlsgitcommand=(colorls --sd --gs -A)
 AUTO_LS_COMMANDS=(colorls)
 AUTO_LS_NEWLINE=false
 
-ZSHZ_EXCLUDE_DIRS=( / )
+#ZSHZ_EXCLUDE_DIRS=( / )
 
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
@@ -108,6 +113,8 @@ alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${
 # dot file management
 alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
+alias edots='command sudo etckeeper vcs'
+alias archedots='command sudo strat -r arch etckeeper vcs'
 
 alias t='tail -f'
 alias g='git'
