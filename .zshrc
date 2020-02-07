@@ -95,8 +95,7 @@ zt 0a light-mode for \
         OMZ::plugins/sudo/sudo.plugin.zsh \
     blockf atpull'zinit creinstall -q "$PWD"' \
         zsh-users/zsh-completions \
-    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start;
-    SPACESHIP_PROMPT_ADD_NEWLINE=true' \
+    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions
 
 ##################
@@ -152,7 +151,7 @@ zt 0c light-mode as'null'  for \
         nateshmbhat/rm-trash \
     sbin from'gh-r' \
         sei40kr/fast-alias-tips-bin \
-    id-as'Cleanup' nocd atinit'unset -f zct zt' \
+    id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true' \
         zdharma/null
 
 ######################

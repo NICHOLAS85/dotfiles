@@ -21,8 +21,3 @@
        # Shortcut to reduce the number of empty lines appearing
        # when pressing Enter
        echo && zle redisplay
-@@ -71,3 +72,4 @@
- if [[ ${AUTO_LS_CHPWD} == true && ${chpwd_functions[(I)auto-ls]} -eq 0 ]]; then
-   chpwd_functions+=(auto-ls)
- fi
-+ 

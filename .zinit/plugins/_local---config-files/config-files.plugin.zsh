@@ -46,6 +46,7 @@ LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
+export SYSTEMD_EDITOR=${EDITOR}
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true # etckeeper on bedrock
 FZF_DEFAULT_OPTS="
 --border
@@ -123,8 +124,6 @@ alias open='xdg-open'
 alias -- -='cd -'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
-
-unalias zplg
 
 #########################
 #         Other         #
