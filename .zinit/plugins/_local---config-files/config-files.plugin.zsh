@@ -114,14 +114,15 @@ alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${
 # dot file management
 alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 #           ^Space added to remove this command from history
-alias edots='command sudo etckeeper vcs'
-alias archedots='command sudo strat -r arch etckeeper vcs'
+alias dedots='command sudo strat -r debian etckeeper vcs'
+alias aedots='command sudo strat -r arch etckeeper vcs'
+alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
 
 alias t='tail -f'
 alias g='git'
 alias gi="git-ignore"
 alias open='xdg-open'
-alias -- -='cd -'
+alias -- -='popd'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
 

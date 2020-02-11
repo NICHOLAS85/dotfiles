@@ -4,15 +4,10 @@
   dotsvar1=("${dotsvar[@]/%/'}")
   dotsvar2=("${dotsvar1[@]/#/-e '}")
   dotsvar3=(grep -v "${dotsvar2[*]}")
-  dotsvar4=$(dots status | eval "${dotsvar3[*]}")
-  if [[ "$dotsvar4" =~ "Changes not staged" ]] && [[ "$dotsvar4" =~ "modified|Changes to be committed" ]]; then
+  dotsvar4=$(dots ls-files --modified --deleted --exclude-standard | eval "${dotsvar3[*]}")
+  if ! [ -z $dotsvar4 ]; then
     echo ""
     dots status -s
-  elif [[ "$dotsvar4" =~ "ahead of" ]]; then
-    dots status
-    dots push
-  elif [[ "$dotsvar4" =~ "is behind" ]]; then
-    dots status
   else
   	return 0
   fi
