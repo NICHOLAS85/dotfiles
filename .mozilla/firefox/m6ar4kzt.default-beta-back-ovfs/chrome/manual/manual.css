@@ -33,3 +33,16 @@
     width: 17px !important;
     max-width: 17px !important;
 }
+
+/* Smaller context popup */
+menupopup menuitem,
+menupopup menu,
+.autocomplete-richlistitem
+{
+	height: inherit !important;
+	padding: 4px 16px !important;
+	border: 0 !important;
+	background: 0 !important;
+	color: inherit !important;
+	fill-opacity: initial !important;
+}

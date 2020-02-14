@@ -1,75 +1,119 @@
-.ac-type-icon
+.urlbarView-body-inner
 {
-	order: 9 !important;
-	margin-inline-start: 16px !important;
-	margin-inline-end: 0 !important;
-}
-
-.ac-site-icon
-{
-	margin-inline-end: 16px !important;
-}
-
-.ac-separator
-{
-	display: none !important;
-}
-
-.ac-title,
-.ac-url
-{
-	flex: 1 !important;
-}
-
-.search-panel-one-offs
-{
-	border-radius: 0 0 8px 8px !important;
-	margin-bottom: 18px !important;
-}
-
-.search-one-offs
-{
-	display: block !important;
-}
-
-#urlbarView-results
-{
-	padding: 0 !important;
+	border: 0 !important;
 }
 
 .urlbarView-row
 {
-	padding: 0 16px !important;
-	height: 32px !important;
+	padding: 0 !important;
 	border-radius: 0 !important;
 }
 
 .urlbarView-row-inner
 {
-	height: 100% !important;
 	align-items: center !important;
+	position: relative !important;
+	padding: 12px 0 !important;
+	padding-inline: 48px 16px !important;
+	max-width: 100% !important;
+	width: auto !important;
 }
 
-.urlbarView-favicon
+.urlbarView-no-wrap
 {
-	margin-inline-end: 16px !important;
+	height: 100% !important;
+	align-items: center !important;
+	margin-inline-start: 0 !important;
+	max-width: 100% !important;
+}
+
+.urlbarView-row[has-url][type]:not([type=bookmark]) .urlbarView-row-inner
+{
+	flex-direction: column !important;
+	align-items: flex-start !important;
+}
+
+.urlbarView-row[has-url][type]:not([type=bookmark]) .urlbarView-no-wrap
+{
+	height: auto !important;
+	align-self: flex-start !important;
+	width: 100% !important;
 }
 
 .urlbarView-title-separator
 {
-	flex: 1 !important;
+	visibility: visible !important;
 }
 
 .urlbarView-title-separator::before
 {
+	content: "-" !important;
+	color: inherit !important;
+}
+
+.urlbarView-title-separator,
+.urlbarView-action
+{
+	opacity: .6 !important;
+	color: inherit !important;
+	font-size: revert !important;
+}
+
+.urlbarView-favicon
+{
+	position: absolute !important;
+	left: 16px !important;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	fill-opacity: .6 !important;
+	flex: unset !important;
+	margin: unset !important;
+}
+
+.urlbarView-title,
+.urlbarView-url
+{
+	text-overflow: ellipsis !important;
+	mask-image: none !important;
+}
+
+.urlbarView-title
+{
+	flex: 1 !important;
+	flex-basis: unset !important;
+}
+
+.urlbarView-url
+{
+	max-width: 100% !important;
+	font-size: revert !important;
+	color: var(--urlbar-popup-url-color) !important;
+}
+
+.urlbarView-url:not(:empty)
+{
+	visibility: visible !important;
+}
+
+.urlbarView-action:not(:empty)
+{
+    display: flex !important;
+}
+
+.urlbarView-row[type=search] ~ .urlbarView-row[type=search] .urlbarView-title-separator,
+.urlbarView-row[type=search] ~ .urlbarView-row[type=search] .urlbarView-action,
+.urlbarView-row[has-url][type]:not([type=bookmark]) .urlbarView-title-separator,
+.urlbarView-type-icon
+{
 	display: none !important;
 }
 
-.urlbarView-type-icon
+.urlbarView-row[type=tip] > .urlbarView-row-inner > .urlbarView-favicon,
+.urlbarView-row[type=tip] > .urlbarView-row-inner > .urlbarView-title,
+.urlbarView-tip-button,
+.urlbarView-tip-help
 {
-	order: 1 !important;
-	margin-inline-start: 16px !important;
-	margin-inline-end: 0 !important;
+	margin-block-end: 0 !important;
 }
 
 .search-one-offs
@@ -88,6 +132,7 @@
 
 .search-panel-one-offs
 {
+	border-radius: 0 0 8px 8px !important;
 	display: inline-flex !important;
 	flex-direction: row !important;
 	padding: 0 !important;
@@ -122,11 +167,13 @@
 	padding: 2px !important;
 	background-clip: padding-box !important;
 	min-height: 28px !important;
+	height: 28px !important;
 	transition: background-color .1s var(--ease-basic) !important;
 	-moz-box-align: center !important;
 	
 	display: block !important;
 	margin: 0 !important;
+	position: relative !important; /* 74+ */
 }
 
 #urlbar:not(:-moz-lwtheme),
@@ -186,6 +233,12 @@
 	align-items: center !important;
 }
 
+#urlbar-input-container
+{
+	height: auto !important;
+	padding: 0 !important;
+}
+
 .urlbar-input-box,
 .searchbar-textbox
 {
@@ -217,6 +270,7 @@
 	box-shadow: none !important;
 	border: 0 !important;
 	background: 0 !important;
+	margin: 0 !important;
 }
 
 #urlbar[open] .urlbarView
@@ -456,7 +510,8 @@
 	order: 99 !important;
 }
 
-#urlbar[open] #page-action-buttons
+#urlbar[open] #page-action-buttons,
+#urlbar[open] #tracking-protection-icon-container
 {
 	display: none !important;
 }
