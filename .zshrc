@@ -89,7 +89,7 @@ zt 0a light-mode for \
         OMZ::lib/completion.zsh \
     as'completion' mv'*.zsh -> _git' \
         felipec/git-completion \
-    has'systemctl' patch"$pchf/systemd.patch" nocompile'!' \
+    has'systemctl' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
         sei40kr/zsh-fast-alias-tips \
         OMZ::plugins/sudo/sudo.plugin.zsh \
