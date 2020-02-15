@@ -3,7 +3,7 @@
 yaycache="$(find $(yay -Pg | jq -r .buildDir) -maxdepth 1 -type d | awk '{ print "-c " $1 }' | tail -n +2)"
 if [ $1 = "remove" ]; then
     yayremoved=$(/bedrock/bin/strat arch paccache -ruvk0 $yaycache | sed '/\.cache\/yay/!d' | cut -d \' -f2 | rev | cut -d / -f2- | rev)
-    [ -z $yayremoved ] || echo "==> Removing all uninstalled package folders" &&
+    [ -z "$yayremoved" ] || echo "==> Removing all uninstalled package folders" &&
     echo $yayremoved | xargs -rt rm -r
 else
     /bedrock/bin/strat arch paccache -rvk2 -c /var/cache/pacman/pkg $yaycache

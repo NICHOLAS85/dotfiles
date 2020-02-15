@@ -3,7 +3,8 @@ Description=Gebaar restarter
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/systemctl --user restart gebaard.service
+ExecStart=/usr/bin/systemctl is-active --quiet gebaard && /usr/bin/systemctl --user restart gebaard.service
+SuccessExitStatus=0 3
 
 [Install]
 WantedBy=default.target
