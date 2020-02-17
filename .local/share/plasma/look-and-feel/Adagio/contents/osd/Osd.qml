@@ -1,6 +1,9 @@
-/*
- * Copyright 2014 Martin Klapetek <mklapetek@kde.org>
- *
+/* THIS IS A MODIFIED VERSION
+ * 
+ * Copyright 2014 Martin Klapetek <mklapetek@kde.org> (Original)
+ * Copyright 2019 Koneko-Nyaa (Changes)
+ * Thanks to '9rief' for inspiration.
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of
@@ -26,6 +29,11 @@ PlasmaCore.Dialog {
     location: PlasmaCore.Types.Floating
     type: PlasmaCore.Dialog.OnScreenDisplay
     outputOnly: true
+    
+    //Set vertical position of OSD
+    property int yPos: Math.round(Screen.height/8*7)
+    y: yPos
+    onYChanged: {if (y != yPos) y = yPos}
 
     // OSD Timeout in msecs - how long it will stay on the screen
     property int timeout: 1800
