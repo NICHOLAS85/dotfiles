@@ -1,17 +1,17 @@
 [kdeglobals][KDE]
-widgetStyle=
+widgetStyle=Breeze
 
 [kdeglobals][General]
-ColorScheme=
+ColorScheme=Materia Dark2
 
 [kdeglobals][Icons]
-Theme=
+Theme=Papirus-Dark
 
 [plasmarc][Theme]
-name=
+name=Materia Mono
 
 [kcminputrc][Mouse]
-cursorTheme=
+cursorTheme=Breeze
 
 [kwinrc][WindowSwitcher]
 LayoutName=
