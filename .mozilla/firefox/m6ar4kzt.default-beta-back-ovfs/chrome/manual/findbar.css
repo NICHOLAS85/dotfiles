@@ -21,7 +21,7 @@
 }
 
 findbar {
-        display: block !important;
+        display: flex !important;
 	animation: 0.2s scale-in;
 	transform-origin: top center;
 	background: var(--toolbar-bgcolor) !important;
@@ -39,6 +39,7 @@ findbar[hidden="true"] {
 }
 
 findbar .findbar-container {
+        width: 510px !important;
 	padding: 0 !important;
 	padding-inline-start: 0 !important;
 	padding-inline-end: 0 !important;
@@ -76,7 +77,6 @@ findbar .findbar-closebutton {
 	margin-right: 4px !important;
 	padding-inline-end: 0 !important;
 	position: relative;
-	top: 6px;
 }
 
 window[lwtheme="true"] findbar {
@@ -124,5 +124,17 @@ window[lwtheme="true"] findbar .findbar-find-status, window[lwtheme="true"] find
 }
 
 findbar .findbar-find-status {
-  display: none !important;
+    display: none !important;
+}
+
+findbar .findbar-match-diacritics {
+    display: none !important;
+}
+
+findbar .findbar-case-sensitive {
+    display: none !important;
+}
+
+findbar .findbar-entire-word {
+    display: none !important;
 }
