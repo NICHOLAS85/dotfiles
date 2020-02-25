@@ -41,13 +41,13 @@ static void receive(const msg_t *msg, const void *userdata) {
         inhibit_upd *up = (inhibit_upd *)MSG_DATA();
         calib_req.nocalib.new = up->new;
         if (up->new) {
+            INFO("Pausing autocalibration and night color.\n");
             M_PUB(&calib_req);                // stop backlight autocalibration
             M_PUB(&kbd_bl_req);               // set 0% kbd backlight
-            system("qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Toggle Night Color\""); // Toggle redshift if active
-            INFO("Pausing autocalibration and night color.\n");
+            system("qdbus org.kde.KWin /ColorCorrect nightColorInfo | grep -q \"Active: true\" && qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Toggle Night Color\""); // Toggle redshift if active
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
-            system("qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Toggle Night Color\""); // toggle redshift if active
+            system("qdbus org.kde.KWin /ColorCorrect nightColorInfo | grep -q \"Active: false\" && qdbus org.kde.kglobalaccel /component/kwin invokeShortcut \"Toggle Night Color\""); // toggle redshift if active
             M_PUB(&calib_req);                // resume backlight autocalibration
             M_PUB(&capture_req);              // ask for a quick calibration
         }
