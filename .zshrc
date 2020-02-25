@@ -84,7 +84,7 @@ zt for  OMZ::lib/history.zsh
 ##################
 
 zt 0a light-mode for \
-    pick'fz.sh' \
+    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" nocompile'!' \
         changyuheng/fz \
         OMZ::lib/completion.zsh \
     as'completion' mv'*.zsh -> _git' \

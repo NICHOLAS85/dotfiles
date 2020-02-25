@@ -1,3 +1,4 @@
+Add compatibility with history-search-multi-word
 --- desyncr---auto-ls/auto-ls.zsh	2020-01-31 18:55:08.466100189 -0500
 +++ desyncr---auto-ls/auto-ls.patch	2020-01-31 18:56:36.476222054 -0500
 @@ -34,9 +34,10 @@

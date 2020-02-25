@@ -67,8 +67,6 @@ colorlsgitcommand=(colorls --sd --gs -A)
 AUTO_LS_COMMANDS=(colorls)
 AUTO_LS_NEWLINE=false
 
-#ZSHZ_EXCLUDE_DIRS=( / )
-
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
