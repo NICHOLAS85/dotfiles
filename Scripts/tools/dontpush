@@ -6,3 +6,4 @@ package-lock.json
 .directory
 pushfiles
 dontpush
+*.~lock*
