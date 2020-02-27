@@ -102,7 +102,7 @@ fi
 #########################
 
 # Allows leaving from deleted directories
-alias ..='command .. 2>/dev/null || cd $(dirname $PWD)'
+alias ..='cd .. 2>/dev/null || cd $(dirname $PWD)'
 
 # Access zsh config files
 alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc }"
@@ -120,7 +120,8 @@ alias t='tail -f'
 alias g='git'
 alias gi="git-ignore"
 alias open='xdg-open'
-alias -- -='popd'
+alias -- -='_dircycle_update_cycled +1 || true'
+alias -- +='_dircycle_update_cycled -0 || true'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
 
