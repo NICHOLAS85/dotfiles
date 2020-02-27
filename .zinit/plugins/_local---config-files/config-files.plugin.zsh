@@ -140,7 +140,6 @@ setopt pushd_ignore_dups    # don't push multiple copies of the same directory o
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
 #setopt correct_all          # autocorrect commands
-setopt hist_verify
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate

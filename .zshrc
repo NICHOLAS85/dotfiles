@@ -32,7 +32,7 @@ zt()  { zinit depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
 zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" \
         atinit'[ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
         atload'![ -f "${thmf}/${MYPROMPT}-post" ] && source "${thmf}/${MYPROMPT}-post"'; \
-        ZINIT_ICE+=( "${(kv)ZINIT_ICES[@]}"); }
+        ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); }
 
 ##################
 # Initial Prompt #
@@ -55,7 +55,8 @@ zt for \
 
 zt light-mode compile'*handler' for \
         zinit-zsh/z-a-patch-dl \
-        zinit-zsh/z-a-bin-gem-node
+        zinit-zsh/z-a-bin-gem-node \
+        zinit-zsh/z-a-submods
 
 ############################
 # Conditional themes block #
@@ -79,6 +80,25 @@ zt pick"pure.zsh" patch"$pchf/%PLUGIN%.patch" nocompile'!' reset reset-prompt fo
 
 zt for  OMZ::lib/history.zsh
 
+######################
+# Trigger-load block #
+######################
+
+zt light-mode for \
+    trigger-load'!x' \
+        OMZ::plugins/extract/extract.plugin.zsh \
+    trigger-load'!man' \
+        ael-code/zsh-colored-man-pages \
+    trigger-load'!ga;!gcf;!gclean;!gd;!glo;!grh;!gss' \
+        wfxr/forgit \
+    trigger-load'!zshz' blockf \
+        agkozak/zsh-z \
+    trigger-load'!updatelocal' blockf \
+        NICHOLAS85/updatelocal \
+    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' blockf \
+    atload'alias gencomp="zinit lucid nocd as\"null\" wait\"1\" atload\"zinit creinstall -q _local/config-files; zpcompinit\" for /dev/null; gencomp"' \
+        RobSis/zsh-completion-generator
+
 ##################
 # Wait'0a' block #
 ##################
@@ -91,7 +111,6 @@ zt 0a light-mode for \
         felipec/git-completion \
     has'systemctl' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
-        sei40kr/zsh-fast-alias-tips \
         OMZ::plugins/sudo/sudo.plugin.zsh \
     blockf atpull'zinit creinstall -q "$PWD"' \
         zsh-users/zsh-completions \
@@ -131,8 +150,11 @@ zt 0b if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" nocompile'!' fo
 # Wait'0c' block #
 ##################
 
-zt 0c light-mode pack'bgn-binary' for \
-        junegunn/fzf
+zt 0c light-mode for \
+    pack'bgn-binary' \
+        junegunn/fzf \
+    sbin from'gh-r' submods'sei40kr/zsh-fast-alias-tips -> plugin' pick'plugin/*.zsh' \
+        sei40kr/fast-alias-tips-bin
 
 zt 0c light-mode pick'/dev/null' for \
     sbin'fd*/fd; fd*/fd -> fdfind' from"gh-r" \
@@ -140,38 +162,18 @@ zt 0c light-mode pick'/dev/null' for \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"' \
         laggardkernel/git-ignore
 
-zt 0c light-mode as'null'  for \
+zt 0c light-mode as'null' for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
+    sbin \
         paulirish/git-open \
     sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset \
         zyedidia/micro \
     sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
-    sbin from'gh-r' \
-        sei40kr/fast-alias-tips-bin \
     id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true' \
         zdharma/null
-
-######################
-# Trigger-load block #
-######################
-
-zt light-mode for \
-    trigger-load'!x' \
-        OMZ::plugins/extract/extract.plugin.zsh \
-    trigger-load'!man' \
-        ael-code/zsh-colored-man-pages \
-    trigger-load'!ga;!gcf;!gclean;!gd;!glo;!grh;!gss' \
-        wfxr/forgit \
-    trigger-load'!zshz' blockf \
-        agkozak/zsh-z \
-    trigger-load'!updatelocal' blockf \
-        NICHOLAS85/updatelocal \
-    trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' blockf \
-    atload'alias gencomp="zinit lucid nocd as\"null\" wait\"1\" atload\"zinit creinstall -q _local/config-files; zpcompinit\" for /dev/null; gencomp"' \
-        RobSis/zsh-completion-generator
 
 $isdolphin || {
 dotscheck
