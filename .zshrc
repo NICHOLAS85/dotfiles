@@ -112,9 +112,10 @@ zt 0a light-mode for \
     has'systemctl' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
         OMZ::plugins/sudo/sudo.plugin.zsh \
-    blockf atpull'zinit creinstall -q "$PWD"' \
+    blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions \
-    compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start' \
+    compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
+    atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions
 
 ##################
@@ -122,8 +123,8 @@ zt 0a light-mode for \
 ##################
 
 zt 0b light-mode for \
-    atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' \
-    patch"$pchf/%PLUGIN%.patch" pick"c.zsh" nocompile'!' reset \
+    pack'no-dir-color-swap' \
+    patch"$pchf/%PLUGIN%.patch" reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”' \
         trapd00r/LS_COLORS \
     compile'{hsmw-*,test/*}' \
@@ -133,7 +134,7 @@ zt 0b light-mode for \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
     pick'autopair.zsh' nocompletions \
         hlissner/zsh-autopair \
-    pick'manydots-magic' \
+    pick'manydots-magic' nocompile \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \

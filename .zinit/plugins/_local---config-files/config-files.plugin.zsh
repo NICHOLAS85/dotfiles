@@ -35,8 +35,8 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
-(){ local stratum strata=( /bedrock/strata/* )
-for stratum in ${${${strata:t}//local/}//init/}; do
+(){ local stratum strata=( /bedrock/run/enabled_strata/* )
+for stratum in ${strata:t}; do
 hash -d "${stratum}"="/bedrock/strata/${stratum}"
 alias "${stratum}"="strat ${stratum}"
 alias "r${stratum}"="strat -r ${stratum}"
@@ -102,7 +102,7 @@ fi
 #########################
 
 # Allows leaving from deleted directories
-alias ..='cd .. 2>/dev/null || cd $(dirname $PWD)'
+alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"'
 
 # Access zsh config files
 alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc }"
