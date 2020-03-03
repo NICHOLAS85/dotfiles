@@ -32,7 +32,8 @@ UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\03
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
-
+FAST_ALIAS_TIPS_PREFIX="» "
+FAST_ALIAS_TIPS_SUFFIX=" «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
 (){ local stratum strata=( /bedrock/run/enabled_strata/* )
@@ -61,10 +62,10 @@ FZF_DEFAULT_OPTS="
 --preview-window right:50%:hidden
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
-colorlscommand=(lsd --group-dirs first)
-colorlsgitcommand=(colorls --sd --gs -A)
+colorlscommand="lsd --group-dirs first"
+colorlsgitcommand="colorls --sd --gs -A"
 
-AUTO_LS_COMMANDS=(colorls)
+AUTO_LS_COMMANDS="colorls"
 AUTO_LS_NEWLINE=false
 
 FZ_HISTORY_CD_CMD=zshz
@@ -85,7 +86,7 @@ fi
 
 # Set variables if on ac mode
 if [[ $(cat /run/tlp/last_pwr) = 0 ]]; then
-    alias micro="\micro -fastdirty false"
+    alias micro="micro -fastdirty false"
 fi
 
 # Used to programatically disable plugins when opening the terminal view in dolphin 
@@ -140,7 +141,6 @@ setopt interactive_comments # Allow comments even in interactive shells (especia
 setopt pushd_ignore_dups    # don't push multiple copies of the same directory onto the directory stack
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
-#setopt correct_all          # autocorrect commands
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate

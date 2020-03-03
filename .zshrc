@@ -125,7 +125,6 @@ zt 0a light-mode for \
 zt 0b light-mode for \
     pack'no-dir-color-swap' \
     patch"$pchf/%PLUGIN%.patch" reset \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”' \
         trapd00r/LS_COLORS \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
