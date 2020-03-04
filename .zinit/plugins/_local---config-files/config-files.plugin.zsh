@@ -32,8 +32,8 @@ UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\03
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
-FAST_ALIAS_TIPS_PREFIX="» "
-FAST_ALIAS_TIPS_SUFFIX=" «"
+FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
+FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
 (){ local stratum strata=( /bedrock/run/enabled_strata/* )
@@ -69,7 +69,7 @@ AUTO_LS_COMMANDS="colorls"
 AUTO_LS_NEWLINE=false
 
 FZ_HISTORY_CD_CMD=zshz
-ZSHZ_CMD="/dev/null" # Don't set the alias, fz will cover that
+ZSHZ_CMD="" # Don't set the alias, fz will cover that
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
