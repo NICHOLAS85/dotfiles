@@ -36,14 +36,6 @@ FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
 FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 
-(){ local stratum strata=( /bedrock/run/enabled_strata/* )
-for stratum in ${strata:t}; do
-hash -d "${stratum}"="/bedrock/strata/${stratum}"
-alias "${stratum}"="strat ${stratum}"
-alias "r${stratum}"="strat -r ${stratum}"
-done }
-
-LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
@@ -102,29 +94,34 @@ fi
 #       Aliases         #
 #########################
 
-# Allows leaving from deleted directories
-alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"'
-
 # Access zsh config files
 alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc }"
-
 alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc &! }"
-
-# dot file management
-alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
-#           ^Space added to remove this command from history
-alias dedots='command sudo strat -r debian etckeeper vcs'
-alias aedots='command sudo strat -r arch etckeeper vcs'
-alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
 
 alias t='tail -f'
 alias g='git'
-alias gi="git-ignore"
 alias open='xdg-open'
-alias -- -='_dircycle_update_cycled +1 || true'
-alias -- +='_dircycle_update_cycled -0 || true'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
+alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
+alias -- -='_dircycle_update_cycled +1 || true'
+alias -- +='_dircycle_update_cycled -0 || true'
+
+(( ${+commands[brl]} )) && {
+(){ local stratum strata=( /bedrock/run/enabled_strata/* )
+for stratum in ${strata:t}; do
+hash -d "${stratum}"="/bedrock/strata/${stratum}"
+alias "${stratum}"="strat ${stratum}"
+alias "r${stratum}"="strat -r ${stratum}"
+[[ -d "/bedrock/strata/${stratum}/etc/.git" ]] && \
+alias "${stratum:0:1}edots"="command sudo strat -r ${stratum} git --git-dir=/etc/.git --work-tree=/etc"
+done }
+alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
+LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
+}
+# dot file management
+alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+#           ^Space added to remove this command from history
 
 #########################
 #         Other         #
