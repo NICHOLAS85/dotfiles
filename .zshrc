@@ -30,7 +30,7 @@ fi
 # zct(): First argument provides $MYPROMPT value used in load'' and unload'' ices. Sources a config file with tracking for easy unloading using $MYPROMPT value. Small hack to function in for-syntax
 zt()  { zinit depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
 zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" \
-        atinit'[ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
+        atinit'![ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
         atload'![ -f "${thmf}/${MYPROMPT}-post" ] && source "${thmf}/${MYPROMPT}-post"'; \
         ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); }
 
@@ -127,8 +127,6 @@ zt 0b light-mode for \
         trapd00r/LS_COLORS \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
-    has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' \
-        laggardkernel/zsh-thefuck \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
     pick'autopair.zsh' nocompletions \
         hlissner/zsh-autopair \
@@ -140,9 +138,8 @@ zt 0b light-mode for \
         zdharma/fast-syntax-highlighting \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
     bindkey "$terminfo[kcud1]" history-substring-search-down' \
-        zsh-users/zsh-history-substring-search
-
-zt 0b if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" nocompile'!' for \
+        zsh-users/zsh-history-substring-search \
+    if'[[ ${isdolphin} != true ]]' patch"$pchf/%PLUGIN%.patch" nocompile'!' \
         desyncr/auto-ls
 
 ##################
@@ -158,7 +155,7 @@ zt 0c light-mode for \
 zt 0c light-mode pick'/dev/null' for \
     sbin'fd*/fd; fd*/fd -> fdfind' from"gh-r" \
          @sharkdp/fd \
-    sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"' \
+    sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"; alias gi="git-ignore"' \
         laggardkernel/git-ignore
 
 zt 0c light-mode as'null' for \
