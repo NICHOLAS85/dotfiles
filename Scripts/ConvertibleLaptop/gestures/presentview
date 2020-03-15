@@ -14,9 +14,9 @@ case $1 in
       {
         trap 'rm $TOGGLE; exit' SIGINT
         if on_ac_power; then
-          time=0.02
+          time=0.01
         else
-          time=0.071
+          time=0.06
         fi
         while true; do
         STATE1=$(xinput --query-state $MOUSE_ID)
