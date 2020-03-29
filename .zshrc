@@ -128,7 +128,7 @@ zt 0b light-mode for \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
-    pick'autopair.zsh' nocompletions \
+    pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word' \
         hlissner/zsh-autopair \
     pick'manydots-magic' nocompile \
         knu/zsh-manydots-magic \
@@ -149,7 +149,7 @@ zt 0b light-mode for \
 zt 0c light-mode for \
     pack'bgn-binary' \
         junegunn/fzf \
-    sbin from'gh-r' submods'sei40kr/zsh-fast-alias-tips -> plugin' pick'plugin/*.zsh' \
+    sbin from'gh-r' submods'NICHOLAS85/zsh-fast-alias-tips -> plugin' pick'plugin/*.zsh' \
         sei40kr/fast-alias-tips-bin
 
 zt 0c light-mode pick'/dev/null' for \
@@ -161,6 +161,8 @@ zt 0c light-mode pick'/dev/null' for \
 zt 0c light-mode as'null' for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
+     sbin \
+        https://github.com/romkatv/dotfiles-public/blob/master/bin/ssh.zsh \
     sbin \
         paulirish/git-open \
     sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset \

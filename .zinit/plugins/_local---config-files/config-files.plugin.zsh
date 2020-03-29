@@ -31,7 +31,10 @@ UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acon
 UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
+ZSH_AUTOSUGGEST_MANUAL_REBIND=set
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
 FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
@@ -162,3 +165,6 @@ zstyle ':completion:*' rehash true
 
 bindkey '^[[1;5C' forward-word   # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word  # [Ctrl-LeftArrow]  - move backward one word
+bindkey -s '^[[5~' ''            # Do nothing on pageup and pagedown. Better than printing '~'.
+bindkey -s '^[[6~' ''
+bindkey '^[[3;5~' kill-word      # ctrl+del   delete next word
