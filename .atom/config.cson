@@ -68,6 +68,7 @@
       disableWhenNoEslintConfig: false
     global:
       globalNodePath: "/usr/local"
+    lintHtmlFiles: true
   "linter-gcc":
     gccDebug: true
     gccLintOnTheFly: true
