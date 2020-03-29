@@ -161,7 +161,7 @@ zt 0c light-mode pick'/dev/null' for \
 zt 0c light-mode as'null' for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
-     sbin \
+    sbin \
         https://github.com/romkatv/dotfiles-public/blob/master/bin/ssh.zsh \
     sbin \
         paulirish/git-open \
@@ -174,7 +174,7 @@ zt 0c light-mode as'null' for \
         zdharma/null
 
 $isdolphin || {
-dotscheck
+dotscheck && echo
 [[ $PWD = ~ ]] && { cd "$(cat $TMPDIR/olddir)" } 2>/dev/null || true
 trap @shexit EXIT
 }

@@ -9,6 +9,6 @@
     echo ""
     eval $dotcmd status -s
   else
-  	return 0
+  	return 1
   fi
 fi
