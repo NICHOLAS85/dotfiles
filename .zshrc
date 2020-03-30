@@ -96,7 +96,7 @@ zt light-mode for \
     trigger-load'!updatelocal' blockf \
         NICHOLAS85/updatelocal \
     trigger-load'!gencomp' pick'zsh-completion-generator.plugin.zsh' blockf \
-    atload'alias gencomp="zinit lucid nocd as\"null\" wait\"1\" atload\"zinit creinstall -q _local/config-files; zpcompinit\" for /dev/null; gencomp"' \
+    atload'alias gencomp="zinit silent nocd as\"null\" wait\"2\" atload\"zinit creinstall -q _local/config-files; zicompinit\" for /dev/null; gencomp"' \
         RobSis/zsh-completion-generator
 
 ##################
