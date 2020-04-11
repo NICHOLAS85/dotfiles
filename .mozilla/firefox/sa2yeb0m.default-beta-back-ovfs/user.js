@@ -19,3 +19,6 @@ user_pref("layers.acceleration.force-enabled", true);
 
 /* Fix dark widgets with dark theme */
 user_pref("widget.content.gtk-theme-override", "Minwaita:light");
+
+/* Allow tabs to shrink more; tabs in overflow will look the same as pinned tabs */
+user_pref("materialFox.reduceTabOverflow", true);

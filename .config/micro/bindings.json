@@ -6,5 +6,5 @@
     "CtrlShiftLeft": "SelectWordLeft",
     "CtrlShiftRight": "SelectWordRight",
     "CtrlUp": "ParagraphPrevious",
-    "Ctrlx": "Redo"
+    "Alt-Z": "Redo"
 }

@@ -6,8 +6,8 @@ ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-$ZPLG_BIN_DIR_NAME}:-bin}"
 if [[ ! -f $ZINIT_HOME/$ZINIT_BIN_DIR_NAME/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
     command mkdir -p "$ZINIT_HOME" && command chmod g-rwX "$ZINIT_HOME"
-    command git clone https://github.com/zdharma/zinit "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME" && \\
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \\
+    command git clone https://github.com/zdharma/zinit "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
         print -P "%F{160}▓▒░ The clone has failed.%f"
 fi
 source "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME/zinit.zsh"
@@ -130,6 +130,8 @@ zt 0b light-mode for \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
     pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word' \
         hlissner/zsh-autopair \
+    trackbinds bindmap'\e[1\;6D -> ^[[1\;5A; \e[1\;6C -> ^[[1\;5B' pick'dircycle.zsh'\
+        michaelxmcbride/zsh-dircycle\
     pick'manydots-magic' nocompile \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \

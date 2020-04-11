@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-TOGGLE="${TEMPDIR:-/temp}/currentlyup"
-DOWNID="${TEMPDIR:-/temp}/downid"
+TOGGLE="${TMPDIR:-/tmp}/currentlyup"
+DOWNID="${TMPDIR:-/tmp}/downid"
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 
 case $1 in

@@ -107,8 +107,6 @@ alias open='xdg-open'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
 alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
-alias -- -='_dircycle_update_cycled +1 || true'
-alias -- +='_dircycle_update_cycled -0 || true'
 
 (( ${+commands[brl]} )) && {
 (){ local stratum strata=( /bedrock/run/enabled_strata/* )
@@ -120,11 +118,10 @@ alias "r${stratum}"="strat -r ${stratum}"
 alias "${stratum:0:1}edots"="command sudo strat -r ${stratum} git --git-dir=/etc/.git --work-tree=/etc"
 done }
 alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
-LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
+#LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 }
 # dot file management
-alias dots=' command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
-#           ^Space added to remove this command from history
+alias dots='command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 
 #########################
 #         Other         #
