@@ -25,7 +25,7 @@ ZSHZ_DATA="${ZPFX}/z"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
-UPDATELOCAL_GITDIR="${HOME}/github/Built"
+UPDATELOCAL_GITDIR="${HOME}/github/built"
 UL_Acond='! $isdolphin' # Condition checked before running UL_Acomm
 UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acond true
 UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
