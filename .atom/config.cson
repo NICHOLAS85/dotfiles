@@ -48,7 +48,7 @@
       "one-dark-syntax"
     ]
   editor:
-    fontFamily: "Fira Code, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontFamily: "FiraCode Nerd Font, Menlo, Consolas, DejaVu Sans Mono, monospace"
     fontSize: 15
     preferredLineLength: 200
     showIndentGuide: true
