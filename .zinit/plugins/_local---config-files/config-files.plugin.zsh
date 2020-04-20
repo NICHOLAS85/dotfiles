@@ -118,7 +118,6 @@ alias "r${stratum}"="strat -r ${stratum}"
 alias "${stratum:0:1}edots"="command sudo strat -r ${stratum} git --git-dir=/etc/.git --work-tree=/etc"
 done }
 alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
-#LD_PRELOAD=~arch/usr/lib/libgtk3-nocsd.so.0 # Fix unable to preload msg
 }
 # dot file management
 alias dots='command git --git-dir=$HOME/.dots/ --work-tree=$HOME'

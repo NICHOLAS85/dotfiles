@@ -32,7 +32,7 @@ zt()  { zinit depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
 zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" \
         atinit'![ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
         atload'![ -f "${thmf}/${MYPROMPT}-post" ] && source "${thmf}/${MYPROMPT}-post"'; \
-        ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); }
+        ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); __turbo=1;}
 
 ##################
 # Initial Prompt #
@@ -66,7 +66,7 @@ zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' for \
     if'zct spaceship-async' \
         maximbaz/spaceship-prompt \
     if'zct spaceship' \
-        denysdovhan/spaceship-prompt \
+        denysdovhan/spaceship-prompt
 
 zt pick'spacezsh.zsh' if'zct spaceship-async2' for \
     compile'{presets/^(*.zwc),lib/**/^(*.zwc),sections/^(*.zwc)}' \
@@ -136,7 +136,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
-    atinit'zicompinit_fast; zicdreplay' \
+    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
         zdharma/fast-syntax-highlighting \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
     bindkey "$terminfo[kcud1]" history-substring-search-down' \
