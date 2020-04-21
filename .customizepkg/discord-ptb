@@ -1,0 +1,1 @@
+addline#package#chmod 755*#  chmod 4755 "$pkgdir"/opt/"$pkgname"/chrome-sandbox
