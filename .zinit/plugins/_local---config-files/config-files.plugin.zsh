@@ -23,12 +23,13 @@ HISTFILE="${HOME}/.histfile"
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
+export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/built"
 UL_Acond='! $isdolphin' # Condition checked before running UL_Acomm
 UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acond true
-UL_Bcomm='chpwd_functions=($cache); [ -z $1 ] && { checkupdates && print -n "\033[1;32m➜ \033[0m" } &!' # Command run after updatelocal finishes if UL_Acond was true
+UL_Bcomm='chpwd_functions=($cache);' # Command run after updatelocal finishes if UL_Acond was true
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
