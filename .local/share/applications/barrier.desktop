@@ -2,7 +2,7 @@
 Categories=Utility;
 Comment[en_US]=Keyboard and mouse sharing solution
 Comment=Keyboard and mouse sharing solution
-Exec=xbindkeys -f ~/Scripts/tools/barrier && barrier && killall xbindkeys
+Exec=xbindkeys -f ~/bin/scripts/tools/barrier && barrier && killall xbindkeys
 GenericName[en_US]=
 GenericName=
 Icon=barrier

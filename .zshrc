@@ -1,4 +1,4 @@
-# https://github.com/NICHOLAS85/dotfiles/blob/xps_13_9365/.zshrc
+# https://github.com/NICHOLAS85/dotfiles/blob/xps_13_9365_refresh/.zshrc
 
 ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-$HOME}/.zinit}}"
 ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-$ZPLG_BIN_DIR_NAME}:-bin}"
@@ -20,7 +20,7 @@ zmodload zdharma/zplugin &>/dev/null
 
 if [[ ! -d "${ZINIT[PLUGINS_DIR]}/_local---config-files" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing local config-files…%f"
-    curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365 | \
+    curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365_refresh | \
     tar -xz --strip=3 dotfiles-xps_13_9365/.zinit/plugins/_local---config-files
     mv _local---config-files "${ZINIT[PLUGINS_DIR]}/"
 fi
