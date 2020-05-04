@@ -8,8 +8,8 @@ CursorShape=1
 
 [General]
 Command=/bedrock/cross/bin/zsh
-Environment=TERM=xterm-256color,COLORTERM=truecolor
-Name=Profile 1
+Environment=TERM=xterm-256color,COLORTERM=truecolor,MYPROMPT=dolphin
+Name=Dolphin
 Parent=FALLBACK/
 
 [Keyboard]
