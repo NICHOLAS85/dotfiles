@@ -32,7 +32,7 @@ zt()  { zinit depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
 zct() { .zinit-ice load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" \
         atinit'![ -f "${thmf}/${MYPROMPT}-pre" ] && source "${thmf}/${MYPROMPT}-pre"' \
         atload'![ -f "${thmf}/${MYPROMPT}-post" ] && source "${thmf}/${MYPROMPT}-post"'; \
-        ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); __turbo=1;}
+        ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); ___turbo=1;}
 
 ##################
 # Initial Prompt #
@@ -177,6 +177,5 @@ zt 0c light-mode as'null' for \
 
 $isdolphin || {
 dotscheck && echo
-[[ $PWD = ~ ]] && { cd "$(cat $TMPDIR/olddir)" } 2>/dev/null || true
-trap @shexit EXIT
+[[ $PWD = ~ ]] && { cd "$(awk -F"'" '{print $2;exit}' $TMPDIR/chpwd-recent-dirs)" } 2>/dev/null || true
 }

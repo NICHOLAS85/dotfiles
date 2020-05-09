@@ -91,6 +91,9 @@ if [[ $MYPROMPT = dolphin ]]; then
     # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
     alias cd='clear -x; cd'
 else
+    autoload -Uz chpwd_recent_dirs
+    add-zsh-hook chpwd chpwd_recent_dirs
+    zstyle ':chpwd:*' recent-dirs-file "$TMPDIR/chpwd-recent-dirs"
     isdolphin=false
 fi
 
