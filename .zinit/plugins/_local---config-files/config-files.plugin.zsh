@@ -33,7 +33,7 @@ UL_Bcomm='chpwd_functions=($cache);' # Command run after updatelocal finishes if
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
+ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)"
 ZSH_AUTOSUGGEST_MANUAL_REBIND=set
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
