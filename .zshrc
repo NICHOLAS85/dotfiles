@@ -104,8 +104,6 @@ zt light-mode for \
 ##################
 
 zt 0a light-mode for \
-    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" nocompile'!' \
-        changyuheng/fz \
         OMZ::lib/completion.zsh \
     as'completion' mv'*.zsh -> _git' \
         felipec/git-completion \
@@ -116,7 +114,9 @@ zt 0a light-mode for \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
     atload'_zsh_autosuggest_start' \
-        zsh-users/zsh-autosuggestions
+        zsh-users/zsh-autosuggestions \
+    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" nocompile'!' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
+        changyuheng/fz
 
 ##################
 # Wait'0b' block #
@@ -128,11 +128,11 @@ zt 0b light-mode for \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
         OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
-    pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word' \
+    pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair \
-    trackbinds bindmap'\e[1\;6D -> ^[[1\;5A; \e[1\;6C -> ^[[1\;5B' pick'dircycle.zsh'\
+    trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' pick'dircycle.zsh' \
         michaelxmcbride/zsh-dircycle\
-    pick'manydots-magic' nocompile \
+    autoload'manydots-magic' atload'manydots-magic' \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
@@ -172,10 +172,16 @@ zt 0c light-mode as'null' for \
     sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
-    id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true' \
+    id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true; _zsh_autosuggest_bind_widgets' \
         zdharma/null
 
 $isdolphin || {
 dotscheck && echo
-[[ $PWD = ~ ]] && { cd "$(awk -F"'" '{print $2;exit}' $TMPDIR/chpwd-recent-dirs)" } 2>/dev/null || true
+(){
+    local chpwdrdf
+    zstyle -g chpwdrdf ':chpwd:*' recent-dirs-file
+    dirstack=($(awk -F"'" '{print $2}' "$chpwdrdf" 2>/dev/null))
+    [[ $PWD = ~ ]] && { cd ${dirstack[1]} 2>/dev/null || true }
+    dirstack=("${dirstack[@]:1}")
+}
 }

@@ -6,4 +6,4 @@ local svrdir="${HOME}/bin/minecraft/servers" dir
 	$FORGIT_ADD_FZF_OPTS" fzf ) )
 }
 
-[ ! -z $dir ] && systemd-inhibit --what=sleep --why="Running Minecraft Server" $dir/serverstartlinux.sh
+[ ! -z $dir ] && systemd-inhibit --who="mcsvr ${1:-${dir:t}}" --why="Running Minecraft Server" $dir/serverstartlinux.sh
