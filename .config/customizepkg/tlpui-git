@@ -1,1 +1,1 @@
-replace#package#"$pkgdir"#"$pkgdir"/bedrock/strata/debian
+replace#package#"$pkgdir/#"$pkgdir/bedrock/strata/debian/
