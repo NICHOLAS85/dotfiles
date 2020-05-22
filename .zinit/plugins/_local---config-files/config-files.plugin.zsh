@@ -55,7 +55,7 @@ FZF_DEFAULT_OPTS="
 --bind ctrl-s:toggle-sort
 --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
 --preview \"(bat --color=always {} || ls -l --color=always {}) 2>/dev/null | head -200\"
---preview-window right:50%:hidden
+--preview-window right:60%
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
 colorlscommand="lsd --group-dirs first"
@@ -124,7 +124,11 @@ done }
 alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
 }
 # dot file management
-alias dots='command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+#alias dots='command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+export DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare"
+export DOTBARE_DIR="$HOME/.dots"
+export DOTBARE_TREE="$HOME"
+export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 #########################
 #         Other         #

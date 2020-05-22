@@ -62,12 +62,6 @@ zt light-mode compile'*handler' for \
 # Conditional themes block #
 ############################
 
-zt pick'spaceship.zsh' compile'{lib/*,sections/*,tests/*.zsh}' for \
-    if'zct spaceship-async' \
-        maximbaz/spaceship-prompt \
-    if'zct spaceship' \
-        denysdovhan/spaceship-prompt
-
 zt pick'spacezsh.zsh' if'zct spaceship-async2' for \
     compile'{presets/^(*.zwc),lib/**/^(*.zwc),sections/^(*.zwc)}' \
         laggardkernel/spacezsh-prompt
@@ -155,7 +149,7 @@ zt 0c light-mode for \
         sei40kr/fast-alias-tips-bin
 
 zt 0c light-mode pick'/dev/null' for \
-    sbin'fd*/fd; fd*/fd -> fdfind' from"gh-r" \
+    sbin'fd*/fd;fd*/fd -> fdfind' from"gh-r" \
          @sharkdp/fd \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"; alias gi="git-ignore"' \
         laggardkernel/git-ignore
@@ -172,6 +166,8 @@ zt 0c light-mode as'null' for \
     sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
+    sbin'dotbare;dotbare -> dots' \
+        kazhala/dotbare \
     id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true; _zsh_autosuggest_bind_widgets' \
         zdharma/null
 
