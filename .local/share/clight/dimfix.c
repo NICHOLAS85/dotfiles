@@ -35,7 +35,6 @@ static void receive(const msg_t *msg, const void *userdata) {
     case DISPLAY_UPD: {
         display_upd *up = (display_upd *)MSG_DATA();
         if(up->new == DISPLAY_DIMMED){
-            INFO("dimmed :D\n");
             fp = popen("busctl call org.clightd.clightd /org/clightd/clightd/Backlight org.clightd.clightd.Backlight GetAll s '' | awk '{print$4}'", "r");
             while (fgets(path, sizeof(path), fp) != NULL) {
                 bl_req.bl.new = atof(path);
