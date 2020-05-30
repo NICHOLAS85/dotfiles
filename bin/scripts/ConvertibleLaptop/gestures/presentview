@@ -36,8 +36,8 @@ case $1 in
   ;;
   --down )
     if [[ -e $TOGGLE ]]; then
+      xdotool click 3
       pkill -SIGINT -f "presentview --up"
-      invoke "Expose"
     else
       echo "$(xdotool getwindowpid $(xdotool getwindowfocus))" > $DOWNID
       invoke "Window Minimize"
