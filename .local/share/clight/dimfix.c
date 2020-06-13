@@ -23,11 +23,13 @@ DECLARE_MSG(bl_req, BL_REQ);
 
 static FILE *fp;
 static char path[20];
+static double new = 0;
 
 static void init(void) {
 	bl_req.bl.smooth = -1;
     /* Subscribe to inhibit state */
     M_SUB(DISPLAY_UPD);
+    M_SUB(BL_UPD);
 }
 
 static void receive(const msg_t *msg, const void *userdata) {
@@ -42,10 +44,16 @@ static void receive(const msg_t *msg, const void *userdata) {
             }
             pclose(fp);
         }
-        if(up->old == DISPLAY_DIMMED){
+        if(up->old == DISPLAY_DIMMED && bl_req.bl.new > new){
             DEBUG("Restoring bl_pct\n");
             M_PUB(&bl_req);
         }
+        new = 0;
+        break;
+    }
+    case BL_UPD: {
+        bl_upd *up = (bl_upd *)MSG_DATA();
+        new = up->new;
         break;
     }
     default:

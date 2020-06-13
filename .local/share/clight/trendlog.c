@@ -88,7 +88,7 @@ static void receive(const msg_t *msg, const void *userdata) {
         }
         case LID_UPD: {
             lid_upd *up = (lid_upd *)MSG_DATA();
-            if (up->old == CLOSED){
+            if (up->new == CLOSED){
                     skip = true;
                     DEBUG("Skipping next log\n");
             }
