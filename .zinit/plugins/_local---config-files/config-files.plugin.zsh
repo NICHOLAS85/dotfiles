@@ -12,6 +12,8 @@
 fpath=("${0:h}/functions" "${fpath[@]}")
 autoload -Uz $fpath[1]/*(.:t)
 
+! $isdolphin && add-zsh-hook chpwd chpwd_ls
+
 #########################
 #       Variables       #
 #########################
@@ -19,7 +21,6 @@ autoload -Uz $fpath[1]/*(.:t)
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
 GENCOMPL_FPATH="${0:h}/completions"
-HISTFILE="${HOME}/.histfile"
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
@@ -27,9 +28,6 @@ export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/built"
-UL_Acond='! $isdolphin' # Condition checked before running UL_Acomm
-#UL_Acomm='cache=($chpwd_functions); chpwd_functions=()' # Command run if UL_Acond true
-#UL_Bcomm='chpwd_functions=($cache);' # Command run after updatelocal finishes if UL_Acond was true
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -85,25 +83,13 @@ if [[ $(cat /run/tlp/last_pwr) = 0 ]]; then
     alias micro="micro -fastdirty false"
 fi
 
-# Used to programatically disable plugins when opening the terminal view in dolphin 
-if [[ $MYPROMPT = dolphin ]]; then
-    isdolphin=true
-    # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
-    alias cd='clear -x; cd'
-else
-    autoload -Uz chpwd_recent_dirs
-    add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':chpwd:*' recent-dirs-file "$TMPDIR/chpwd-recent-dirs"
-    isdolphin=false
-fi
-
 #########################
 #       Aliases         #
 #########################
 
 # Access zsh config files
-alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc }"
-alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}*~*.zwc &! }"
+alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
+alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc &! }"
 
 alias t='tail -f'
 alias g='git'
@@ -111,6 +97,12 @@ alias open='xdg-open'
 alias atom='atom-beta --disable-gpu'
 alias apm='apm-beta'
 alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
+# Aesthetic function for Dolphin, clear -x if cd while in Dolphin
+$isdolphin && alias cd='clear -x; cd'
+
+# dot file management
+alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare" dotbare'
+export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 (( ${+commands[brl]} )) && {
 (){ local stratum strata=( /bedrock/run/enabled_strata/* )
@@ -121,14 +113,8 @@ alias "r${stratum}"="strat -r ${stratum}"
 [[ -d "/bedrock/strata/${stratum}/etc/.git" ]] && \
 alias "${stratum:0:1}edots"="command sudo strat -r ${stratum} git --git-dir=/etc/.git --work-tree=/etc"
 done }
-alias bedots='command sudo git --git-dir=/bedrock/.git --work-tree=/bedrock'
+alias bedots='command sudo DOTBARE_FZF_DEFAULT_OPTS="$DOTBARE_FZF_DEFAULT_OPTS" DOTBARE_DIR="/bedrock/.git" DOTBARE_TREE="/bedrock" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/bdotbare" dotbare'
 }
-# dot file management
-#alias dots='command git --git-dir=$HOME/.dots/ --work-tree=$HOME'
-export DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare"
-export DOTBARE_DIR="$HOME/.dots"
-export DOTBARE_TREE="$HOME"
-export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 #########################
 #         Other         #
