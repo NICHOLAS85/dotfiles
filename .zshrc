@@ -83,7 +83,7 @@ zt light-mode compile'*handler' for \
         zinit-zsh/z-a-bin-gem-node \
         zinit-zsh/z-a-submods
 
-zt 0a light-mode blockf for \
+zt light-mode blockf for \
         _local/config-files
 
 ###########
@@ -123,7 +123,7 @@ zt 0a light-mode for \
     has'systemctl' \
         OMZ::plugins/systemd/systemd.plugin.zsh \
         OMZ::plugins/sudo/sudo.plugin.zsh \
-    blockf atpull'zinit creinstall -q .' \
+    blockf \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
     atload'_zsh_autosuggest_start' \
@@ -146,7 +146,7 @@ zt 0b light-mode for \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' patch"$pchf/%PLUGIN%.patch" \
     reset pick'dircycle.zsh' \
         michaelxmcbride/zsh-dircycle \
-    autoload'manydots-magic' atload'manydots-magic' \
+    autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
