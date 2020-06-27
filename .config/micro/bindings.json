@@ -1,10 +1,11 @@
 {
     "Alt-/": "lua:comment.comment",
+    "Alt-Z": "Redo",
     "CtrlDown": "ParagraphNext",
     "CtrlLeft": "WordLeft",
     "CtrlRight": "WordRight",
     "CtrlShiftLeft": "SelectWordLeft",
     "CtrlShiftRight": "SelectWordRight",
-    "CtrlUp": "ParagraphPrevious",
-    "Alt-Z": "Redo"
+    "CtrlUnderscore": "lua:comment.comment",
+    "CtrlUp": "ParagraphPrevious"
 }
