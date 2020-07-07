@@ -1,9 +1,13 @@
 #!/bin/sh
 
-cur_window=$(cat /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm)
+cur_window="$(cat /proc/"$(xdotool getwindowpid "$(xdotool getwindowfocus)")"/comm)"
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "$1"; }
-if [ $cur_window = "firefox-bin" ]; then
-  xdotool key ctrl+w #Standard shortcut, can't use qdbus to invoke
-else
-  invoke "Window Close"
-fi
+
+case $cur_window in
+  "firefox-bin" | "MainThread" )
+    xdotool key ctrl+w # Standard shortcut, can't use qdbus to invoke
+    ;;
+  * )
+    invoke "Window Close"
+    ;;
+esac
