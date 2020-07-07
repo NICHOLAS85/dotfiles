@@ -91,7 +91,7 @@ zt light-mode blockf for \
 ###########
 
 zt atinit'HISTFILE="${HOME}/.histfile"' for \
-    OMZ::lib/history.zsh
+    OMZL::history.zsh
 
 ######################
 # Trigger-load block #
@@ -117,12 +117,12 @@ zt light-mode for \
 ##################
 
 zt 0a light-mode for \
-        OMZ::lib/completion.zsh \
+        OMZL::completion.zsh \
     if'false' ver'dev' \
         marlonrichert/zsh-autocomplete \
     has'systemctl' \
-        OMZ::plugins/systemd/systemd.plugin.zsh \
-        OMZ::plugins/sudo/sudo.plugin.zsh \
+        OMZP::systemd/systemd.plugin.zsh \
+        OMZP::sudo/sudo.plugin.zsh \
     blockf \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
@@ -140,7 +140,7 @@ zt 0b light-mode for \
         trapd00r/LS_COLORS \
     compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
-        OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
+        OMZP::command-not-found/command-not-found.plugin.zsh \
     pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' patch"$pchf/%PLUGIN%.patch" \
@@ -177,8 +177,6 @@ zt 0c light-mode pick'/dev/null' for \
 zt 0c light-mode as'null' for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
-    sbin \
-        https://github.com/romkatv/dotfiles-public/blob/master/bin/ssh.zsh \
     sbin \
         paulirish/git-open \
     sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset \

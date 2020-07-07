@@ -56,14 +56,13 @@ FZF_DEFAULT_OPTS="
 --preview-window right:60%
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
-colorlscommand="lsd --group-dirs first"
-colorlsgitcommand="colorls --sd --gs -A"
 
 AUTO_LS_COMMANDS="colorls"
 AUTO_LS_NEWLINE=false
 
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD="" # Don't set the alias, fz will cover that
+ZSHZ_UNCOMMON=1
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
 # Strings to ignore when using dotscheck, escape stuff that could be wild cards (../)
@@ -72,7 +71,6 @@ dotsvar=( gtkrc-2.0 kwinrulesrc '\.\./' \.config/gtk-3\.0/settings\.ini )
 # Export variables when connected via SSH
 if [[ -n $SSH_CONNECTION ]]; then
     export DISPLAY=:0
-    colorlscommand=(lsd --group-dirs first --icon never)
     alias ls="lsd --group-dirs=first --icon=never"
 else
     alias ls='lsd --group-dirs=first'
@@ -151,6 +149,7 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*' use-cache true
 zstyle ':completion:*' rehash true
 
 bindkey '^[[1;5C' forward-word   # [Ctrl-RightArrow] - move forward one word
