@@ -1,0 +1,159 @@
+.findbar-match-diacritics {display: none !important;}
+.findbar-case-sensitive {display: none !important;}
+.findbar-highlight {display: none !important;}
+.findbar-entire-word {display: none !important;}
+.findbar-find-status {display: none !important;}
+findbar{height: 35px;}
+findbar {margin-right: 16px !important;}
+.findbar-find-fast {padding: 0px !important;}
+.findbar-find-fast {padding-left: 2px !important;}
+.findbar-container {margin-right: -40px !important;}
+findbar[hidden] {transform: translateY(-15px);}
+findbar > .findbar-container > hbox{margin-right: 20px;}
+findbar{
+border-color: transparent  !important;
+-moz-box-ordinal-group: 0 !important;
+margin-bottom: calc(0px - 2 * var(--toolbarbutton-inner-padding) -  15px);
+transition: transform 82ms linear, opacity 82ms linear 32ms !important;
+background: none !important;
+pointer-events: none;
+position: fixed !important;
+right: 0 !important;
+z-index: 1 !important;
+display: flex;
+border-left: 1px solid var(--chrome-content-separator-color);
+border-top: none !important;
+margin-top: -1px !important;}
+.findbar-closebutton{
+padding-left: 20px !important;
+padding-right: 20px !important;
+border-right: 1px solid #e1e1e2 !important;
+margin-right: 30px !important;
+border-bottom-right-radius: 3px !important;}
+findbar > .findbar-container,
+findbar > .close-icon{
+border: 1px solid var(--chrome-content-separator-color);
+border-width: 0 0 1px 0px;
+border-width: 0 0 1px 0px;
+padding: 7px !important;
+margin-left: 11px !important;
+background: var(--uc-light-bkgnd-color,var(--toolbar-bgcolor)) !important;
+border-bottom-right-radius: 3px !important;
+pointer-events: auto;}
+findbar .found-matches {
+direction: ltr !important;
+color: black !important;
+font-size: 14px;
+font-family: Calibri;
+-moz-box-ordinal-group: 0 !important;
+padding-right: 12px !important;
+padding-left: 5px !important;}
+.findbar-container > .findbar-find-fast{
+padding: var(--toolbarbutton-inner-padding) 1px;
+margin: 0 !important;}
+.findbar-find-previous {-moz-box-ordinal-group: 2 !important;
+border-left-width: -1px !important;
+border-right-width: 1px !important;}
+.findbar-find-next {-moz-box-ordinal-group: 2 !important;
+position: relative !important;
+border-right: 1px !important;
+border-radius: 0px !important;}
+.findbar-textbox {-moz-box-ordinal-group: 3 !important;}
+findbar > .findbar-container{
+-moz-box-direction: reverse;
+border-left-width: 1px;}
+findbar > .findbar-container {
+border-bottom-left-radius: 3px !important;}
+findbar .findbar-container {direction: rtl !important;}
+findbar .findbar-textbox {
+border-right: 0px !important;
+direction: ltr !important;}
+input.findbar-textbox::placeholder {opacity: 0 !important;}
+.findbar-textbox::placeholder {display: none !important;}
+ 
+ 
+ 
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■ Customization area ■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+/*Findbar position*/
+findbar{
+margin-right: 30px !important;
+}
+/**/
+ 
+ 
+ 
+/*Findbar*/
+findbar > .findbar-container,
+findbar > .close-icon{
+background-color: #f9f9fa !important; /*Background*/
+border-color: #e1e1e2 !important;     /*Border*/
+}
+/**/
+ 
+ 
+/*Next/Prev result buttons*/
+.findbar-find-next{
+background-color: #fafafb !important; /*Background*/
+border-color: #a0a0a0 !important;     /*Border*/
+fill: #0c0c0d !important;             /*Arrow*/
+}
+.findbar-find-previous{
+background-color: #fafafb !important; /*Background*/
+border-color: #a0a0a0 !important;     /*Border*/
+fill: #0c0c0d !important;             /*Arrow*/
+}
+/**/
+ 
+ 
+/*Text field*/
+.findbar-textbox{
+background-color: #ffffff !important; /*Background*/
+border-color: #a0a0a0 !important;     /*Border*/
+color: #000000 !important;            /*Text*/
+}
+/**/
+ 
+ 
+/*Text field when no results found*/
+.findbar-textbox[status="notfound"]{
+background-color: rgb(251, 251, 251) !important;    /*Background*/
+border-color: rgba(206, 206, 206, 0.69) !important; /*Border*/
+color: #000000 !important;                          /*Text*/
+}
+/**/
+
+
+/*Text field highlighted*/
+.findbar-textbox::selection {
+background-color: #3399ff !important; /*Background*/
+color: #ffffff !important;            /*Text*/
+}
+/**/
+
+
+/*Results*/
+findbar .found-matches{
+color: #000000 !important; /*Text*/
+}
+/**/
+ 
+ 
+/*Close button*/
+findbar > .close-icon .toolbarbutton-icon{
+fill: black !important;               /*Icon*/
+border-radius: 1px !important;
+}
+ 
+findbar > .close-icon:hover .toolbarbutton-icon{
+fill: black !important;               /*Hover icon*/
+background-color: #f9f9fa !important; /*Hover background*/
+border-radius: 1px !important;
+}
+ 
+findbar > .close-icon:active .toolbarbutton-icon{
+fill: black !important;               /*Active icon*/
+background-color: #F4F4F4 !important; /*Active background*/
+border-radius: 1px !important;
+}
+/**/
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
