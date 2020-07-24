@@ -1,7 +1,7 @@
 #include <clight/public.h>
 
 /**
- * Modified to not set brightness to 100% and toggle redshift gamma correction
+ * Modified to not set brightness to 100% and toggle gamma correction
  **/
 
 /**
