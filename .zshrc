@@ -39,8 +39,8 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit installer's chunk
 
-module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
-zmodload zdharma/zplugin &>/dev/null
+#module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
+#zmodload zdharma/zplugin &>/dev/null
 
 if [[ ! -d "${ZINIT[PLUGINS_DIR]}/_local---config-files" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing local config-files…%f"
@@ -59,7 +59,7 @@ zct() {
     load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" }
     .zinit-ice atload'! [[ -f "${thmf}/${MYPROMPT}-post.zsh" ]] && source "${thmf}/${MYPROMPT}-post.zsh"' \
     nocd id-as"${1}-theme";
-    ZINIT_ICE+=("${(kv)ZINIT_ICES[@]}"); ZINIT_ICES=();
+    ICE+=("${(kv)ZINIT_ICES[@]}"); ZINIT_ICES=();
 }
 
 ##################
@@ -128,7 +128,7 @@ zt 0a light-mode for \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
     atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions \
-    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" nocompile'!' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
+    pick'fz.sh' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
         changyuheng/fz
 
 ##################
@@ -168,13 +168,13 @@ zt 0c light-mode for \
     sbin from'gh-r' submods'NICHOLAS85/zsh-fast-alias-tips -> plugin' pick'plugin/*.zsh' \
         sei40kr/fast-alias-tips-bin
 
-zt 0c light-mode pick'/dev/null' for \
+zt 0c light-mode binary for \
     sbin'fd*/fd;fd*/fd -> fdfind' from"gh-r" \
          @sharkdp/fd \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"; alias gi="git-ignore"' \
         laggardkernel/git-ignore
 
-zt 0c light-mode as'null' for \
+zt 0c light-mode null for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
     sbin \
