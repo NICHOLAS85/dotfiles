@@ -26,3 +26,8 @@ user_pref("materialFox.reduceTabOverflow", true);
 
 /* Disable Pocket */
 user_pref("extensions.pocket.enabled", false);
+
+/* Enable VA-API Acceleration */
+user_pref("media.ffvpx.enabled", false);
+user_pref("media.ffmpeg.vaapi-drm-display.enabled", true);
+user_pref("media.ffmpeg.vaapi.enabled", true);
