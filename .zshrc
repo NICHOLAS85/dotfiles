@@ -181,7 +181,7 @@ zt 0c light-mode null for \
         paulirish/git-open \
     sbin'm*/micro' from"gh-r" ver'nightly' bpick'*linux64*' reset \
         zyedidia/micro \
-    sbin'*/rm-trash' atload'alias rm="rm-trash ${rm_opts}"' reset \
+    sbin'*/rm-trash' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
     sbin \
