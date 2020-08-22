@@ -8,4 +8,4 @@ Environment="DISPLAY=:0" "XAUTHORITY=%h/.Xauthority"
 Restart=always
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
