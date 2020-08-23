@@ -69,8 +69,6 @@ zct() {
 ##################
 
 zt light-mode for \
-    pick'async.zsh' \
-        mafredri/zsh-async \
         romkatv/powerlevel10k \
 
 zt for if'zct dolphin' \
@@ -138,7 +136,9 @@ zt 0a light-mode for \
 zt 0b light-mode for \
     pack'no-dir-color-swap' patch"$pchf/%PLUGIN%.patch" reset \
         trapd00r/LS_COLORS \
-    compile'{hsmw-*,test/*}' \
+    atinit"PER_DIRECTORY_HISTORY_BASE=$ZPFX/per-directory-history" \
+        kadaan/per-directory-history \
+    compile'{hsmw-*,test/*}' patch"$pchf/%PLUGIN%.patch" reset \
         zdharma/history-search-multi-word \
         OMZP::command-not-found/command-not-found.plugin.zsh \
     pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
@@ -172,7 +172,9 @@ zt 0c light-mode binary for \
     sbin'fd*/fd;fd*/fd -> fdfind' from"gh-r" \
          @sharkdp/fd \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"; alias gi="git-ignore"' \
-        laggardkernel/git-ignore
+        laggardkernel/git-ignore \
+    sbin from"gh-r" \
+        casey/just
 
 zt 0c light-mode null for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
