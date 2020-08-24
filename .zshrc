@@ -12,7 +12,7 @@ else
         local chpwdrdf
         zstyle -g chpwdrdf ':chpwd:*' recent-dirs-file
         dirstack=($(awk -F"'" '{print $2}' "$chpwdrdf" 2>/dev/null))
-        [[ $PWD = ~ ]] && { cd ${dirstack[1]} 2>/dev/null || true }
+        [[ $PWD = ~ ]] && { cd -q ${dirstack[1]} 2>/dev/null || true }
         dirstack=("${dirstack[@]:1}")
     }
 fi
@@ -126,7 +126,8 @@ zt 0a light-mode for \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
     atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions \
-    pick'fz.sh' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
+    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" reset \
+    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
         changyuheng/fz
 
 ##################
@@ -136,7 +137,7 @@ zt 0a light-mode for \
 zt 0b light-mode for \
     pack'no-dir-color-swap' patch"$pchf/%PLUGIN%.patch" reset \
         trapd00r/LS_COLORS \
-    atinit"PER_DIRECTORY_HISTORY_BASE=$ZPFX/per-directory-history" \
+    patch"$pchf/%PLUGIN%.patch" reset\
         kadaan/per-directory-history \
     compile'{hsmw-*,test/*}' patch"$pchf/%PLUGIN%.patch" reset \
         zdharma/history-search-multi-word \

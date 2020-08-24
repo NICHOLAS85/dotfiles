@@ -23,6 +23,7 @@ thmf="${0:h}/themes"
 GENCOMPL_FPATH="${0:h}/completions"
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
+PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 
@@ -33,7 +34,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)"
 ZSH_AUTOSUGGEST_MANUAL_REBIND=set
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(dir_history history completion)
 FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
 FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
@@ -52,7 +53,7 @@ FZF_DEFAULT_OPTS="
 --cycle
 --bind ctrl-s:toggle-sort
 --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
---preview \"(bat --color=always {} || ls -l --color=always {}) 2>/dev/null | head -200\"
+--preview '(bat --color=always {} || ls --color=always \$(x={}; echo \"\${x/#\~/\$HOME}\")) 2>/dev/null | head -200'
 --preview-window right:60%
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
@@ -61,7 +62,7 @@ AUTO_LS_COMMANDS="colorls"
 AUTO_LS_NEWLINE=false
 
 FZ_HISTORY_CD_CMD=zshz
-ZSHZ_CMD="" # Don't set the alias, fz will cover that
+ZSHZ_CMD=" " # Don't set the alias, fz will cover that
 ZSHZ_UNCOMMON=1
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
