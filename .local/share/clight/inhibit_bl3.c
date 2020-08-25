@@ -30,9 +30,7 @@ DECLARE_MSG(temp_req, TEMP_REQ);
 static void init(void) {
     capture_req.capture.reset_timer = false; // avoid resetting clight internal BACKLIGHT timer
     kbd_bl_req.bl.new = 0.0;
-    temp_req.temp.smooth = 1;
-    //temp_req.temp.step = 50;
-    //temp_req.temp.timeout = 100;
+    temp_req.temp.smooth = -1;
     temp_req.temp.daytime = NIGHT;
     
     /* Subscribe to inhibit state */
