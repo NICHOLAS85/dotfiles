@@ -8,9 +8,11 @@ CursorShape=1
 
 [General]
 Command=/bedrock/cross/bin/zsh
+Directory=/home/nicholas/
 Environment=TERM=xterm-256color,COLORTERM=truecolor
 Name=Profile 1
 Parent=FALLBACK/
+StartInCurrentSessionDir=true
 
 [Keyboard]
 KeyBindings=default

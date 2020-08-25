@@ -1,5 +1,5 @@
-[[command-swipe-gesture]]
-fingers = 3
+[[swipe.commands]]
+#fingers = 3
 #left_up = ""
 #right_up = ""
 up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
@@ -9,42 +9,52 @@ down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
 left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
-[[command-swipe-gesture]]
+[[swipe.commands]]
 fingers = 4
 up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
 down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
 left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
 right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
-[[command-swipe-touch]]
+[[swipe.commands]]
 fingers = 2
+type = "TOUCH"
 up = "dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible"
 left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
-
-[[command-swipe-touch]]
-fingers = 3
+[[swipe.commands]]
+#fingers = 3
+type = "TOUCH"
 up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Expose"'
 down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Minimize"'
 
-[[command-swipe-touch]]
+[[swipe.commands]]
 fingers = 4
+type = "TOUCH"
 up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
 down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
 left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
 right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
-[[command-pinch]]
-fingers = 2
+[[pinch.commands]]
+#fingers = 2
+type = "ONESHOT"
 in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust"
 out = "xdotool key ctrl+shift+t"
 
-[command-switch]
+[switch.commands]
 laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/bin/scripts/ConvertibleLaptop/switch/landscape"
 tablet = "screenrotator & onboard &"
 
 [settings]
-interact.type = "GESTURE"
 pinch.threshold = 0.13
-gesture.threshold = 0.7
+interact.type = "GESTURE"
+
+[settings.gesture_swipe]
+threshold = 0.7
+one_shot = true
+trigger_on_release = false
+
+[settings.touch_swipe]
+longswipe_screen_percentage = 70
