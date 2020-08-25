@@ -24,8 +24,9 @@ user_pref("widget.content.gtk-theme-override", "Minwaita:light");
 /* Allow tabs to shrink more; tabs in overflow will look the same as pinned tabs */
 user_pref("materialFox.reduceTabOverflow", true);
 
-/* Disable Pocket */
+/* Disable Pocket and screenshots */
 user_pref("extensions.pocket.enabled", false);
+user_pref("extensions.screenshots.disabled". true);
 
 /* Enable VA-API Acceleration */
 user_pref("media.ffvpx.enabled", false);
@@ -35,3 +36,6 @@ user_preg("widget.wayland-dmabuf-vaapi.enabled", true);
 
 /* Allow smooth zooming */
 user_pref("apz.allow_zooming", true);
+
+/* Increase scroll speed */
+user_pref("mousewheel.default.delta_multiplier_y", 200);
