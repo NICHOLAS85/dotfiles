@@ -2,7 +2,7 @@
 
 trap 'exit' SIGINT
 
-excludefile="$HOME/Scripts/tools/dontpush"
+excludefile="$HOME/bin/scripts/tools/dontpush"
 pushfiles(){
     rsync -auvn --progress --exclude-from $excludefile ~/Documents/OneDrive/* ~/OneDrive/
     read -p "Press enter to Push";
