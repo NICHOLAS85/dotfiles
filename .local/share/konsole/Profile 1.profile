@@ -16,3 +16,6 @@ StartInCurrentSessionDir=true
 
 [Keyboard]
 KeyBindings=default
+
+[Scrolling]
+HighlightScrolledLines=false
