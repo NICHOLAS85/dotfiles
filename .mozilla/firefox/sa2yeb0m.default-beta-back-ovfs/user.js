@@ -14,7 +14,7 @@ user_pref("ui.touch.radius.enabled", true);
 
 /* Faster firefox? */
 user_pref("gfx.canvas.azure.accelerated", true);
-user_pref("gfx.webrender.all", false);
+user_pref("gfx.webrender.all", true);
 user_pref("layers.acceleration.force-enabled", true);
 user_pref("browser.tabs.remote.force-enable", true);
 
