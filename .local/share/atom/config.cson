@@ -52,6 +52,7 @@
     fontSize: 15
     preferredLineLength: 200
     showIndentGuide: true
+    showInvisibles: true
     softWrap: true
   "exception-reporting":
     userId: "ff2cb61b-13b8-4e40-b325-331a712f49a0"
@@ -83,6 +84,7 @@
   "linter-ui-default":
     alwaysTakeMinimumSpace: true
     decorateOnTreeView: "None"
+    showPanel: true
     showProviderName: true
   "linter-vnu":
     vnuUrl: "http://localhost:8844"
