@@ -71,7 +71,7 @@ zct() {
 zt light-mode for \
         romkatv/powerlevel10k \
 
-zt for if'zct dolphin' \
+zt light-mode for if'zct dolphin' \
         zdharma/null \
     if'zct p10k' \
         zdharma/null
@@ -121,10 +121,10 @@ zt 0a light-mode for \
     has'systemctl' \
         OMZP::systemd/systemd.plugin.zsh \
         OMZP::sudo/sudo.plugin.zsh \
-    blockf \
+    as'completion' blockf \
         zsh-users/zsh-completions \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
-    atload'_zsh_autosuggest_start' \
+    atload'_zsh_autosuggest_start' ver'develop' \
         zsh-users/zsh-autosuggestions \
     pick'fz.sh' patch"$pchf/%PLUGIN%.patch" reset \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
@@ -175,7 +175,9 @@ zt 0c light-mode binary for \
     sbin'bin/git-ignore' atload'export GI_TEMPLATE="$PWD/.git-ignore"; alias gi="git-ignore"' \
         laggardkernel/git-ignore \
     sbin from"gh-r" \
-        casey/just
+        casey/just \
+    sbin'lsd*/lsd' from"gh-r" \
+        Peltoche/lsd
 
 zt 0c light-mode null for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \

@@ -20,12 +20,18 @@ autoload -Uz $fpath[1]/*(.:t)
 
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
+ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 GENCOMPL_FPATH="${0:h}/completions"
 WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
 PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
+export CCACHE_DIR="${HOME}/.cache/ccache"
+export CCACHE_COMPRESS=true
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
+export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/built"
@@ -33,7 +39,7 @@ UPDATELOCAL_GITDIR="${HOME}/github/built"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)" # Don't consider 100 character entries
-ZSH_AUTOSUGGEST_COMPLETION_IGNORE="^\s*"   # Ignore leading whitespace
+ZSH_AUTOSUGGEST_COMPLETION_IGNORE="[[:space:]]*"   # Ignore leading whitespace
 ZSH_AUTOSUGGEST_MANUAL_REBIND=set
 ZSH_AUTOSUGGEST_STRATEGY=(dir_history history completion)
 FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
@@ -58,9 +64,6 @@ FZF_DEFAULT_OPTS="
 --preview-window right:60%
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
-
-AUTO_LS_COMMANDS="colorls"
-AUTO_LS_NEWLINE=false
 
 FZ_HISTORY_CD_CMD=zshz
 ZSHZ_CMD=" " # Don't set the alias, fz will cover that
@@ -94,8 +97,7 @@ alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${
 alias t='tail -f'
 alias g='git'
 alias open='xdg-open'
-alias atom='atom-beta --disable-gpu'
-alias apm='apm-beta'
+alias atom='atom --disable-gpu'
 alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
 # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
 $isdolphin && alias cd='clear -x; cd'
@@ -105,9 +107,10 @@ alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPF
 export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 (( ${+commands[brl]} )) && {
-(){ local stratum strata=( /bedrock/run/enabled_strata/* )
+(){ local stratum strata=( /bedrock/run/enabled_strata/* local)
 for stratum in ${strata:t}; do
 hash -d "${stratum}"="/bedrock/strata/${stratum}"
+[[ "${stratum}" = "local" ]] && continue
 alias "${stratum}"="strat ${stratum}"
 alias "r${stratum}"="strat -r ${stratum}"
 [[ -d "/bedrock/strata/${stratum}/etc/.git" ]] && \
