@@ -57,7 +57,7 @@ static void receive(const msg_t *msg, const void *userdata) {
                     if (clightBLCTRL){
                         sprintf(cmd, "echo '%.3lf %.3lf' >> %s%sdata", up->new, bl_level, logpath, mode ? "AC-" : "BAT-");
                     } else {
-                        sprintf(cmd, "busctl call org.clightd.clightd /org/clightd/clightd/Backlight org.clightd.clightd.Backlight Get s '' | awk '{print \"%.3lf \"$4}' >> %s%sdata", up->new, logpath, mode ? "AC-" : "BAT-");
+                        sprintf(cmd, "busctl call org.clightd.clightd /org/clightd/clightd/Backlight org.clightd.clightd.Backlight Get s '' | awk '{print \"%.3lf \"$NF}' >> %s%sdata", up->new, logpath, mode ? "AC-" : "BAT-");
                     }
                     system(cmd);
                     DEBUG("Ran %s\n", cmd);
