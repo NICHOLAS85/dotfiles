@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+PATH=:$PATH:
+PATH=${PATH//:$(dirname $0):/:}
+PATH=${PATH#:}
+PATH=${PATH%:}
+
+export HOME="$HOME/.local/home"
+
+exec "$(basename $0)" "$@"
