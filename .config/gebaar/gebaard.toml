@@ -40,13 +40,13 @@ right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick
 [[pinch.commands]]
 #fingers = 2
 type = "ONESHOT"
-in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust"
+in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust &"
 out = "xdotool key ctrl+shift+t"
 
 [[pinch.commands]]
 type = "CONTINUOUS"
-rotate_left = "qdbus org.kde.kglobalaccel /component/kmix invokeShortcut \"decrease_volume\""
-rotate_right = "qdbus org.kde.kglobalaccel /component/kmix invokeShortcut \"increase_volume\""
+rotate_left = "brillo -u 1000 -U 4"
+rotate_right = "brillo -u 1000 -A 4"
 
 [switch.commands]
 laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/bin/scripts/ConvertibleLaptop/switch/landscape"
@@ -54,7 +54,7 @@ tablet = "screenrotator & onboard &"
 
 [settings]
 pinch.threshold = 0.13
-interact.type = "GESTURE"
+interact.type = "BOTH"
 
 [settings.gesture_swipe]
 threshold = 0.7
