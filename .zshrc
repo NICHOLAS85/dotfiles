@@ -51,16 +51,7 @@ fi
 
 # Functions to make configuration less verbose
 # zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
-# zct(): First argument provides $MYPROMPT value used in load'' and unload'' ices. Sources a config file with tracking for easy unloading using $MYPROMPT value. Small hack to function in for-syntax
 zt()  { zinit depth'3' lucid ${1/#[0-9][a-c]/wait"$1"} "${@:2}"; }
-zct() {
-    thmf="${ZINIT[PLUGINS_DIR]}/_local---config-files/themes"
-    if [[ ${1} != ${MYPROMPT=p10k} ]] && { ___turbo=1; .zinit-ice \
-    load"[[ \${MYPROMPT} = ${1} ]]" unload"[[ \${MYPROMPT} != ${1} ]]" }
-    .zinit-ice atload'! [[ -f "${thmf}/${MYPROMPT}-post.zsh" ]] && source "${thmf}/${MYPROMPT}-post.zsh"' \
-    nocd id-as"${1}-theme";
-    ICE+=("${(kv)ZINIT_ICES[@]}"); ZINIT_ICES=();
-}
 
 ##################
 # Initial Prompt #
@@ -68,13 +59,17 @@ zct() {
 # Config source  #
 ##################
 
-zt light-mode for \
-        romkatv/powerlevel10k \
-
-zt light-mode for if'zct dolphin' \
-        zdharma/null \
-    if'zct p10k' \
-        zdharma/null
+(){
+    thmf="${ZINIT[PLUGINS_DIR]}/_local---config-files/themes"
+    if [[ -f ${thmf}/${1}-pre.zsh || -f ${thmf}/${1}-post.zsh ]] && {
+        zt light-mode for \
+                romkatv/powerlevel10k \
+            id-as"${1}-theme" \
+            atinit"[[ -f ${thmf}/${1}-pre.zsh ]] && source ${thmf}/${1}-pre.zsh" \
+            atload"[[ -f ${thmf}/${1}-post.zsh ]] && source ${thmf}/${1}-post.zsh" \
+                zdharma/null
+    } || echo "$1 theme not found"
+} "${MYPROMPT=p10k}"
 
 zt light-mode compile'*handler' for \
         zinit-zsh/z-a-patch-dl \
@@ -116,48 +111,46 @@ zt light-mode for \
 
 zt 0a light-mode for \
         OMZL::completion.zsh \
-    if'false' ver'dev' \
-        marlonrichert/zsh-autocomplete \
     has'systemctl' \
         OMZP::systemd/systemd.plugin.zsh \
         OMZP::sudo/sudo.plugin.zsh \
     as'completion' blockf \
         zsh-users/zsh-completions \
-    compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' \
-    atload'_zsh_autosuggest_start' ver'develop' \
-        zsh-users/zsh-autosuggestions \
-    pick'fz.sh' patch"$pchf/%PLUGIN%.patch" reset \
-    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
-        changyuheng/fz
+    as'completion' mv'*.zsh -> _git' \
+        felipec/git-completion \
+    compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' ver'develop' \
+    atload'_zsh_autosuggest_start; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
+        zsh-users/zsh-autosuggestions
 
 ##################
 # Wait'0b' block #
 ##################
 
-zt 0b light-mode for \
-    pack'no-dir-color-swap' patch"$pchf/%PLUGIN%.patch" reset \
+zt 0b light-mode patch"$pchf/%PLUGIN%.patch" reset nocompile'!' for \
+    pick'fz.sh' \
+        changyuheng/fz \
+    pack'no-dir-color-swap' \
         trapd00r/LS_COLORS \
-    patch"$pchf/%PLUGIN%.patch" reset\
         kadaan/per-directory-history \
-    compile'{hsmw-*,test/*}' patch"$pchf/%PLUGIN%.patch" reset \
+    compile'{hsmw-*,test/*}' \
         zdharma/history-search-multi-word \
+    pick'dircycle.zsh' trackbinds \
+    bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
+        michaelxmcbride/zsh-dircycle
+
+zt 0b light-mode for \
         OMZP::command-not-found/command-not-found.plugin.zsh \
-    pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
-        hlissner/zsh-autopair \
-    trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' patch"$pchf/%PLUGIN%.patch" \
-    reset pick'dircycle.zsh' \
-        michaelxmcbride/zsh-dircycle \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
-    pick'autoenv.zsh' nocompletions \
-        Tarrasch/zsh-autoenv \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
         zdharma/fast-syntax-highlighting \
+    pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
+        hlissner/zsh-autopair \
+    pick'autoenv.zsh' nocompletions \
+        Tarrasch/zsh-autoenv \
     atload'bindkey "$terminfo[kcuu1]" history-substring-search-up;
     bindkey "$terminfo[kcud1]" history-substring-search-down' \
-        zsh-users/zsh-history-substring-search \
-    as'completion' mv'*.zsh -> _git' \
-        felipec/git-completion \
+        zsh-users/zsh-history-substring-search
 
 ##################
 # Wait'0c' block #
@@ -191,5 +184,5 @@ zt 0c light-mode null for \
         nateshmbhat/rm-trash \
     sbin \
         kazhala/dotbare \
-    id-as'Cleanup' nocd atinit'unset -f zct zt; SPACESHIP_PROMPT_ADD_NEWLINE=true; _zsh_autosuggest_bind_widgets' \
+    id-as'Cleanup' nocd atinit'unset -f zt; SPACESHIP_PROMPT_ADD_NEWLINE=true; _zsh_autosuggest_bind_widgets' \
         zdharma/null
