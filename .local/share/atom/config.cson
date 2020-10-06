@@ -41,6 +41,7 @@
       "package-generator"
       "teletype"
       "markdown-preview"
+      "linter-gcc"
     ]
     telemetryConsent: "no"
     themes: [
@@ -64,6 +65,9 @@
     showHash: false
   github: {}
   linter: {}
+  "linter-cppcheck":
+    enableMissingInclude: true
+    enableUnusedFunction: true
   "linter-eslint":
     disabling:
       disableWhenNoEslintConfig: false

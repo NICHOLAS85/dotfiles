@@ -14,8 +14,13 @@ Name=Profile 1
 Parent=FALLBACK/
 StartInCurrentSessionDir=true
 
+[Interaction Options]
+TrimLeadingSpacesInSelectedText=false
+TrimTrailingSpacesInSelectedText=true
+
 [Keyboard]
 KeyBindings=default
 
 [Scrolling]
 HighlightScrolledLines=false
+HistoryMode=2
