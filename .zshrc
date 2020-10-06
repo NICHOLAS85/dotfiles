@@ -118,7 +118,7 @@ zt 0a light-mode for \
         zsh-users/zsh-completions \
     as'completion' mv'*.zsh -> _git' \
         felipec/git-completion \
-    compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' ver'develop' \
+    compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' ver'develop' atpull'zinit cclear' \
     atload'_zsh_autosuggest_start; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
         zsh-users/zsh-autosuggestions
 
