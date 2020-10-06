@@ -1,5 +1,5 @@
 [[swipe.commands]]
-#fingers = 3
+fingers = 3
 #left_up = ""
 #right_up = ""
 up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
@@ -24,7 +24,7 @@ left = "xdotool key alt+Right"
 right = "xdotool key alt+Left"
 
 [[swipe.commands]]
-#fingers = 3
+fingers = 3
 type = "TOUCH"
 up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Expose"'
 down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Minimize"'
@@ -38,7 +38,7 @@ left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick 
 right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
 [[pinch.commands]]
-#fingers = 2
+fingers = 2
 type = "ONESHOT"
 in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust &"
 out = "xdotool key ctrl+shift+t"
@@ -48,7 +48,7 @@ type = "CONTINUOUS"
 rotate_left = "brillo -u 1000 -U 4"
 rotate_right = "brillo -u 1000 -A 4"
 
-[switch.commands]
+[[switch.commands]]
 laptop = "pkill onboard; pkill screenrotator; /bin/bash /home/nicholas/bin/scripts/ConvertibleLaptop/switch/landscape"
 tablet = "screenrotator & onboard &"
 
