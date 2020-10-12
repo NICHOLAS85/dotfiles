@@ -136,7 +136,9 @@ zt 0b light-mode patch"$pchf/%PLUGIN%.patch" reset nocompile'!' for \
         zdharma/history-search-multi-word \
     pick'dircycle.zsh' trackbinds \
     bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
-        michaelxmcbride/zsh-dircycle
+        michaelxmcbride/zsh-dircycle \
+    blockf nocompletions \
+        marlonrichert/zsh-edit
 
 zt 0b light-mode for \
         OMZP::command-not-found/command-not-found.plugin.zsh \
