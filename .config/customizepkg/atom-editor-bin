@@ -1,0 +1,1 @@
+addline#package#mv usr#  chmod 4755 "$pkgdir"/usr/share/atom/chrome-sandbox
