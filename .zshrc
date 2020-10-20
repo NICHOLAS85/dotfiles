@@ -141,7 +141,6 @@ zt 0b light-mode patch"$pchf/%PLUGIN%.patch" reset nocompile'!' for \
         marlonrichert/zsh-edit
 
 zt 0b light-mode for \
-        OMZP::command-not-found/command-not-found.plugin.zsh \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
