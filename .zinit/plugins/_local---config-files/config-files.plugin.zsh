@@ -60,7 +60,7 @@ FZF_DEFAULT_OPTS="
 --bind ctrl-s:toggle-sort
 --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
 --preview '(bat --color=always {} || ls --color=always \$(x={}; echo \"\${x/#\~/\$HOME}\")) 2>/dev/null | head -200'
---preview-window right:60%
+--preview-window right:65%:wrap
 "
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
 
@@ -104,6 +104,7 @@ $isdolphin && alias cd='clear -x; cd'
 # dot file management
 alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare" dotbare'
 export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+export DOTBARE_DIFF_PAGER=diff-so-fancy
 
 (( ${+commands[brl]} )) && {
 (){ local stratum strata=( /bedrock/run/enabled_strata/* local)
@@ -133,6 +134,8 @@ setopt interactive_comments # Allow comments even in interactive shells (especia
 setopt pushd_ignore_dups    # don't push multiple copies of the same directory onto the directory stack
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
+setopt pushd_silent         # Silence pushd
+setopt glob_dots            # Use for hidden files in cd comp
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate
@@ -140,24 +143,41 @@ zstyle ':completion:*:match:*' original only
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
 
 # Pretty completions
-zstyle ':completion:*:matches' group 'yes'
-zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+#zstyle ':completion:*:matches' group 'yes'
+#zstyle ':completion:*:options' description 'yes'
+#zstyle ':completion:*:options' auto-description '%d'
+#zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+#zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:descriptions' format '[%d]'
+#zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*' group-name ''
+#zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+#zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
 zstyle ':completion:*' use-cache true
-zstyle ':completion:*' rehash true
+zstyle ':completion:*' special-dirs true
+
+# fzf-tab
+zstyle ':fzf-tab:*' fzf-bindings ' :accept'   # Space as accept
+zstyle ':fzf-tab:*' prefix ''                 # No dot prefix
+zstyle ':fzf-tab:*' single-group color header # Show header for single groups
+zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview 'ls -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:micro:argument-rest' fzf-preview 'bat --color=always $realpath 2>/dev/null || ls --color=always $(x=$realpath; echo "${x/#\~/$HOME}")'
+zstyle ':fzf-tab:complete:micro:argument-rest' fzf-flags --preview-window=right:65%
+zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-preview "git --git-dir=$UPDATELOCAL_GITDIR/\${word}/.git log --color --date=short --pretty=format:'%Cgreen%cd %h %Creset%s %Cred%d%Creset ||%n%b' ..FETCH_HEAD 2>/dev/null"
+zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-flags --preview-window=down:5:wrap
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+  '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+
 
 bindkey '^[[1;5C' forward-word   # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word  # [Ctrl-LeftArrow]  - move backward one word
 bindkey -s '^[[5~' ''            # Do nothing on pageup and pagedown. Better than printing '~'.
 bindkey -s '^[[6~' ''
 bindkey '^[[3;5~' kill-word      # ctrl+del   delete next word
+# bindkey '^h' _complete_help

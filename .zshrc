@@ -116,7 +116,7 @@ zt 0a light-mode for \
         OMZP::sudo/sudo.plugin.zsh \
     as'completion' blockf \
         zsh-users/zsh-completions \
-    as'completion' mv'*.zsh -> _git' \
+    as'completion' mv'*.zsh -> _git' patch"$pchf/%PLUGIN%.patch" reset \
         felipec/git-completion \
     compile'{src/*.zsh,src/strategies/*}' pick'zsh-autosuggestions.zsh' ver'develop' atpull'zinit cclear' \
     atload'_zsh_autosuggest_start; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert __fz_zsh_completion)' \
@@ -145,6 +145,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
         zdharma/fast-syntax-highlighting \
+        Aloxaf/fzf-tab \
     pick'autopair.zsh' nocompletions atload'bindkey "^H" backward-kill-word; ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair \
     pick'autoenv.zsh' nocompletions \
@@ -171,7 +172,9 @@ zt 0c light-mode binary for \
     sbin from"gh-r" \
         casey/just \
     sbin'lsd*/lsd' from"gh-r" \
-        Peltoche/lsd
+        Peltoche/lsd \
+    sbin \
+        kazhala/dotbare
 
 zt 0c light-mode null for \
     sbin"bin/git-dsf;bin/diff-so-fancy" \
@@ -183,7 +186,5 @@ zt 0c light-mode null for \
     sbin'*/rm-trash' reset \
     patch"$pchf/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
-    sbin \
-        kazhala/dotbare \
     id-as'Cleanup' nocd atinit'unset -f zt; SPACESHIP_PROMPT_ADD_NEWLINE=true; _zsh_autosuggest_bind_widgets' \
         zdharma/null
