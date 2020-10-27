@@ -32,7 +32,9 @@ user_pref("extensions.screenshots.disabled". true);
 user_pref("media.ffvpx.enabled", false);
 user_pref("media.ffmpeg.vaapi-drm-display.enabled", true);
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_preg("widget.wayland-dmabuf-vaapi.enabled", true);
+user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
+user_pref("media.ffmpeg.low-latency.enabled", true);
+user_pref("media.navigator.mediadatadecoder_vpx_enabled", true);
 
 /* Allow smooth zooming */
 user_pref("apz.allow_zooming", true);
