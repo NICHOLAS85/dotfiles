@@ -12,6 +12,23 @@
 fpath=("${0:h}/functions" "${fpath[@]}")
 autoload -Uz $fpath[1]/*(.:t)
 
+_zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a completion
+    emulate -L zsh
+    if $_per_directory_history_is_global && [[ -r "$_per_directory_history_path" ]]; then
+        setopt EXTENDED_GLOB
+        fc -a -p "$_per_directory_history_path"
+        local prefix="${1//(#m)[\\*?[\]<>()|^~#]/\\$MATCH}"
+        local pattern="$prefix*"
+        if [[ -n $ZSH_AUTOSUGGEST_HISTORY_IGNORE ]]; then
+        pattern="($pattern)~($ZSH_AUTOSUGGEST_HISTORY_IGNORE)"
+        fi
+        local dir_history=()
+        typeset -g suggestion="${history[(r)$pattern]}"
+    else
+        typeset -g suggestion=
+    fi
+}
+
 ! $isdolphin && add-zsh-hook chpwd chpwd_ls
 
 #########################
@@ -22,22 +39,23 @@ pchf="${0:h}/patches"
 thmf="${0:h}/themes"
 ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 GENCOMPL_FPATH="${0:h}/completions"
+GENCOMP_DIR="${0:h}/completions"
 MANPATH="${ZPFX}/man:${MANPATH}"
-WD_CONFIG="${ZPFX}/warprc"
 ZSHZ_DATA="${ZPFX}/z"
 PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
-export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
+export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
+export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
+export TMPPREFIX="${TMPDIR%/}/zsh"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
 UPDATELOCAL_GITDIR="${HOME}/github/built"
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)" # Don't consider 100 character entries
+ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)" # Do not consider 100 character entries
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE="[[:space:]]*"   # Ignore leading whitespace
 ZSH_AUTOSUGGEST_MANUAL_REBIND=set
 ZSH_AUTOSUGGEST_STRATEGY=(dir_history history completion)
@@ -65,7 +83,7 @@ FZF_DEFAULT_OPTS="
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
 
 FZ_HISTORY_CD_CMD=zshz
-ZSHZ_CMD=" " # Don't set the alias, fz will cover that
+ZSHZ_CMD=" " # Do not set the alias, fz will cover that
 ZSHZ_UNCOMMON=1
 forgit_ignore="/dev/null" #replaced gi with local git-ignore plugin
 
@@ -126,8 +144,8 @@ alias bedots='command sudo DOTBARE_FZF_DEFAULT_OPTS="$DOTBARE_FZF_DEFAULT_OPTS" 
 bindkey -e                  # EMACS bindings
 setopt append_history       # Allow multiple terminal sessions to all append to one zsh command history
 setopt hist_ignore_all_dups # delete old recorded entry if new entry is a duplicate.
-setopt no_beep              # don't beep on error
-setopt auto_cd              # If you type foo, and it isn't a command, and it is a directory in your cdpath, go there
+setopt no_beep              # do not beep on error
+setopt auto_cd              # If you type foo, and it is not a command, and it is a directory in your cdpath, go there
 setopt multios              # perform implicit tees or cats when multiple redirections are attempted
 setopt prompt_subst         # enable parameter expansion, command substitution, and arithmetic expansion in the prompt
 setopt interactive_comments # Allow comments even in interactive shells (especially for Muness)
@@ -135,7 +153,8 @@ setopt pushd_ignore_dups    # don't push multiple copies of the same directory o
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
 setopt pushd_silent         # Silence pushd
-setopt glob_dots            # Use for hidden files in cd comp
+#setopt glob_dots            # Use for hidden files in cd comp
+setopt extended_glob
 
 # Fuzzy matching of completions for when you mistype them:
 zstyle ':completion:*' completer _complete _match _approximate
@@ -161,11 +180,13 @@ zstyle ':completion:*' use-cache true
 zstyle ':completion:*' special-dirs true
 
 # fzf-tab
-zstyle ':fzf-tab:*' fzf-bindings ' :accept'   # Space as accept
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept'   # Space as accept
+zstyle ':fzf-tab:*' print-query ctrl-c        # Use input as result when ctrl-c
+zstyle ':fzf-tab:*' accept-line enter
 zstyle ':fzf-tab:*' prefix ''                 # No dot prefix
 zstyle ':fzf-tab:*' single-group color header # Show header for single groups
-zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview 'ls -1 --color=always $realpath'
-zstyle ':fzf-tab:complete:micro:argument-rest' fzf-preview 'bat --color=always $realpath 2>/dev/null || ls --color=always $(x=$realpath; echo "${x/#\~/$HOME}")'
+zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview 'ls -1 --color=always -- $realpath'
+zstyle ':fzf-tab:complete:((micro|cp|rm):argument-rest|kate:*)' fzf-preview 'bat --color=always -- $realpath 2>/dev/null || ls --color=always -- $realpath'
 zstyle ':fzf-tab:complete:micro:argument-rest' fzf-flags --preview-window=right:65%
 zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-preview "git --git-dir=$UPDATELOCAL_GITDIR/\${word}/.git log --color --date=short --pretty=format:'%Cgreen%cd %h %Creset%s %Cred%d%Creset ||%n%b' ..FETCH_HEAD 2>/dev/null"
 zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-flags --preview-window=down:5:wrap
