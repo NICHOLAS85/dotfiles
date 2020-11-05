@@ -45,7 +45,7 @@ zmodload zdharma/zplugin &>/dev/null
 if [[ ! -d "${ZINIT[PLUGINS_DIR]}/_local---config-files" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing local config-files…%f"
     curl https://codeload.github.com/NICHOLAS85/dotfiles/tar.gz/xps_13_9365_refresh | \
-    tar -xz --strip=3 dotfiles-xps_13_9365/.zinit/plugins/_local---config-files
+    tar -xz --strip=3 dotfiles-xps_13_9365_refresh/.zinit/plugins/_local---config-files
     mv _local---config-files "${ZINIT[PLUGINS_DIR]}/"
 fi
 
