@@ -1,24 +1,33 @@
---- zdharma---history-search-multi-word/history-search-multi-word	2020-08-23 06:19:40.538991017 -0400
-+++ zdharma---history-search-multi-word/history-search-multi-word-patch	2020-08-23 06:19:35.409006283 -0400
-@@ -19,6 +19,8 @@
- # zstyle ":plugin:history-search-multi-word" synhl "yes"
- # zstyle ":plugin:history-search-multi-word" clear-on-cancel "no"
- 
-+[[ -z $HISTORY_BASE ]] && HISTORY_BASE="$HOME/.directory_history"
-+[[ -z $PER_DIRECTORY_HISTORY_TOGGLE ]] && PER_DIRECTORY_HISTORY_TOGGLE='^G'
- [[ "$__HSMW_MH_SOURCED" != "1" ]] && source "$HSMW_REPO_DIR/hsmw-highlight"
- local right_brace_is_recognised_everywhere
- integer path_dirs_was_set multi_func_def ointeractive_comments
-@@ -169,7 +171,11 @@
+--- zdharma---history-search-multi-word/history-search-multi-word	2020-11-05 23:01:31.568455761 -0500
++++ zdharma---history-search-multi-word/history-search-multi-word-patch	2020-11-05 23:01:18.603608347 -0500
+@@ -169,7 +169,11 @@
          # Colorify
          #
  
 -        local preamble=$'\n'"Ctrl-K – context, Ctrl-J – bump. Entry #$__hsmw_hcw_index of $max_index"$'\n'
 +        local history_type=""
 +        if (( ${+_per_directory_history_is_global} )); then
-+          history_type=", Ctrl-G – $(if [[ $_per_directory_history_is_global == false ]]; then echo 'global'; else echo "local"; fi)"
++          history_type=", Ctrl-G – ${${_per_directory_history_is_global/false/global}/true/local}"
 +        fi
 +        local preamble=$'\n'"Ctrl-K – context, Ctrl-J – bump$history_type. Entry #$__hsmw_hcw_index of $max_index"$'\n'
          integer offset=${#preamble}+${#BUFFER}
          POSTDISPLAY="$preamble$text"
  
+@@ -408,7 +412,7 @@
+     trap '(( __hsmw_recedit_trap_executed == 0 )) && zle && { __hsmw_recedit_trap_executed=1; zle .send-break; }' INT
+ 
+     if zle .recursive-edit -K hsmw; then
+-        trap '' INT
++        trap - INT
+ 
+         if [[ "$__hsmw_hcw_index" -gt "0" ]]; then
+             if (( __hsmw_ctx )); then
+@@ -427,7 +431,7 @@
+             unset __hsmw_conc
+         fi
+     else
+-        trap '' INT
++        trap - INT
+         (( __hsmw_conc )) && BUFFER=""
+         unset __hsmw_conc
+     fi
