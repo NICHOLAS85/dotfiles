@@ -37,11 +37,11 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
 
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
-ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 GENCOMPL_FPATH="${0:h}/completions"
 GENCOMP_DIR="${0:h}/completions"
 MANPATH="${ZPFX}/man:${MANPATH}"
 ZSHZ_DATA="${ZPFX}/z"
+HISTFILE="${HOME}/.histfile"
 PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
@@ -157,7 +157,7 @@ setopt pushd_silent         # Silence pushd
 setopt extended_glob
 
 # Fuzzy matching of completions for when you mistype them:
-zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' completer _complete _match _list _ignored _correct _approximate
 zstyle ':completion:*:match:*' original only
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
 
@@ -202,3 +202,4 @@ bindkey -s '^[[5~' ''            # Do nothing on pageup and pagedown. Better tha
 bindkey -s '^[[6~' ''
 bindkey '^[[3;5~' kill-word      # ctrl+del   delete next word
 # bindkey '^h' _complete_help
+bindkey '^I' expand-or-complete-prefix # Fix autopair completion within brackets
