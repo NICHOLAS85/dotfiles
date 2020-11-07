@@ -62,6 +62,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(dir_history history completion)
 FAST_ALIAS_TIPS_PREFIX="» $(tput setaf 6)"
 FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
+AUTOPAIR_CTRL_BKSPC_WIDGET=".backward-kill-word"
 
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
@@ -203,3 +204,4 @@ bindkey -s '^[[6~' ''
 bindkey '^[[3;5~' kill-word      # ctrl+del   delete next word
 # bindkey '^h' _complete_help
 bindkey '^I' expand-or-complete-prefix # Fix autopair completion within brackets
+bindkey '^H' backward-kill-word

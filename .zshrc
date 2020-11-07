@@ -117,24 +117,11 @@ zt 0a light-mode for \
 # Wait'0b' block #
 ##################
 
-zt 0b light-mode for \
-    autoload'#manydots-magic' \
-        knu/zsh-manydots-magic \
-    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f in *~*.zwc; do zcompile -Uz -- ${f};done}' \
-    compile'.*fast*' nocompletions atpull'%atclone' \
-        zdharma/fast-syntax-highlighting \
-    pick'autopair.zsh' atload'bindkey "^H" backward-kill-word;ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
-        hlissner/zsh-autopair \
-    pick'autoenv.zsh' nocompletions \
-        Tarrasch/zsh-autoenv \
-    atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;
-    bindkey "${terminfo[kcud1]}" history-substring-search-down' \
-        zsh-users/zsh-history-substring-search
-
 zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     pick'fz.sh' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
+    pick'autopair.zsh' atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
+        hlissner/zsh-autopair \
     pack'no-dir-color-swap' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
     pick'per-directory-history.zsh' \
@@ -148,6 +135,19 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         marlonrichert/zsh-edit \
     pick'fzf-tab.zsh' blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab
+
+zt 0b light-mode for \
+    autoload'#manydots-magic' \
+        knu/zsh-manydots-magic \
+    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
+    atclone'(){local f;cd -q →*;for f in *~*.zwc; do zcompile -Uz -- ${f};done}' \
+    compile'.*fast*' nocompletions atpull'%atclone' \
+        zdharma/fast-syntax-highlighting \
+    pick'autoenv.zsh' nocompletions \
+        Tarrasch/zsh-autoenv \
+    atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;
+    bindkey "${terminfo[kcud1]}" history-substring-search-down' \
+        zsh-users/zsh-history-substring-search
 
 ##################
 # Wait'0c' block #
