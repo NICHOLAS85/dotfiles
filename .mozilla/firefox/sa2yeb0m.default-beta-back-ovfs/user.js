@@ -41,3 +41,7 @@ user_pref("apz.allow_zooming", true);
 
 /* Increase scroll speed */
 user_pref("mousewheel.default.delta_multiplier_y", 200);
+
+/* Faster Pageload extension */
+user_pref("network.dns.disablePrefetchFromHTTPS", false);
+user_pref("network.predictor.enable-prefetch", true);
