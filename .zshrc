@@ -3,14 +3,18 @@
 # Change shell behavior when opening the terminal view in dolphin. MYPROMPT set by konsole profile
 if ! [[ $MYPROMPT = dolphin ]]; then
     isdolphin=false
-    # Use chpwd_recent_dirs to start new sessions from last open dir
+    # Use chpwd_recent_dirs to start new sessions from last working dir
     # Populate dirstack with chpwd history
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
     dirstack=($(awk -F"'" '{print $2}' ${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null))
-    [[ ${PWD} = ~ ]] && { cd -q ${dirstack[1]} 2>/dev/null || true }
-    dirstack=("${dirstack[@]:1}")
+    [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
+        local dir
+        for dir ($dirstack){
+            [[ -d ${dir} ]] && { cd -q ${dir}; break }
+        }
+    } 2>/dev/null
 fi || isdolphin=true
 
 # Enable Powerlevel10k instant prompt
@@ -48,15 +52,18 @@ zt(){ zinit depth'3' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}"; }
 #     Prompt     #
 ##################
 
+zt light-mode blockf svn id-as for \
+        https://github.com/NICHOLAS85/dotfiles/trunk/.zinit/snippets/config
+
 # zcompile doesn't support Unicode file names, planned on using compile'*handler' ice.
 # https://www.zsh.org/mla/workers/2020/msg01057.html
 zt light-mode for \
         zinit-zsh/z-a-patch-dl \
+    patch"${pchf}/%PLUGIN%.patch" reset \
         zinit-zsh/z-a-bin-gem-node \
-        zinit-zsh/z-a-submods
-
-zt light-mode blockf svn id-as for \
-        https://github.com/NICHOLAS85/dotfiles/trunk/.zinit/snippets/config
+        zinit-zsh/z-a-submods \
+        NICHOLAS85/z-a-zman \
+        NICHOLAS85/z-a-linkbin
 
 (){ # Load $MYPROMPT configuration and powerlevel10k
     if [[ -f ${thmf}/${1}-pre.zsh || -f ${thmf}/${1}-post.zsh ]] && {
@@ -138,7 +145,7 @@ zt 0b light-mode for \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f in *~*.zwc; do zcompile -Uz -- ${f};done}' \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}}}' \
     compile'.*fast*' nocompletions atpull'%atclone' \
         zdharma/fast-syntax-highlighting \
     pick'autoenv.zsh' nocompletions \
@@ -155,28 +162,30 @@ zt 0c light-mode for \
     pack'bgn-binary' \
         fzf
 
-zt 0c light-mode binary for \
-    sbin'fd*/fd;fd*/fd -> fdfind' from"gh-r" mv'**/fd.1 -> ${ZPFX}/man/man1' atpull'%atclone' \
-        @sharkdp/fd \
-    sbin'bat*/bat' from"gh-r" atclone'mv -f **/*.zsh _bat; mv -u **/bat.1 ${ZPFX}/man/man1' atpull'%atclone' \
-        @sharkdp/bat \
-    sbin'*/git-ignore' atload'export GI_TEMPLATE="${PWD}/.git-ignore"; alias gi="git-ignore"' \
-        laggardkernel/git-ignore \
-    sbin from"gh-r" mv'just.1 -> ${ZPFX}/man/man1' atclone'./just --completions zsh > _just' atpull'%atclone' \
+zt 0c light-mode binary from'gh-r' zman lbin for \
+    atclone'./just --completions zsh > _just' atpull'%atclone' \
         casey/just \
-    sbin'lsd*/lsd' from"gh-r" \
+    bpick'*linux64*' \
+        zyedidia/micro \
+    atclone'mv -f **/*.zsh _bat' atpull'%atclone' \
+        @sharkdp/bat \
+        @sharkdp/hyperfine \
+        @sharkdp/fd
+
+zt 0c light-mode binary for \
+    lbin \
+        laggardkernel/git-ignore \
+    lbin from'gh-r' \
         Peltoche/lsd \
-    sbin \
+    fbin \
         kazhala/dotbare
 
 zt 0c light-mode null for \
-    sbin"*/git-dsf;*/diff-so-fancy" \
+    lbin"*/git-dsf;!*/diff-so-fancy" \
         zdharma/zsh-diff-so-fancy \
-    sbin \
+    lbin \
         paulirish/git-open \
-    sbin'm*/micro' from"gh-r" bpick'*linux64*' mv'**/micro.1 -> ${ZPFX}/man/man1' \
-        zyedidia/micro \
-    sbin'*/rm-trash' reset patch"${pchf}/%PLUGIN%.patch" mv'**/rm-trash.1 -> ${ZPFX}/man/man1' \
+    lbin zman reset patch"${pchf}/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
     id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
         zdharma/null

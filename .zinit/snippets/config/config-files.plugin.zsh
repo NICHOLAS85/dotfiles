@@ -39,7 +39,6 @@ pchf="${0:h}/patches"
 thmf="${0:h}/themes"
 GENCOMPL_FPATH="${0:h}/completions"
 GENCOMP_DIR="${0:h}/completions"
-MANPATH="${ZPFX}/man:${MANPATH}"
 ZSHZ_DATA="${ZPFX}/z"
 HISTFILE="${HOME}/.histfile"
 PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
@@ -64,11 +63,13 @@ FAST_ALIAS_TIPS_SUFFIX="$(tput sgr0) «"
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 AUTOPAIR_CTRL_BKSPC_WIDGET=".backward-kill-word"
 
+export GI_TEMPLATE="${ZPFX}/git-ignore-template"
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy
 export rm_opts=(-I -v)
 export EDITOR=micro
 export SYSTEMD_EDITOR=${EDITOR}
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true # etckeeper on bedrock
+
 FZF_DEFAULT_OPTS="
 --border
 --height 80%
@@ -114,6 +115,7 @@ alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${
 
 alias t='tail -f'
 alias g='git'
+alias gi="git-ignore"
 alias open='xdg-open'
 alias atom='atom --disable-gpu'
 alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
