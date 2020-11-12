@@ -10,6 +10,7 @@
     "savecursor": true,
     "saveundo": true,
     "scrollbar": true,
+    "scrollmargin": 2,
     "softwrap": true,
     "tabmovement": true,
     "tabstospaces": true

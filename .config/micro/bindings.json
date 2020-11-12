@@ -8,6 +8,4 @@
     "CtrlShiftRight": "SelectWordRight",
     "CtrlUnderscore": "lua:comment.comment",
     "CtrlUp": "ParagraphPrevious",
-    "MouseWheelUp":   "ScrollUp,CursorUp,CursorUp",
-    "MouseWheelDown": "ScrollDown,CursorDown,CursorDown"
 }
