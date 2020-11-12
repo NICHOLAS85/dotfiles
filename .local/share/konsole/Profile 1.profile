@@ -24,3 +24,4 @@ KeyBindings=default
 [Scrolling]
 HighlightScrolledLines=false
 HistoryMode=2
+ScrollBarPosition=2

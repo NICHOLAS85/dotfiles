@@ -1,7 +1,7 @@
 [Appearance]
 BoldIntense=false
 ColorScheme=MateriaDark
-Font=FiraCode Nerd Font,11,-1,5,50,0,0,0,0,0,Regular
+Font=FiraCode Nerd Font,11,-1,5,50,0,0,0,0,0
 
 [Cursor Options]
 CursorShape=1
@@ -14,3 +14,6 @@ Parent=FALLBACK/
 
 [Keyboard]
 KeyBindings=default
+
+[Scrolling]
+HighlightScrolledLines=false
