@@ -15,7 +15,9 @@ if ! [[ $MYPROMPT = dolphin ]]; then
             [[ -d ${dir} ]] && { cd -q ${dir}; break }
         }
     } 2>/dev/null
-fi || isdolphin=true
+else
+    isdolphin=true
+fi
 
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -59,7 +61,6 @@ zt light-mode blockf svn id-as for \
 # https://www.zsh.org/mla/workers/2020/msg01057.html
 zt light-mode for \
         zinit-zsh/z-a-patch-dl \
-    patch"${pchf}/%PLUGIN%.patch" reset \
         zinit-zsh/z-a-bin-gem-node \
         zinit-zsh/z-a-submods \
         NICHOLAS85/z-a-zman \
@@ -158,10 +159,6 @@ zt 0b light-mode for \
 # Wait'0c' block #
 ##################
 
-zt 0c light-mode for \
-    pack'bgn-binary' \
-        fzf
-
 zt 0c light-mode binary from'gh-r' zman lbin for \
     atclone'./just --completions zsh > _just' atpull'%atclone' \
         casey/just \
@@ -185,7 +182,11 @@ zt 0c light-mode null for \
         zdharma/zsh-diff-so-fancy \
     lbin \
         paulirish/git-open \
+    lbin from'gh-r' \
+        dandavison/delta \
     lbin zman reset patch"${pchf}/%PLUGIN%.patch" \
         nateshmbhat/rm-trash \
+    lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' zman \
+        junegunn/fzf \
     id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
         zdharma/null
