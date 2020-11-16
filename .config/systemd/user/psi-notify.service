@@ -1,0 +1,16 @@
+[Unit]
+ConditionPathExists=/proc/pressure
+ConditionFileIsExecutable=/bedrock/cross/bin/psi-notify
+
+[Service]
+ExecStart=/bedrock/bin/strat arch psi-notify
+ExecReload=kill -HUP $MAINPID
+Type=notify
+
+Restart=always
+
+# Will be updated by watchdog_update_usec() once we parsed the config
+WatchdogSec=2s
+
+[Install]
+WantedBy=default.target
