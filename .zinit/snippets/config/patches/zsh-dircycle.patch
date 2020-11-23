@@ -1,3 +1,4 @@
+p10k support, Affect dirstack and chwpd
 --- michaelxmcbride---zsh-dircycle/dircycle.zsh	2020-10-14 03:42:40.565527743 -0400
 +++ michaelxmcbride---zsh-dircycle/dircycle.zsh-patch	2020-10-14 03:42:32.315653673 -0400
 @@ -5,20 +5,22 @@

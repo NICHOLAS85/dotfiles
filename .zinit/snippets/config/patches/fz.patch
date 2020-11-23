@@ -1,3 +1,4 @@
+Fuzzy match subdirs using last arg
 --- changyuheng---fz/fz.sh	2020-07-21 01:00:05.985292796 -0400
 +++ changyuheng---fz/fz.sh-patch	2020-08-24 04:21:02.276684891 -0400
 @@ -271,15 +271,15 @@

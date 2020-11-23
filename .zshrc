@@ -102,7 +102,7 @@ zt light-mode for \
     atclone'command rm -rf lib/*;git ls-files -z lib/ |xargs -0 git update-index --skip-worktree' \
     submods'RobSis/zsh-completion-generator -> lib/zsh-completion-generator;
     nevesnunes/sh-manpage-completions -> lib/sh-manpage-completions' \
-    atload'gcomp(){gencomp "${@}" && zinit creinstall -q ${ZINIT[SNIPPETS_DIR]}/config 1>/dev/null}' \
+    atload' gcomp(){gencomp "${@}" && zinit creinstall -q ${ZINIT[SNIPPETS_DIR]}/config 1>/dev/null}' \
          Aloxaf/gencomp
 
 ##################
@@ -116,7 +116,7 @@ zt 0a light-mode for \
         OMZP::sudo/sudo.plugin.zsh \
     as'completion' blockf \
         zsh-users/zsh-completions \
-    as'completion' mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
+    as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
         felipec/git-completion \
     ver'develop' atpull'zinit cclear' atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions
@@ -137,7 +137,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         zdharma/history-search-multi-word \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle \
-    blockf nocompletions compile'functions/*' atload'cdpath(){:}' \
+    blockf nocompletions compile'functions/*' \
         marlonrichert/zsh-edit \
     blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab
@@ -174,7 +174,7 @@ zt 0c light-mode binary for \
         laggardkernel/git-ignore \
     lbin from'gh-r' \
         Peltoche/lsd \
-    fbin \
+    lbin'!' patch"${pchf}/%PLUGIN%.patch" reset \
         kazhala/dotbare
 
 zt 0c light-mode null for \
