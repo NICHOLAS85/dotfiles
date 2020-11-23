@@ -1,4 +1,5 @@
 #include <clight/public.h>
+#include <stdlib.h>
 
 /**
  * Modified to not set brightness to 100% and toggle gamma correction
@@ -29,10 +30,10 @@ DECLARE_MSG(temp_req, TEMP_REQ);
 
 static void init(void) {
     capture_req.capture.reset_timer = false; // avoid resetting clight internal BACKLIGHT timer
-    kbd_bl_req.bl.new = 0.0;
+    kbd_bl_req.bl.new = 0.5;
     temp_req.temp.smooth = -1;
     temp_req.temp.daytime = NIGHT;
-    
+
     /* Subscribe to inhibit state */
     M_SUB(INHIBIT_UPD);
 }
@@ -44,11 +45,13 @@ static void receive(const msg_t *msg, const void *userdata) {
         calib_req.nocalib.new = up->new;
         if (up->new) {
             INFO("Pausing autocalibration and night color.\n");
-            M_PUB(&kbd_bl_req);  // set 0% kbd backlight
+            M_PUB(&kbd_bl_req);  // set 50% kbd backlight
+            system("sudo dellkbdtimeout 2s"); // set short timeout
             temp_req.temp.new = 6500;
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
             M_PUB(&capture_req); // ask for a quick calibration
+            system("sudo dellkbdtimeout 10s"); // set default timeout
             temp_req.temp.new = 4200;
         }
         M_PUB(&temp_req);
