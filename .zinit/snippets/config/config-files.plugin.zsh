@@ -37,6 +37,7 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
 
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
+ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 GENCOMPL_FPATH="${0:h}/completions"
 GENCOMP_DIR="${0:h}/completions"
 ZSHZ_DATA="${ZPFX}/z"

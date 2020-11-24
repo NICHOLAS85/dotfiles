@@ -38,7 +38,6 @@ source "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit installer's chunk
-ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 
 # A binary Zsh module which transparently and automatically compiles sourced scripts
 module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
@@ -61,7 +60,6 @@ zt light-mode blockf svn id-as for \
 # https://www.zsh.org/mla/workers/2020/msg01057.html
 zt light-mode for \
         zinit-zsh/z-a-patch-dl \
-        zinit-zsh/z-a-bin-gem-node \
         zinit-zsh/z-a-submods \
         NICHOLAS85/z-a-zman \
         NICHOLAS85/z-a-linkbin
@@ -178,13 +176,11 @@ zt 0c light-mode binary for \
         kazhala/dotbare
 
 zt 0c light-mode null for \
-    lbin"*/git-dsf;!*/diff-so-fancy" \
-        zdharma/zsh-diff-so-fancy \
     lbin \
         paulirish/git-open \
-    lbin from'gh-r' \
+    lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
         dandavison/delta \
-    lbin zman reset patch"${pchf}/%PLUGIN%.patch" \
+    lbin zman patch"${pchf}/%PLUGIN%.patch" reset \
         nateshmbhat/rm-trash \
     lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' zman \
         junegunn/fzf \
