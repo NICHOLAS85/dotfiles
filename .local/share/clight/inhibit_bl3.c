@@ -27,34 +27,47 @@ DECLARE_MSG(capture_req, CAPTURE_REQ);
 DECLARE_MSG(calib_req, NO_AUTOCALIB_REQ);
 DECLARE_MSG(kbd_bl_req, KBD_BL_REQ);
 DECLARE_MSG(temp_req, TEMP_REQ);
+double cont = 1.0;
 
 static void init(void) {
     capture_req.capture.reset_timer = false; // avoid resetting clight internal BACKLIGHT timer
-    kbd_bl_req.bl.new = 0.5;
-    temp_req.temp.smooth = -1;
-    temp_req.temp.daytime = NIGHT;
+    temp_req.temp.smooth = -1;               // use current smooth mode
+    temp_req.temp.daytime = NIGHT;           // only affect night gamma
+    kbd_bl_req.bl.new = 0.5;                 // set kbd 50% brightness during inhibition
 
-    /* Subscribe to inhibit state */
+    /* Subscribe to inhibit and kbd_bl state */
     M_SUB(INHIBIT_UPD);
+    M_SUB(KBD_BL_UPD);
+}
+
+static void kbd_timeout(char* timeout) {
+    char cmd[128];
+    snprintf(cmd, sizeof(cmd), "echo %s | sudo /usr/bin/tee /sys/devices/platform/dell-laptop/leds/dell::kbd_backlight/stop_timeout", timeout);
+    system(cmd);
 }
 
 static void receive(const msg_t *msg, const void *userdata) {
     switch (MSG_TYPE()) {
+    case KBD_BL_UPD: {
+        bl_upd *up = (bl_upd *)MSG_DATA();
+        cont = up->new;
+        break;
+    }
     case INHIBIT_UPD: {
         inhibit_upd *up = (inhibit_upd *)MSG_DATA();
         calib_req.nocalib.new = up->new;
         if (up->new) {
             INFO("Pausing autocalibration and night color.\n");
-            M_PUB(&kbd_bl_req);  // set 50% kbd backlight
-            system("sudo dellkbdtimeout 2s"); // set short timeout
+            if (cont > 0) { M_PUB(&kbd_bl_req) }; // set 50% kbd backlight
+            kbd_timeout("2s");                    // set short timeout
             temp_req.temp.new = 6500;
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
+            kbd_timeout("10s");  // set default timeout
             M_PUB(&capture_req); // ask for a quick calibration
-            system("sudo dellkbdtimeout 10s"); // set default timeout
             temp_req.temp.new = 4200;
         }
-        M_PUB(&temp_req);
+        M_PUB(&temp_req);  // set gamma value
         M_PUB(&calib_req); // stop or start backlight autocalibration
         break;
     }
