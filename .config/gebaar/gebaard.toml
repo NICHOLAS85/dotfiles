@@ -64,7 +64,7 @@ interact.type = "BOTH"
 
 [settings.gesture_swipe]
 threshold = 0.7
-trigger_on_release = false
+trigger_on_release = true
 
 [settings.touch_swipe]
 longswipe_screen_percentage = 70

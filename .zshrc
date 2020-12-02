@@ -61,7 +61,7 @@ zt light-mode blockf svn id-as for \
 zt light-mode for \
         zinit-zsh/z-a-patch-dl \
         zinit-zsh/z-a-submods \
-        NICHOLAS85/z-a-zman \
+        NICHOLAS85/z-a-linkman \
         NICHOLAS85/z-a-linkbin
 
 (){ # Load $MYPROMPT configuration and powerlevel10k
@@ -92,7 +92,7 @@ zt light-mode for \
         wfxr/forgit \
     trigger-load'!zshz' blockf \
         agkozak/zsh-z \
-    trigger-load'!updatelocal' blockf compile'f*/*' \
+    trigger-load'!updatelocal' blockf compile'f*/*~*.zwc' \
         NICHOLAS85/updatelocal \
     trigger-load'!zhooks' \
         agkozak/zhooks \
@@ -135,7 +135,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         zdharma/history-search-multi-word \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle \
-    blockf nocompletions compile'functions/*' \
+    blockf nocompletions compile'functions/*~*.zwc' \
         marlonrichert/zsh-edit \
     blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab
@@ -145,7 +145,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}}}' \
-    compile'.*fast*' nocompletions atpull'%atclone' \
+    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
         zdharma/fast-syntax-highlighting \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
@@ -157,7 +157,7 @@ zt 0b light-mode for \
 # Wait'0c' block #
 ##################
 
-zt 0c light-mode binary from'gh-r' zman lbin for \
+zt 0c light-mode binary from'gh-r' lman lbin for \
     atclone'./just --completions zsh > _just' atpull'%atclone' \
         casey/just \
     bpick'*linux64*' \
@@ -180,9 +180,9 @@ zt 0c light-mode null for \
         paulirish/git-open \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
         dandavison/delta \
-    lbin zman patch"${pchf}/%PLUGIN%.patch" reset \
+    lbin lman patch"${pchf}/%PLUGIN%.patch" reset \
         nateshmbhat/rm-trash \
-    lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' zman \
+    lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' lman \
         junegunn/fzf \
     id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
         zdharma/null

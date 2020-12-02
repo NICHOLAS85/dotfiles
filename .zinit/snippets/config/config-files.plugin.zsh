@@ -126,7 +126,7 @@ $isdolphin && alias cd='clear -x; cd'
 # dot file management
 alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare" dotbare'
 export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
-export DOTBARE_DIFF_PAGER=diff-so-fancy
+export DOTBARE_DIFF_PAGER=delta
 
 (( ${+commands[brl]} )) && {
 (){ local stratum strata=( /bedrock/run/enabled_strata/* local)
