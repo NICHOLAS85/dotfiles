@@ -2,15 +2,13 @@
 #include <stdlib.h>
 
 /**
- * Modified to not set brightness to 100% and toggle gamma correction
- **/
-
-/**
  * Small example custom module for Clight.
  *
  * It just hooks on INHIBIT state updates and:
- * -> when entering INHIBIT state (eg: start watching a movie), disables automatic calibration, switch off kbd backlight, pause night color
- * -> when leaving INHIBIT state, triggers a new backlight calibration and re-enables automatic calibration, unpause night color
+ * -> when entering INHIBIT state (eg: start watching a movie), disables automatic calibration,
+ *    set low kbd brightness and timeout, and pauses any gamma adjustment
+ * -> when leaving INHIBIT state, triggers a new backlight calibration and re-enables automatic calibration,
+ *    unpauses gamma adjustment, and restores kbd timeout
  **/
 
 /*
@@ -33,7 +31,6 @@ static void init(void) {
     capture_req.capture.reset_timer = false; // avoid resetting clight internal BACKLIGHT timer
     temp_req.temp.smooth = -1;               // use current smooth mode
     temp_req.temp.daytime = NIGHT;           // only affect night gamma
-    kbd_bl_req.bl.new = 0.5;                 // set kbd 50% brightness during inhibition
 
     /* Subscribe to inhibit and kbd_bl state */
     M_SUB(INHIBIT_UPD);
@@ -58,14 +55,17 @@ static void receive(const msg_t *msg, const void *userdata) {
         calib_req.nocalib.new = up->new;
         if (up->new) {
             INFO("Pausing autocalibration and night color.\n");
-            if (cont > 0) { M_PUB(&kbd_bl_req) }; // set 50% kbd backlight
-            kbd_timeout("2s");                    // set short timeout
-            temp_req.temp.new = 6500;
+            temp_req.temp.new = 6500;                 // day gamma value
+            kbd_bl_req.bl.new = 0.5;                  // 50% kbd brightness
+            if (cont >= 0.75) { M_PUB(&kbd_bl_req) }; // set 50% kbd brightness if kbd above 50%
+            kbd_timeout("2s");                        // set 2 second kbd backlight timeout
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
-            kbd_timeout("10s");  // set default timeout
-            M_PUB(&capture_req); // ask for a quick calibration
-            temp_req.temp.new = 4200;
+            temp_req.temp.new = 4200; // night gamma value
+//            kbd_bl_req.bl.new = 0;    // 0% kbd brightness
+//            M_PUB(&kbd_bl_req)        // set 0% kbd brightness
+            kbd_timeout("10s");       // set 10 second timeout, causes keyboard to wake, above hides this
+            M_PUB(&capture_req);      // ask for a quick calibration, sets kbd to proper brightness
         }
         M_PUB(&temp_req);  // set gamma value
         M_PUB(&calib_req); // stop or start backlight autocalibration
