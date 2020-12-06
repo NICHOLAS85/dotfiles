@@ -43,6 +43,8 @@ autoload -Uz _zinit
 module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
 zmodload zdharma/zplugin &>/dev/null
 
+zinit add-fpath /usr/share/zsh/site-functions
+
 # Functions to make configuration less verbose
 # zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
 zt(){ zinit depth'3' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}"; }
