@@ -62,9 +62,7 @@ static void receive(const msg_t *msg, const void *userdata) {
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
             temp_req.temp.new = 4200; // night gamma value
-//            kbd_bl_req.bl.new = 0;    // 0% kbd brightness
-//            M_PUB(&kbd_bl_req)        // set 0% kbd brightness
-            kbd_timeout("10s");       // set 10 second timeout, causes keyboard to wake, above hides this
+            kbd_timeout("10s");       // set 10 second timeout, causes keyboard to wake
             M_PUB(&capture_req);      // ask for a quick calibration, sets kbd to proper brightness
         }
         M_PUB(&temp_req);  // set gamma value
