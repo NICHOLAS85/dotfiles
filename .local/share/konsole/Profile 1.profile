@@ -17,6 +17,7 @@ StartInCurrentSessionDir=true
 [Interaction Options]
 TrimLeadingSpacesInSelectedText=false
 TrimTrailingSpacesInSelectedText=true
+UnderlineFilesEnabled=false
 
 [Keyboard]
 KeyBindings=default
