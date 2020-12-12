@@ -39,6 +39,10 @@ user_pref("media.navigator.mediadatadecoder_vpx_enabled", true);
 /* Allow smooth zooming */
 user_pref("apz.allow_zooming", true);
 
+/* Disable regular zoom function */
+user_pref("zoom.maxPercent", 100);
+user_pref("zoom.minPercent", 100);
+
 /* Increase scroll speed */
 user_pref("mousewheel.default.delta_multiplier_y", 200);
 
