@@ -35,15 +35,17 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
 #       Variables       #
 #########################
 
+[[ -z ${fpath[(re)/usr/share/zsh/site-functions]} && -d /usr/share/zsh/site-functions ]] && fpath=( "${fpath[@]}" /usr/share/zsh/site-functions )
+[[ -z ${path[(re)$HOME/.local/bin]} && -d "$HOME/.local/bin" ]] && path=( "$HOME/.local/bin" "${path[@]}" )
+ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
-ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 GENCOMPL_FPATH="${0:h}/completions"
 GENCOMP_DIR="${0:h}/completions"
 ZSHZ_DATA="${ZPFX}/z"
-HISTFILE="${HOME}/.histfile"
-PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
+PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
+export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
 export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
