@@ -158,6 +158,8 @@ zt 0b light-mode for \
 ##################
 
 zt 0c light-mode binary from'gh-r' lman lbin for \
+    lbin'**/gh' atclone'./**/gh completion --shell zsh > _gh' atpull'%atclone' \
+        cli/cli \
     atclone'./just --completions zsh > _just' atpull'%atclone' \
         casey/just \
     bpick'*linux64*' \
@@ -180,8 +182,10 @@ zt 0c light-mode null for \
         Fmstrat/winapps \
     lbin'*d.sh;*n.sh' \
         bkw777/notify-send.sh \
-    lbin'antidot* -> antidot' from'gh-r' \
+    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update' atpull'%atclone' \
         doron-cohen/antidot \
+    lbin from'gh-r' bpick'*x_x86*' \
+        charmbracelet/glow \
     lbin \
         paulirish/git-open \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
