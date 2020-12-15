@@ -182,7 +182,7 @@ zt 0c light-mode null for \
         Fmstrat/winapps \
     lbin'*d.sh;*n.sh' \
         bkw777/notify-send.sh \
-    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update' atpull'%atclone' \
+    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' \
         doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
