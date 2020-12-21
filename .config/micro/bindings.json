@@ -1,6 +1,6 @@
 {
     "Alt-/": "lua:comment.comment",
-    "Alt-Z": "Redo",
+    "\u001bctrlshiftz": "Redo",
     "CtrlDown": "ParagraphNext",
     "CtrlLeft": "WordLeft",
     "CtrlRight": "WordRight",
@@ -8,4 +8,5 @@
     "CtrlShiftRight": "SelectWordRight",
     "CtrlUnderscore": "lua:comment.comment",
     "CtrlUp": "ParagraphPrevious",
+    "CtrlH" : "DeleteWordLeft"
 }

@@ -20,7 +20,7 @@ TrimTrailingSpacesInSelectedText=true
 UnderlineFilesEnabled=false
 
 [Keyboard]
-KeyBindings=default
+KeyBindings=CustomBinds
 
 [Scrolling]
 HighlightScrolledLines=false
