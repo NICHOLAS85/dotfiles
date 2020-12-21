@@ -186,6 +186,8 @@ zt 0c light-mode null for \
         doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
+    lbin'nnn* -> nnn' from'gh-r' bpick'*nerd*' \
+        jarun/nnn \
     lbin \
         paulirish/git-open \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \

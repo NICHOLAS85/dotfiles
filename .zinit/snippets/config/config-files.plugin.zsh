@@ -113,8 +113,8 @@ fi
 #########################
 
 # Access zsh config files
-alias zshconf="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
-alias zshconfatom="(){ setopt extendedglob local_options; atom ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc &! }"
+alias zshconf="(){ setopt extendedglob local_options; $EDITOR ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
+alias zshconfkate="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
 
 alias t='tail -f'
 alias g='git'
@@ -159,7 +159,7 @@ setopt pushd_ignore_dups    # don't push multiple copies of the same directory o
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
 setopt pushd_silent         # Silence pushd
-#setopt glob_dots            # Use for hidden files in cd comp
+#setopt glob_dots            # Show dotfiles in completions
 setopt extended_glob
 
 # Fuzzy matching of completions for when you mistype them:
@@ -182,13 +182,21 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
-zstyle ':completion:*' use-cache true
+zstyle ':completion:*' use-cache on
 zstyle ':completion:*' special-dirs true
+# do not include pwd after ../
+zstyle ':completion:*' ignore-parents parent pwd
+# do not include . in results
+zstyle ':completion:*:directories' ignored-patterns '.'
+# Hide nonexistant matches, speeds up completion a bit
+zstyle ':completion:*' accept-exact '*(N)'
+# divide man pages by sections
+zstyle ':completion:*:manuals' separate-sections true
 
 # fzf-tab
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'   # Space as accept
 zstyle ':fzf-tab:*' print-query ctrl-c        # Use input as result when ctrl-c
-zstyle ':fzf-tab:*' accept-line enter
+zstyle ':fzf-tab:*' accept-line enter         # Accept selected entry on enter
 zstyle ':fzf-tab:*' prefix ''                 # No dot prefix
 zstyle ':fzf-tab:*' single-group color header # Show header for single groups
 zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview 'ls -1 --color=always -- $realpath'
