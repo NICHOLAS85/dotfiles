@@ -1,47 +1,28 @@
 #!/bin/bash
 
 
-TOGGLE="${TMPDIR:-/tmp}/currentlyup"
 DOWNID="${TMPDIR:-/tmp}/downid"
+CURRENTLYUP(){
+    EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")
+    [[ "${EFFECTS[*]}" =~ "presentwindows" ]] && true || false
+}
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 
 case $1 in
   --up )
-    expose(){
-      invoke "Expose"
-      touch $TOGGLE
-      MOUSE_ID=$(xinput list --id-only "DLL077A:01 06CB:76AF Touchpad")
-      {
-        trap 'rm $TOGGLE; exit' SIGINT
-        if on_ac_power; then
-          time=0.01
-        else
-          time=0.06
-        fi
-        while true; do
-        STATE1=$(xinput --query-state $MOUSE_ID)
-        if [[ $STATE1 == *"button[1]=down"* ]]; then
-          rm $TOGGLE
-          break
-        fi
-        sleep $time
-        done
-      } &
-    }
     if [[ -e $DOWNID ]]; then
-      xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm $DOWNID || expose
-    elif [[ ! -e $TOGGLE ]]; then
-      expose
+      xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm -f $DOWNID || invoke "Expose"
+    elif ! CURRENTLYUP; then
+      invoke "Expose"
     fi
   ;;
   --down )
-    if [[ -e $TOGGLE ]]; then
+    if CURRENTLYUP; then
       xdotool click 3
-      pkill -SIGINT -f "presentview --up"
     else
-      echo "$(xdotool getwindowpid $(xdotool getwindowfocus))" > $DOWNID
+      xdotool getwindowpid $(xdotool getwindowfocus) > $DOWNID
       invoke "Window Minimize"
-      { sleep .6; rm $DOWNID 2>/dev/null; } &
+      { sleep 0.6; rm -f $DOWNID; } &
     fi
   ;;
 esac
