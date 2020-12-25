@@ -1,140 +1,52 @@
-@keyframes scale-in {
-	0% {
-		transform: scaleY(0);
-	}
-	100% {
-		transform: scaleY(1);
-	}
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/floating_findbar_on_top.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+findbar{
+  -moz-box-ordinal-group: 0;
+  margin-bottom: calc(0px - 2 * var(--toolbarbutton-inner-padding) -  25px);
+  position: relative;
+  border-top: none !important;
+  transition: transform 82ms linear, opacity 82ms linear 32ms !important;
+  background: none !important;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 10px;
 }
 
-@keyframes scale-out {
-	0% {
-		transform: scaleY(1);
-	}
-	100% {
-		transform: scaleY(0);
-	}
+.findbar-container > .findbar-find-fast{
+  padding: var(--toolbarbutton-inner-padding) 1px;
+  margin: 0 !important;
 }
 
-.browserContainer {
-	position: relative;
+findbar[hidden]{ transform: translateY(-30px);}
+
+findbar > .findbar-container,
+findbar > .close-icon{
+  border: 1px solid var(--chrome-content-separator-color);
+  border-width: 0 0 1px 0px;
+  background: var(--uc-light-bkgnd-color,var(--toolbar-bgcolor)) !important;
+  pointer-events: auto;
+}
+findbar > .findbar-container{
+  -moz-box-direction: reverse;
+  border-left-width: 1px;
+  border-radius: 10px 0px 0px 10px;
 }
 
-findbar {
-        display: flex !important;
-	animation: 0.2s scale-in;
-	transform-origin: top center;
-	background: var(--toolbar-bgcolor) !important;
-	padding: 4px 6px 6px 6px;
-	border: 1px solid var(--toolbox-border-bottom-color);
-	border-top-width: 0;
-	border-radius: 0 0 var(--toolbarbutton-border-radius) var(--toolbarbutton-border-radius);
-	position: absolute;
-	top: -2px;
-	right: 38px;
+findbar > .findbar-container > hbox{ margin: 0 5px }
+
+findbar::before{
+  content:"";
+  display: -moz-box;
+  -moz-box-flex: 100;
 }
 
-findbar[hidden="true"] {
-	animation: 0.2s scale-out;
+/*
+Move findbar so it isn't over the scrollbar
+Delete if you want findbar to begin from right window edge
+*/
+findbar{
+  margin-right: 16px;
+  border-right: 1px solid var(--chrome-content-separator-color);
 }
 
-findbar .findbar-container {
-        width: 510px !important;
-	padding: 0 !important;
-	padding-inline-start: 0 !important;
-	padding-inline-end: 0 !important;
-}
-
-findbar .findbar-container .findbar-textbox {
-	padding: 6px 8px !important;
-	background-color: var(--url-and-searchbar-background-color) !important;
-	border-color: var(--backbutton-border-color) !important;
-}
-
-findbar .findbar-container .findbar-textbox[status="notfound"] {
-	background-color: #E74C3C !important;
-	color: white !important;
-}
-
-findbar .findbar-container .findbar-find-previous,
-findbar .findbar-container .findbar-find-next {
-	background: transparent !important;
-	border-color: var(--backbutton-border-color) !important;
-}
-
-findbar .findbar-container .findbar-find-previous:hover, findbar .findbar-container .findbar-find-previous:focus,
-findbar .findbar-container .findbar-find-next:hover,
-findbar .findbar-container .findbar-find-next:focus {
-	background-color: var(--toolbarbutton-hover-background) !important;
-}
-
-findbar .findbar-button {
-	border: 1px solid var(--backbutton-border-color);
-	border-radius: var(--toolbarbutton-border-radius) !important;
-}
-
-findbar .findbar-closebutton {
-	margin-right: 4px !important;
-	padding-inline-end: 0 !important;
-	position: relative;
-}
-
-window[lwtheme="true"] findbar {
-	background: var(--lwt-header-image) !important;
-	background-attachment: fixed !important;
-	background-position: top right !important;
-	top: -1px;
-}
-
-window[lwtheme="true"] findbar:before {
-	display: block;
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 0;
-	width: 100%;
-	height: 100%;
-	background-color: var(--toolbar-bgcolor);
-}
-
-window[lwtheme="true"] findbar .findbar-container,
-window[lwtheme="true"] findbar .findbar-closebutton {
-	position: relative;
-	z-index: 1;
-}
-
-window[lwtheme="true"] findbar .findbar-textbox {
-	color: var(--lwt-text-color) !important;
-	background-color: var(--toolbar-bgcolor) !important;
-}
-
-window[lwtheme="true"] findbar .findbar-textbox[status="notfound"] {
-	background-color: #E74C3C !important;
-	color: white !important;
-}
-
-window[lwtheme="true"] findbar .findbar-button[checked="true"] {
-	font-weight: bold;
-	background-color: var(--toolbar-bgcolor) !important;
-}
-
-window[lwtheme="true"] findbar .findbar-find-status, window[lwtheme="true"] findbar .found-matches {
-	color: var(--lwt-text-color) !important;
-}
-
-findbar .findbar-find-status {
-    display: none !important;
-}
-
-findbar .findbar-match-diacritics {
-    display: none !important;
-}
-
-findbar .findbar-case-sensitive {
-    display: none !important;
-}
-
-findbar .findbar-entire-word {
-    display: none !important;
-}
