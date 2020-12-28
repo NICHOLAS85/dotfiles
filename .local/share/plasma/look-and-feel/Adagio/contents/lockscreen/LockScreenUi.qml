@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
 
-import QtQuick 2.6
+import QtQuick 2.8
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
@@ -31,6 +31,18 @@ import "../components"
 PlasmaCore.ColorScope {
 
     colorGroup: PlasmaCore.Theme.ComplementaryColorGroup
+
+    function performOperation(what) {
+        var service = dataEngine.serviceForSource("PowerDevil");
+        var operation = service.operationDescription(what);
+        service.startOperationCall(operation);
+    }
+
+    PlasmaCore.DataSource {
+      id: dataEngine
+      engine: "powermanagement"
+      connectedSources: ["PowerDevil"]
+    }
 
     Connections {
         target: authenticator
@@ -108,6 +120,8 @@ PlasmaCore.ColorScope {
             }
         }
         Keys.onPressed: {
+            if (event.key == 16908292) performOperation("suspendToRam")
+            if (event.key == 16777399) performOperation("suspendToRam")
             uiVisible = true;
             event.accepted = false;
         }
