@@ -112,11 +112,11 @@ zt 0a light-mode for \
         OMZL::completion.zsh \
         OMZP::systemd/systemd.plugin.zsh \
         OMZP::sudo/sudo.plugin.zsh \
-    as'completion' blockf \
+    as'completion' atpull'zinit cclear' blockf \
         zsh-users/zsh-completions \
     as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
         felipec/git-completion \
-    ver'develop' atpull'zinit cclear' atload'_zsh_autosuggest_start' \
+    ver'develop' atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions
 
 ##################
