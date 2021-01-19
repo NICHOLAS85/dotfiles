@@ -8,5 +8,6 @@
     "CtrlShiftRight": "SelectWordRight",
     "CtrlUnderscore": "lua:comment.comment",
     "CtrlUp": "ParagraphPrevious",
-    "CtrlH" : "DeleteWordLeft"
+    "CtrlH" : "DeleteWordLeft",
+    "CtrlDelete" : "DeleteWordRight"
 }
