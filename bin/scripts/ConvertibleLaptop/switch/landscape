@@ -1,12 +1,19 @@
 #!/bin/bash
 
-xrandr -o normal
+xrandr --output eDP-1 --rotate normal || notify-send "Error rotating screen"
 
-device_list=("DLL077A:01 06CB:76AF Touchpad" "Wacom HID 4833 Pen eraser" "Virtual core pointer" "Virtual core XTEST pointer" "Wacom HID 4833 Pen stylus")
+GENERIC_PROP="Coordinate Transformation Matrix"
+GENERIC=(1 0 0 0 1 0 0 0 1)
 
-for device in "${device_list[@]}"
-do
-    xinput set-prop "$device" 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1
+WACOM_PROP="Wacom Rotation"
+WACOM="0"
+
+mapfile -t device_list < <(xinput list | awk '/Virtual core pointer/ { printing=1 } /Virtual core keyboard/ { printing=0} { if (printing && (match($0, /ELAN/) || match($0, /Pen/) || match($0, /Finger/) || match($0, /Touch/) )) { gsub(".*id=",""); print $1 } }')
+
+for device in "${device_list[@]}"; do
+    if xinput list-props "$device" | grep -q "$WACOM_PROP"; then
+        xinput set-prop "$device" "$WACOM_PROP" "$WACOM"
+    elif xinput list-props "$device"| grep -q "$GENERIC_PROP"; then
+        xinput set-prop "$device" "$GENERIC_PROP" "${GENERIC[@]}"
+    fi
 done
-
-#xinput set-prop "Wacom HID 4833 Finger touch" 'Coordinate Transformation Matrix' 1.00102214650766609880 0 -.00374787052810902896 0 1.00440796473628210974 -.00942392460860313117 0 0 1

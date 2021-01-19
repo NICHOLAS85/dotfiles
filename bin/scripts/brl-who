@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-[ -n "$1" ] && input=$1 || return
-for stratum in $(brl list -ei); do
-/bedrock/bin/strat -r $stratum /usr/bin/env sh -c "command -v $input 1>/dev/null && printf \"$stratum provides $input\"\\\n" || true
-done

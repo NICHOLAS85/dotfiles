@@ -6,5 +6,10 @@ PATH=${PATH#:}
 PATH=${PATH%:}
 
 export HOME="$HOME/.local/home"
+PNAME="$(basename $0)"
 
-exec "$(basename $0)" "$@"
+command -v "$PNAME" && {
+    exec "$PNAME" "$@"
+} || {
+    exec "$@"
+}
