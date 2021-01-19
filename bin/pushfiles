@@ -1,0 +1,34 @@
+#!/bin/bash
+
+trap 'exit' SIGINT
+excludepat=".eslintrc.js
+.htmlhintrc
+stylelint.config.js
+node_modules
+package-lock.json
+.directory
+pushfiles
+dontpush
+*.~lock*"
+
+excludefile="$HOME/bin/scripts/tools/dontpush"
+pushfiles(){
+    echo "$excludepat" | rsync -auvn --progress --exclude-from=- ~/Documents/OneDrive/* ~/OneDrive/
+    read -p "Press enter to Push";
+    echo "$excludepat" | rsync -auv --progress --exclude-from=- ~/Documents/OneDrive/* ~/OneDrive/
+}
+
+if [[ $(tty) =~ "not a tty" ]]
+then
+    # Not running on terminal
+    konsole -e bash "$(test -L "$0" && readlink "$0" || echo "$0")"
+else
+    # Running on terminal
+    status=$(systemctl --user show -p SubState --value onedrive)
+    if [ $status = "running" ]; then
+        pushfiles
+    else
+        echo "onedrive.service is $status"
+    fi
+    read -p "Press enter to close"
+fi
