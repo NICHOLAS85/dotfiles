@@ -136,13 +136,14 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle \
     blockf nocompletions compile'functions/*~*.zwc' \
-        marlonrichert/zsh-edit \
-    blockf compile'lib/*f*~*.zwc' \
-        Aloxaf/fzf-tab
+        marlonrichert/zsh-edit
 
 zt 0b light-mode for \
+    blockf compile'lib/*f*~*.zwc' \
+        Aloxaf/fzf-tab \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
+        RobSis/zsh-reentry-hook \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}}}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
@@ -190,6 +191,8 @@ zt 0c light-mode null for \
         jarun/nnn \
     lbin \
         paulirish/git-open \
+    lbin'**/*nal;**/*nal-run' from'gh-r' \
+        tycho-kirchner/shournal \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
         dandavison/delta \
     lbin lman patch"${pchf}/%PLUGIN%.patch" reset \

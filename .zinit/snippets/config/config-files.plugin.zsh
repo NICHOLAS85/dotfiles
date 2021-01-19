@@ -36,6 +36,7 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
 #########################
 
 [[ -z ${fpath[(re)/usr/share/zsh/site-functions]} && -d /usr/share/zsh/site-functions ]] && fpath=( "${fpath[@]}" /usr/share/zsh/site-functions )
+[[ -z ${path[(re)$HOME/bin]} && -d "$HOME/bin" ]] && path=( "$HOME/bin" "${path[@]}" )
 [[ -z ${path[(re)$HOME/.local/bin]} && -d "$HOME/.local/bin" ]] && path=( "$HOME/.local/bin" "${path[@]}" )
 ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 pchf="${0:h}/patches"
