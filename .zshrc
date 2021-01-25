@@ -130,6 +130,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         hlissner/zsh-autopair \
     pack'no-dir-color-swap' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
+    atload'add-zsh-hook chpwd @chwpd_dir-history-var; add-zsh-hook zshaddhistory @append_dir-history-var' \
         kadaan/per-directory-history \
     compile'h*' \
         zdharma/history-search-multi-word \
@@ -145,7 +146,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
         RobSis/zsh-reentry-hook \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}}}' \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
         zdharma/fast-syntax-highlighting \
     pick'autoenv.zsh' nocompletions \

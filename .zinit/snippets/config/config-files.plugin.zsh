@@ -16,14 +16,12 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
     emulate -L zsh
     if $_per_directory_history_is_global && [[ -r "$_per_directory_history_path" ]]; then
         setopt EXTENDED_GLOB
-        fc -a -p "$_per_directory_history_path"
         local prefix="${1//(#m)[\\*?[\]<>()|^~#]/\\$MATCH}"
         local pattern="$prefix*"
         if [[ -n $ZSH_AUTOSUGGEST_HISTORY_IGNORE ]]; then
         pattern="($pattern)~($ZSH_AUTOSUGGEST_HISTORY_IGNORE)"
         fi
-        local dir_history=()
-        typeset -g suggestion="${history[(r)$pattern]}"
+        typeset -g suggestion="${dir_history[(r)$pattern]}"
     else
         typeset -g suggestion=
     fi
