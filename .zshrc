@@ -7,12 +7,12 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     # Populate dirstack with chpwd history
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
+    zstyle ':chpwd:*' recent-dirs-file "${TMPDIR:-/tmp}/chpwd-recent-dirs"
     dirstack=($(awk -F"'" '{print $2}' ${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
         for dir ($dirstack){
-            [[ -d ${dir} ]] && { cd -q ${dir}; break }
+            [[ -d "${dir}" ]] && { cd -q "${dir}"; break }
         }
     } 2>/dev/null
 else
@@ -27,7 +27,7 @@ fi
 ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-${HOME}}/.zinit}}"
 ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-${ZPLG_BIN_DIR_NAME}}:-bin}"
 ### Added by Zinit's installer
-if [[ ! -f ${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh ]]; then
+if [[ ! -f "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
     command mkdir -p "${ZINIT_HOME}" && command chmod g-rwX "${ZINIT_HOME}"
     command git clone https://github.com/zdharma/zinit "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}" && \
@@ -65,7 +65,7 @@ zt light-mode for \
         NICHOLAS85/z-a-linkbin
 
 (){ # Load $MYPROMPT configuration and powerlevel10k
-    if [[ -f ${thmf}/${1}-pre.zsh || -f ${thmf}/${1}-post.zsh ]] && {
+    if [[ -f "${thmf}/${1}-pre.zsh" || -f "${thmf}/${1}-post.zsh" ]] && {
         zt light-mode for \
                 romkatv/powerlevel10k \
             id-as"${1}-theme" \
@@ -109,9 +109,10 @@ zt light-mode for \
 
 zt 0a light-mode for \
         OMZL::history.zsh \
-        OMZL::completion.zsh \
         OMZP::systemd/systemd.plugin.zsh \
         OMZP::sudo/sudo.plugin.zsh \
+    atload'zstyle ":completion:*" special-dirs false' \
+        OMZL::completion.zsh \
     as'completion' atpull'zinit cclear' blockf \
         zsh-users/zsh-completions \
     as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
@@ -130,7 +131,8 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         hlissner/zsh-autopair \
     pack'no-dir-color-swap' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
-    atload'add-zsh-hook chpwd @chwpd_dir-history-var; add-zsh-hook zshaddhistory @append_dir-history-var' \
+    atload'add-zsh-hook chpwd @chwpd_dir-history-var;
+    add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var' \
         kadaan/per-directory-history \
     compile'h*' \
         zdharma/history-search-multi-word \

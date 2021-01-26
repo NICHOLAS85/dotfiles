@@ -21,10 +21,22 @@ _zsh_autosuggest_strategy_dir_history(){ # Avoid Zinit picking this up as a comp
         if [[ -n $ZSH_AUTOSUGGEST_HISTORY_IGNORE ]]; then
         pattern="($pattern)~($ZSH_AUTOSUGGEST_HISTORY_IGNORE)"
         fi
+        [[ "${dir_history[(r)$pattern]}" != "$prefix" ]] && \
         typeset -g suggestion="${dir_history[(r)$pattern]}"
-    else
-        typeset -g suggestion=
     fi
+}
+
+_zsh_autosuggest_strategy_custom_history () {
+        emulate -L zsh
+        setopt EXTENDED_GLOB
+        local prefix="${1//(#m)[\\*?[\]<>()|^~#]/\\$MATCH}"
+        local pattern="$prefix*"
+        if [[ -n $ZSH_AUTOSUGGEST_HISTORY_IGNORE ]]
+        then
+                pattern="($pattern)~($ZSH_AUTOSUGGEST_HISTORY_IGNORE)"
+        fi
+        [[ "${history[(r)$pattern]}" != "$prefix" ]] && \
+        typeset -g suggestion="${history[(r)$pattern]}"
 }
 
 ! $isdolphin && add-zsh-hook chpwd chpwd_ls
@@ -59,7 +71,7 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c100,)" # Do not consider 100 character entries
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE="[[:space:]]*"   # Ignore leading whitespace
 ZSH_AUTOSUGGEST_MANUAL_REBIND=set
-ZSH_AUTOSUGGEST_STRATEGY=(dir_history history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(dir_history custom_history completion)
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 AUTOPAIR_CTRL_BKSPC_WIDGET=".backward-kill-word"
 
@@ -156,7 +168,7 @@ setopt pushd_ignore_dups    # don't push multiple copies of the same directory o
 setopt auto_pushd           # make cd push the old directory onto the directory stack
 setopt pushdminus           # swapped the meaning of cd +1 and cd -1; we want them to mean the opposite of what they mean
 setopt pushd_silent         # Silence pushd
-#setopt glob_dots            # Show dotfiles in completions
+setopt glob_dots            # Show dotfiles in completions
 setopt extended_glob
 
 # Fuzzy matching of completions for when you mistype them:
@@ -180,11 +192,8 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' special-dirs true
 # do not include pwd after ../
 zstyle ':completion:*' ignore-parents parent pwd
-# do not include . in results
-zstyle ':completion:*:directories' ignored-patterns '.'
 # Hide nonexistant matches, speeds up completion a bit
 zstyle ':completion:*' accept-exact '*(N)'
 # divide man pages by sections
