@@ -45,7 +45,14 @@ user_pref("zoom.minPercent", 100);
 
 /* Increase scroll speed */
 user_pref("mousewheel.default.delta_multiplier_y", 200);
+user_pref("general.autoScroll", true);
+user_pref("general.smoothScroll.msdPhysics.enabled", false);
+//user_pref("general.smoothScroll.mouseWheel.migrationPercent", 0);
+user_pref("apz.gtk.kinetic_scroll.enabled", false); // make trackpad scrolling less floaty
 
 /* Faster Pageload extension */
 user_pref("network.dns.disablePrefetchFromHTTPS", false);
 user_pref("network.predictor.enable-prefetch", true);
+
+/* Up refresh rate */
+user_pref("layout.frame_rate", 75);
