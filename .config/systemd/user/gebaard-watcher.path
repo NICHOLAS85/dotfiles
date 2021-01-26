@@ -1,6 +1,8 @@
-# Watches for file change and triggers gebaard-watcher.service
+[Unit]
+Description=Watch for gebaar configuration changes
+
 [Path]
 PathModified=%h/.config/gebaar/gebaard.toml
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
