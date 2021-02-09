@@ -56,6 +56,8 @@ GENCOMP_DIR="${0:h}/completions"
 ZSHZ_DATA="${ZPFX}/z"
 AUTOENV_AUTH_FILE="${ZPFX}/autoenv_auth"
 PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
+export HISTSIZE=501000
+export SAVEHIST=500000
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
@@ -157,8 +159,13 @@ alias bedots='command sudo DOTBARE_FZF_DEFAULT_OPTS="$DOTBARE_FZF_DEFAULT_OPTS" 
 #########################
 
 bindkey -e                  # EMACS bindings
-setopt append_history       # Allow multiple terminal sessions to all append to one zsh command history
-setopt hist_ignore_all_dups # delete old recorded entry if new entry is a duplicate.
+#setopt inc_append_history       # Allow multiple terminal sessions to all append to one zsh command history
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+
 setopt no_beep              # do not beep on error
 setopt auto_cd              # If you type foo, and it is not a command, and it is a directory in your cdpath, go there
 setopt multios              # perform implicit tees or cats when multiple redirections are attempted
@@ -205,7 +212,7 @@ zstyle ':fzf-tab:*' print-query ctrl-c        # Use input as result when ctrl-c
 zstyle ':fzf-tab:*' accept-line enter         # Accept selected entry on enter
 zstyle ':fzf-tab:*' prefix ''                 # No dot prefix
 zstyle ':fzf-tab:*' single-group color header # Show header for single groups
-zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview 'ls -1 --color=always -- $realpath'
+zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview '[[ -d $realpath ]] && ls -1 --color=always -- $realpath'
 zstyle ':fzf-tab:complete:((micro|cp|rm):argument-rest|kate:*)' fzf-preview 'bat --color=always -- $realpath 2>/dev/null || ls --color=always -- $realpath'
 zstyle ':fzf-tab:complete:micro:argument-rest' fzf-flags --preview-window=right:65%
 zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-preview "git --git-dir=$UPDATELOCAL_GITDIR/\${word}/.git log --color --date=short --pretty=format:'%Cgreen%cd %h %Creset%s %Cred%d%Creset ||%b' ..FETCH_HEAD 2>/dev/null"

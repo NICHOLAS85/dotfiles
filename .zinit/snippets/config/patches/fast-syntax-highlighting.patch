@@ -1,0 +1,11 @@
+Fix loss of highlight when tab completion return nothing
+--- zdharma---fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh	2021-01-28 17:40:39.313892813 -0500
++++ zdharma---fast-syntax-highlighting/fast-syntax-highlighting.patch	2021-01-28 17:41:39.419449507 -0500
+@@ -144,7 +144,6 @@
+
+   } always {
+     typeset -g _ZSH_HIGHLIGHT_PRIOR_BUFFER="$BUFFER"
+-    typeset -g _ZSH_HIGHLIGHT_PRIOR_RACTIVE="$REGION_ACTIVE"
+     typeset -gi _ZSH_HIGHLIGHT_PRIOR_CURSOR=$CURSOR
+   }
+ }

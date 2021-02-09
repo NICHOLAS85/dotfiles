@@ -88,7 +88,7 @@ zt light-mode for \
         OMZ::plugins/extract \
     trigger-load'!man' \
         ael-code/zsh-colored-man-pages \
-    trigger-load'!ga;!grh;!glo;!gd;!gcf;!gclean;!gss;!gcp' \
+    trigger-load'!ga;!grh;!grb;!glo;!gd;!gcf;!gclean;!gss;!gcp;!gcb' \
         wfxr/forgit \
     trigger-load'!zshz' blockf \
         agkozak/zsh-z \
@@ -108,7 +108,6 @@ zt light-mode for \
 ##################
 
 zt 0a light-mode for \
-        OMZL::history.zsh \
         OMZP::systemd/systemd.plugin.zsh \
         OMZP::sudo/sudo.plugin.zsh \
     atload'zstyle ":completion:*" special-dirs false' \
@@ -139,7 +138,11 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle \
     blockf nocompletions compile'functions/*~*.zwc' \
-        marlonrichert/zsh-edit
+        marlonrichert/zsh-edit \
+    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
+    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
+        zdharma/fast-syntax-highlighting
 
 zt 0b light-mode for \
     blockf compile'lib/*f*~*.zwc' \
@@ -147,10 +150,6 @@ zt 0b light-mode for \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
         RobSis/zsh-reentry-hook \
-    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
-    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
-        zdharma/fast-syntax-highlighting \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
     atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;

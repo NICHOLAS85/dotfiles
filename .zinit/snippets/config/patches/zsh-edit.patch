@@ -1,14 +1,19 @@
-Fix autoloading with Zinit, remove cdpath hook
---- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2020-11-24 14:57:14.225191357 -0500
-+++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2020-11-24 15:01:38.468808641 -0500
-@@ -6,9 +6,7 @@
-
+--- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-02-05 21:57:30.818078906 -0500
++++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-02-05 22:04:42.940602997 -0500
+@@ -6,7 +6,7 @@
+ 
    local fdir=${${(%):-%x}:A:h}/functions
    typeset -gU FPATH fpath=( $fdir $fpath )
 -  autoload -Uz add-zsh-hook $fdir/_*~*.zwc
--
--  add-zsh-hook chpwd _cdpath
-+  autoload -Uz add-zsh-hook $fdir/_*~*.zwc(.:t)
-
-   local widget
-
++  autoload -Uz add-zsh-hook $fdir/_edit_subword
+ 
+   add-zsh-hook chpwd _cdpath
+ 
+@@ -14,6 +14,7 @@
+   for widget in {forward,backward,kill,backward-kill}-word; do
+     zle -N $widget _edit_subword
+   done
++  return
+   for widget in yank yank-pop reverse-yank-pop; do
+     zle -N $widget _visual_yank
+   done
