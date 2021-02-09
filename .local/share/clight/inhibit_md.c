@@ -25,6 +25,7 @@ CLIGHT_MODULE("INHIBIT_MOD");
 DECLARE_MSG(capture_req, CAPTURE_REQ);
 DECLARE_MSG(calib_req, NO_AUTOCALIB_REQ);
 DECLARE_MSG(kbd_bl_req, KBD_BL_REQ);
+DECLARE_MSG(kbd_to_req, KBD_TO_REQ);
 
 bool in_event = false;
 bool first_run_temp = true;
@@ -48,14 +49,6 @@ static void init(void) {
     M_SUB(IN_EVENT_UPD); // event state
 }
 
-static void kbd_timeout(char* timeout) {
-    char cmd[128];
-    // Add following line to sudoers, replace USERNAME
-    // USERNAME ALL=(root) NOPASSWD: /usr/bin/tee /sys/devices/platform/dell-laptop/leds/dell\:\:kbd_backlight/stop_timeout
-    snprintf(cmd, sizeof(cmd), "echo %s | sudo /usr/bin/tee /sys/devices/platform/dell-laptop/leds/dell::kbd_backlight/stop_timeout", timeout);
-    system(cmd);
-}
-
 static void receive(const msg_t *msg, const void *userdata) {
     switch (MSG_TYPE()) {
     case INHIBIT_UPD: {
@@ -70,12 +63,12 @@ static void receive(const msg_t *msg, const void *userdata) {
             if (kbd_lev >= 0.75) {
                 M_PUB(&kbd_bl_req);      // set 50% kbd brightness if kbd above 50%
             }
-            kbd_timeout("2s");           // set 2 second kbd backlight timeout
+            kbd_to_req.to.new = 2;       // set 2 second kbd backlight timeout
             temp_req->temp.daytime = -1; // affect current daytime
             temp_req->temp.new = 6500;   // day gamma value
         } else {
             INFO("Doing a quick backlight calibration and unpausing night color.\n");
-            kbd_timeout("10s");       // set 10 second timeout, causes keyboard to wake
+            kbd_to_req.to.new = 10;   // set 10 second timeout, causes keyboard to wake
             M_PUB(&capture_req);      // ask for a quick calibration, sets kbd to proper brightness
             first_run_event = true;   // ignore first TEMPUPD temp
             if (in_event) {
@@ -91,6 +84,7 @@ static void receive(const msg_t *msg, const void *userdata) {
         }
         M_PUB(temp_req);   // set gamma
         M_PUB(&calib_req); // stop or start backlight autocalibration
+        M_PUB(&kbd_to_req);
         break;
     }
     case TEMP_UPD: {
