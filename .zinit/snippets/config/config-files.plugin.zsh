@@ -125,7 +125,6 @@ fi
 
 # Access zsh config files
 alias zshconf="(){ setopt extendedglob local_options; $EDITOR ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
-alias zshconfkate="(){ setopt extendedglob local_options; kate ${HOME}/.zshrc ${0:h}/config-files.plugin.zsh ${0:h}/themes/\${MYPROMPT}-*~*.zwc }"
 
 alias t='tail -f'
 alias g='git'
