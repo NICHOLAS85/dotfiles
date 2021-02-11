@@ -201,5 +201,7 @@ zt 0c light-mode null for \
         nateshmbhat/rm-trash \
     lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' lman \
         junegunn/fzf \
+    lbin id-as'playit' \
+        https://playit.gg/downloads/playit-linux_64-latest \
     id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
         zdharma/null
