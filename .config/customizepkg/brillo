@@ -1,3 +1,0 @@
-addline#package#make install #make install.apparmor install.polkit install.udev DESTDIR="${pkgdir}/bedrock/strata/debian/"
-addline#package#make install #make install.bin install.man DESTDIR="${pkgdir}/"
-removeline#package#make install install.apparmor

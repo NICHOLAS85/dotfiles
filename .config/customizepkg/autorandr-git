@@ -1,1 +1,0 @@
-replace#package#DESTDIR="${pkgdir}"#DESTDIR="${pkgdir}/bedrock/strata/debian"
