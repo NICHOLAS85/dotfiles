@@ -39,7 +39,7 @@ _zsh_autosuggest_strategy_custom_history () {
         typeset -g suggestion="${history[(r)$pattern]}"
 }
 
-! $isdolphin && add-zsh-hook chpwd chpwd_ls
+[[ $MYPROMPT != dolphin ]] && add-zsh-hook chpwd chpwd_ls
 
 #########################
 #       Variables       #
@@ -88,7 +88,6 @@ FZF_DEFAULT_OPTS="
 --border
 --height 80%
 --extended
---ansi
 --reverse
 --cycle
 --bind ctrl-s:toggle-sort
@@ -133,7 +132,7 @@ alias open='xdg-open'
 alias atom='atom --disable-gpu'
 alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from deleted directories
 # Aesthetic function for Dolphin, clear -x if cd while in Dolphin
-$isdolphin && alias cd='clear -x; cd'
+[[ $MYPROMPT = dolphin ]] && alias cd='clear -x; cd'
 
 # dot file management
 alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare" dotbare'
@@ -206,13 +205,14 @@ zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*:manuals' separate-sections true
 
 # fzf-tab
-zstyle ':fzf-tab:*' fzf-bindings 'space:accept'   # Space as accept
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept,backward-eof:abort'   # Space as accept, abort when deleting empty space
 zstyle ':fzf-tab:*' print-query ctrl-c        # Use input as result when ctrl-c
 zstyle ':fzf-tab:*' accept-line enter         # Accept selected entry on enter
+zstyle ':fzf-tab:*' fzf-pad 4
 zstyle ':fzf-tab:*' prefix ''                 # No dot prefix
 zstyle ':fzf-tab:*' single-group color header # Show header for single groups
 zstyle ':fzf-tab:complete:(cd|ls|lsd):*' fzf-preview '[[ -d $realpath ]] && ls -1 --color=always -- $realpath'
-zstyle ':fzf-tab:complete:((micro|cp|rm):argument-rest|kate:*)' fzf-preview 'bat --color=always -- $realpath 2>/dev/null || ls --color=always -- $realpath'
+zstyle ':fzf-tab:complete:((micro|cp|rm|bat):argument-rest|kate:*)' fzf-preview 'bat --color=always -- $realpath 2>/dev/null || ls --color=always -- $realpath'
 zstyle ':fzf-tab:complete:micro:argument-rest' fzf-flags --preview-window=right:65%
 zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-preview "git --git-dir=$UPDATELOCAL_GITDIR/\${word}/.git log --color --date=short --pretty=format:'%Cgreen%cd %h %Creset%s %Cred%d%Creset ||%b' ..FETCH_HEAD 2>/dev/null"
 zstyle ':fzf-tab:complete:updatelocal:argument-rest' fzf-flags --preview-window=down:5:wrap
