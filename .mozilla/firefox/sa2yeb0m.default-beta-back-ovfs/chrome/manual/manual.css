@@ -3,13 +3,45 @@
  * Only show close buttons on background tabs when hovering with the mouse
  *
  * Contributor(s): Timvde
- */
+ *//*
 .tabbrowser-tab:not([selected]):not([pinned]) .tab-close-button {
   display: none !important;
 }
 
 .tabbrowser-tab:not([selected]):not([pinned]):hover .tab-close-button {
   display: -moz-box !important;
+}*/
+
+.tabbrowser-tab[selected=true] .tab-close-button
+{
+	border-radius: 99px !important;
+	color: inherit !important;
+	-moz-context-properties: fill, fill-opacity !important;
+	transition-property: fill-opacity, background-color !important;
+	transition-duration: .15s !important;
+	transition-timing-function: var(--ease-basic) !important;
+	fill-opacity: 1 !important;
+	opacity: 1 !important;
+}
+
+.tabbrowser-tab:not([selected=true]) .tab-close-button
+{
+	border-radius: 99px !important;
+	color: inherit !important;
+	-moz-context-properties: fill, fill-opacity !important;
+	transition-property: fill-opacity, background-color !important;
+	transition-duration: .15s !important;
+	transition-timing-function: var(--ease-basic) !important;
+	display: none;
+	fill-opacity: 0 !important;
+	opacity: 0 !important;
+}
+
+.tabbrowser-tab:not([selected=true]):hover .tab-close-button
+{
+	display: initial;
+	fill-opacity: 1 !important;
+	opacity: 1 !important;
 }
 
 /* Hide forward and back buttons when not used */
@@ -46,3 +78,5 @@ menupopup menu,
 	color: inherit !important;
 	fill-opacity: initial !important;
 }
+
+/* Removed pinned tabs from topbar *//* .tabbrowser-tab[pinned] { display:none!important } */

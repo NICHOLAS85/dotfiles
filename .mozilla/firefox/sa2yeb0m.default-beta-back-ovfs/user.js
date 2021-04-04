@@ -56,3 +56,6 @@ user_pref("network.predictor.enable-prefetch", true);
 
 /* Up refresh rate */
 user_pref("layout.frame_rate", 75);
+
+/* Disable firefox screenshot */
+user_pref("extensions.screenshots.disabled", true);

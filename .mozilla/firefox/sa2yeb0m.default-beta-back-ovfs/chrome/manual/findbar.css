@@ -50,3 +50,6 @@ findbar{
   border-right: 1px solid var(--chrome-content-separator-color);
 }
 
+.findbar-match-diacritics.findbar-button.tabbable {
+    display: none !important;
+}
