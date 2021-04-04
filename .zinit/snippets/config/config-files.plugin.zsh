@@ -49,6 +49,7 @@ _zsh_autosuggest_strategy_custom_history () {
 [[ -z ${path[(re)$HOME/bin]} && -d "$HOME/bin" ]] && path=( "$HOME/bin" "${path[@]}" )
 [[ -z ${path[(re)$HOME/.local/bin]} && -d "$HOME/.local/bin" ]] && path=( "$HOME/.local/bin" "${path[@]}" )
 ZINIT[ZCOMPDUMP_PATH]="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache/zinit}}/zcompdump-${HOST/.*/}-${ZSH_VERSION}"
+WORDCHARS=' *?_-.~\'
 pchf="${0:h}/patches"
 thmf="${0:h}/themes"
 GENCOMPL_FPATH="${0:h}/completions"

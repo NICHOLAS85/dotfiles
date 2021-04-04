@@ -1,11 +1,11 @@
---- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-03-09 21:16:04.229000087 -0500
-+++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-03-09 21:20:13.444048906 -0500
-@@ -7,12 +7,13 @@
+--- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-04-01 17:29:32.791224046 -0400
++++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-04-01 17:31:30.785943564 -0400
+@@ -6,12 +6,13 @@
+   setopt $_edit_opts
  
    local fdir=${${(%):-%x}:h}/functions
-   typeset -gU FPATH fpath=( $fdir $fpath )
--  autoload -Uz add-zsh-hook $fdir/_*~*.zwc
-+  autoload -Uz add-zsh-hook $fdir/_edit_subword
+-  autoload -Uz $fdir/bindkey $fdir/_*~*.zwc
++  autoload -Uz $fdir/_edit_subword
  
    local widget
    for widget in {forward,backward,kill,backward-kill}-word; do

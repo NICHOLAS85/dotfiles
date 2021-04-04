@@ -2,7 +2,6 @@
 
 # Change shell behavior when opening the terminal view in dolphin. MYPROMPT set by konsole profile
 if ! [[ $MYPROMPT = dolphin ]]; then
-    isdolphin=false
     # Use chpwd_recent_dirs to start new sessions from last working dir
     # Populate dirstack with chpwd history
     autoload -Uz chpwd_recent_dirs add-zsh-hook
@@ -15,8 +14,6 @@ if ! [[ $MYPROMPT = dolphin ]]; then
             [[ -d "${dir}" ]] && { cd -q "${dir}"; break }
         }
     } 2>/dev/null
-else
-    isdolphin=true
 fi
 
 # Enable Powerlevel10k instant prompt
@@ -62,7 +59,9 @@ zt light-mode for \
         zinit-zsh/z-a-patch-dl \
         zinit-zsh/z-a-submods \
         NICHOLAS85/z-a-linkman \
-        NICHOLAS85/z-a-linkbin
+        NICHOLAS85/z-a-linkbin \
+        atinit'Z_A_USECOMP=1' \
+        NICHOLAS85/z-a-eval
 
 (){ # Load $MYPROMPT configuration and powerlevel10k
     if [[ -f "${thmf}/${1}-pre.zsh" || -f "${thmf}/${1}-post.zsh" ]] && {
@@ -128,7 +127,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         changyuheng/fz \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair \
-    pack'no-dir-color-swap' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
+    eval'dircolors -b LS_COLORS' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
     atload'add-zsh-hook chpwd @chwpd_dir-history-var;
     add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var' \
@@ -203,5 +202,9 @@ zt 0c light-mode null for \
         junegunn/fzf \
     lbin id-as'playit' \
         https://playit.gg/downloads/playit-linux_64-latest \
+    lbin from'gh-r' \
+        ericchiang/pup \
+    lbin \
+        Bugswriter/tuxi \
     id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
         zdharma/null
