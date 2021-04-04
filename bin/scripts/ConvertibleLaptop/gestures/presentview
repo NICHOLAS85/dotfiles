@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 DOWNID="${TMPDIR:-/tmp}/downid"
 CURRENTLYUP(){
     EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")

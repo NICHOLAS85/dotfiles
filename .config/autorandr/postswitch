@@ -1,15 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 kwc5(){
 kwriteconfig5 --file kwinrc --group Windows --key ClickRaise "$1"
 kwriteconfig5 --file kwinrc --group MouseBindings --key CommandWindowWheel "$2"
  }
-if [[ $AUTORANDR_CURRENT_PROFILE = "docked" ]]; then
-    kwc5 "false" "Activate and scroll"
+if test "$AUTORANDR_CURRENT_PROFILE" = "docked" ; then
+#    kwc5 "false" "Activate and scroll"
 else
-    kwc5 "true" "Scroll"
+#    kwc5 "true" "Scroll"
 fi
-qdbus org.kde.KWin /KWin reconfigure
+#qdbus org.kde.KWin /KWin reconfigure
 
 sleep 1
 xinput map-to-output "Wacom HID 4833 Finger touch" eDP-1
