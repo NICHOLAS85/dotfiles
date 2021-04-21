@@ -1,0 +1,11 @@
+[Unit]
+Description=Checks for new firmware every day
+Requires=com.system76.FirmwareManager.Notify.service
+
+[Timer]
+Unit=com.system76.FirmwareManager.Notify.service
+OnUnitInactiveSec=1440m
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
