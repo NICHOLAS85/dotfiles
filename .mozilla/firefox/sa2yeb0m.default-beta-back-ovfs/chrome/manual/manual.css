@@ -80,3 +80,11 @@ menupopup menu,
 }
 
 /* Removed pinned tabs from topbar *//* .tabbrowser-tab[pinned] { display:none!important } */
+
+@-moz-document url(about:blank) {
+    html,body { background: #2A2A2E !important;}
+}
+
+#tabbrowser-tabpanels{
+  background-color: #2A2A2E !important;
+}

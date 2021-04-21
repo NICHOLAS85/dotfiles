@@ -59,3 +59,6 @@ user_pref("layout.frame_rate", 75);
 
 /* Disable firefox screenshot */
 user_pref("extensions.screenshots.disabled", true);
+
+/* Use xdg-desktop-portal */
+user_pref("widget.use-xdg-desktop-portal", true);
