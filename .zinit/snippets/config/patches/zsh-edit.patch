@@ -1,9 +1,10 @@
---- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-04-01 17:29:32.791224046 -0400
-+++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-04-01 17:31:30.785943564 -0400
-@@ -6,12 +6,13 @@
+--- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-04-18 16:40:07.191110037 -0400
++++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-04-18 16:44:04.806847115 -0400
+@@ -6,13 +6,13 @@
    setopt $_edit_opts
  
    local fdir=${${(%):-%x}:h}/functions
+-  unfunction bindkey 2>/dev/null
 -  autoload -Uz $fdir/bindkey $fdir/_*~*.zwc
 +  autoload -Uz $fdir/_edit_subword
  

@@ -115,7 +115,7 @@ else
 fi
 
 # Set variables if on ac mode
-if [[ $(cat /run/tlp/last_pwr) = 0 ]]; then
+if [[ $(cat /run/tlp/last_pwr 2>/dev/null) = 0 ]]; then
     alias micro="micro -fastdirty false"
 fi
 
