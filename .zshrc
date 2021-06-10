@@ -136,12 +136,15 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         zdharma/history-search-multi-word \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle \
-    blockf nocompletions compile'functions/*~*.zwc' \
+    blockf nocompletions compile'functions/*~*.zwc' ver'2ea314b0964093980ecacc58869e6abdb21edd88' \
         marlonrichert/zsh-edit \
     atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
-        zdharma/fast-syntax-highlighting
+        zdharma/fast-syntax-highlighting \
+    atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;
+    bindkey "${terminfo[kcud1]}" history-substring-search-down' \
+        zsh-users/zsh-history-substring-search
 
 zt 0b light-mode for \
     blockf compile'lib/*f*~*.zwc' \
@@ -150,10 +153,7 @@ zt 0b light-mode for \
         knu/zsh-manydots-magic \
         RobSis/zsh-reentry-hook \
     pick'autoenv.zsh' nocompletions \
-        Tarrasch/zsh-autoenv \
-    atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;
-    bindkey "${terminfo[kcud1]}" history-substring-search-down' \
-        zsh-users/zsh-history-substring-search
+        Tarrasch/zsh-autoenv
 
 ##################
 # Wait'0c' block #
