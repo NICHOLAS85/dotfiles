@@ -55,7 +55,7 @@ rotate_left = "brillo -u 1000 -U 4"
 rotate_right = "brillo -u 1000 -A 4"
 
 [[switch.commands]]
-laptop = "pkill onboard; pkill screenrotator; pkill unclutter; /bin/bash /home/nicholas/bin/scripts/ConvertibleLaptop/switch/landscape"
+laptop = "pkill onboard; pkill screenrotator -INT; pkill unclutter"
 tablet = "screenrotator & onboard & unclutter --timeout 1 -b"
 
 [settings]
