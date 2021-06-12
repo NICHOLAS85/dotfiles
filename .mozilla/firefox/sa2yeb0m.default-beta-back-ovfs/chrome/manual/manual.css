@@ -66,7 +66,7 @@
     max-width: 17px !important;
 }
 
-/* Smaller context popup */
+/* Smaller context popup 
 menupopup menuitem,
 menupopup menu,
 .autocomplete-richlistitem
@@ -77,7 +77,7 @@ menupopup menu,
 	background: 0 !important;
 	color: inherit !important;
 	fill-opacity: initial !important;
-}
+}*/
 
 /* Removed pinned tabs from topbar *//* .tabbrowser-tab[pinned] { display:none!important } */
 

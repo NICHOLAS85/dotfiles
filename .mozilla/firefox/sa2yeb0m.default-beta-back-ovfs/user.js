@@ -35,6 +35,7 @@ user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
 user_pref("media.ffmpeg.low-latency.enabled", true);
 user_pref("media.navigator.mediadatadecoder_vpx_enabled", true);
+user_pref("media.rdd-vpx.enabled", false);
 
 /* Allow smooth zooming */
 user_pref("apz.allow_zooming", true);
@@ -62,3 +63,8 @@ user_pref("extensions.screenshots.disabled", true);
 
 /* Use xdg-desktop-portal */
 user_pref("widget.use-xdg-desktop-portal", true);
+
+/* Allow blurry stuff*/
+user_pref("layout.css.backdrop-filter.enabled", true);
+/* Fix context menu highlight */
+user_pref("layout.css.color-mix.enabled", true);
