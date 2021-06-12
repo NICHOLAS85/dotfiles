@@ -1,0 +1,8 @@
+#!/bin/sh
+PID=$1
+while [ -e /proc/$PID ]
+do
+    echo "Process: $PID is still running"
+    sleep 45m
+done
+echo "Process $PID has finished"

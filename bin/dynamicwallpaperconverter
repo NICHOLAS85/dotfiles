@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+
+# Copyright (C) 2020 Vlad Zahorodnii
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import argparse
+import base64
+import datetime
+import json
+import os
+import plistlib
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+
+for executable in ['heif-convert', 'kdynamicwallpaperbuilder']:
+    if shutil.which(executable) is None:
+        print(executable + ' is not installed on your computer')
+        sys.exit(1)
+
+
+class MetadataException(Exception):
+    pass
+
+
+def extract_base64_metadata(input_file):
+    strings_cmd = subprocess.Popen(['strings', input_file],
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.STDOUT)
+    grep_cmd = subprocess.Popen(['grep', 'apple_desktop'],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                stdin=strings_cmd.stdout)
+    stdout_data = str(grep_cmd.communicate()[0])
+    match = re.search(r'apple_desktop:solar="([A-Za-z0-9\+\/]+[=]{0,2})"', stdout_data)
+    if match:
+        return match.group(1)
+    match = re.search(r'apple_desktop:h24="([A-Za-z0-9\+\/]+[=]{0,2})"', stdout_data)
+    if match:
+        return match.group(1)
+    raise MetadataException("No metadata found")
+
+
+def extract_metadata(input_file):
+    base64_metadata = extract_base64_metadata(input_file)
+    blob_metadata = base64.b64decode(base64_metadata)
+    plist_metadata = plistlib.loads(blob_metadata)
+    return plist_metadata
+
+
+def prepare_images(input_file, working_directory, options):
+    template_file = os.path.join(working_directory, 'image.%s' % options['format'])
+    heifconvert_cmd = subprocess.Popen(['heif-convert', input_file, template_file])
+    heifconvert_cmd.wait()
+
+
+def make_image_filename(working_directory, index, options):
+    return os.path.join(working_directory, 'image-%i.%s' % (index + 1, options['format']))
+
+
+def make_metadata_filename(working_directory):
+    return os.path.join(working_directory, 'metadata.json')
+
+
+def time_from_real(t):
+    minute_count = int(1440 * t)
+    return datetime.time(minute_count // 60, minute_count % 60)
+
+
+def prepare_solar_metadata_helper(metadata, working_directory, options):
+    result = dict()
+    result['SolarElevation'] = metadata['a']
+    result['SolarAzimuth'] = metadata['z']
+    result['Time'] = '00:00' # whatever...
+    result['CrossFade'] = options['crossfade']
+    result['FileName'] = make_image_filename(working_directory, metadata['i'], options)
+    return result
+
+
+def prepare_solar_metadata(metadata, wd, options):
+    return list(map(lambda item: prepare_solar_metadata_helper(item, wd, options), metadata))
+
+
+def prepare_timed_metadata_helper(metadata, working_directory, options):
+    result = dict()
+    result['Time'] = time_from_real(metadata['t']).strftime('%H:%M')
+    result['CrossFade'] = options['crossfade']
+    result['FileName'] = make_image_filename(working_directory, metadata['i'], options)
+    return result
+
+
+def prepare_timed_metadata(metadata, wd, options):
+    return list(map(lambda item: prepare_timed_metadata_helper(item, wd, options), metadata))
+
+
+def prepare_metadata(input_file, working_directory, options):
+    metadata = extract_metadata(input_file)
+    if 'si' in metadata:
+        converted_metadata = prepare_solar_metadata(metadata['si'], working_directory, options)
+    else:
+        converted_metadata = prepare_timed_metadata(metadata['ti'], working_directory, options)
+
+    with open(make_metadata_filename(working_directory), 'w') as f:
+        json.dump(converted_metadata, f)
+
+
+def build_wallpaper(working_directory, output_file, options):
+    metadata_file = make_metadata_filename(working_directory)
+    builder_cmd = subprocess.Popen(['kdynamicwallpaperbuilder', '--output', output_file,
+                                    '--quality', str(options['quality']), metadata_file])
+    builder_cmd.wait()
+
+
+parser = argparse.ArgumentParser(description='dynamic wallpaper importer')
+parser.add_argument('--output', default='wallpaper.heic',
+                    help='file where the result will be written')
+parser.add_argument('file', help='input file')
+parser.add_argument('--crossfade', default=False, action='store_true',
+                    help='allow cross fading between images')
+parser.add_argument('--intermediate-format', default='jpg', choices=('jpg', 'png'),
+                    help='intermediate image file format')
+parser.add_argument('--quality', default=100, type=int,
+                    help='desired quality of the encoded images (from 1 to 100)')
+args = parser.parse_args()
+
+input_file = args.file
+output_file = args.output
+
+options = {
+    'crossfade': args.crossfade,
+    'format': args.intermediate_format,
+    'quality': args.quality
+}
+
+with tempfile.TemporaryDirectory() as working_directory:
+    prepare_metadata(input_file, working_directory, options)
+    prepare_images(input_file, working_directory, options)
+    build_wallpaper(working_directory, output_file, options)
