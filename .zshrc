@@ -130,7 +130,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     eval'dircolors -b LS_COLORS' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
     atload'add-zsh-hook chpwd @chwpd_dir-history-var;
-    add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var' \
+    add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var now' \
         kadaan/per-directory-history \
     compile'h*' \
         zdharma/history-search-multi-word \

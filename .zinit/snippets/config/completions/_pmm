@@ -35,12 +35,6 @@ args=(
 	'--check-pmm-configuration:sanity check pmm configuration'
 	'--list-pmm-ui-files:list expected front-end files with current user interface'
 	'(-h --help)'{-h,--help}'[print help message]'
-	# Stratum
-	#'(-)1:operations:_pmm_list_operations'
-	# Command to run from stratum
-	#'2:command:_strat_local_cmds'
-	# Parameters for command being run from specified stratum
-	#'*::parameters:_strat_local_params'
 )
 
 # zsh-ism: we want it to expand here

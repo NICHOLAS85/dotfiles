@@ -78,6 +78,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(dir_history custom_history completion)
 HISTORY_SUBSTRING_SEARCH_FUZZY=set
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=set
 AUTOPAIR_CTRL_BKSPC_WIDGET=".backward-kill-word"
+chwpd_dir_history_funcs=("_dircycle_update_cycled" ".zinit-cd")
 
 export GI_TEMPLATE="${ZPFX}/git-ignore-template"
 export OPENCV_LOG_LEVEL=ERROR # Hide nonimportant errors for howdy

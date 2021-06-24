@@ -1,3 +1,5 @@
 emulate -L zsh
 
+[[ -v dir_history ]] || return
+
 dir_history=("${1%%$'\n'}" "${(u)dir_history[@]}" )
