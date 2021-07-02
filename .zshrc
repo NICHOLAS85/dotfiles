@@ -89,6 +89,8 @@ zt light-mode for \
         ael-code/zsh-colored-man-pages \
     trigger-load'!ga;!grh;!grb;!glo;!gd;!gcf;!gclean;!gss;!gcp;!gcb' \
         wfxr/forgit \
+    trigger-load'!ugit' \
+        Bhupesh-V/ugit \
     trigger-load'!zshz' blockf \
         agkozak/zsh-z \
     trigger-load'!updatelocal' blockf compile'f*/*~*.zwc' \

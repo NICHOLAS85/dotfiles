@@ -95,9 +95,9 @@ FZF_DEFAULT_OPTS="
 --cycle
 --bind ctrl-s:toggle-sort
 --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
---preview '(bat --color=always {} || ls --color=always \$(x={}; echo \"\${x/#\~/\$HOME}\")) 2>/dev/null | head -200'
---preview-window right:65%:wrap
 "
+# --preview '(bat --color=always {} || ls --color=always \$(x={}; echo \"\${x/#\~/\$HOME}\")) 2>/dev/null | head -200'
+# --preview-window right:65%:wrap
 FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git 2>/dev/null"
 
 FZ_HISTORY_CD_CMD=zshz
