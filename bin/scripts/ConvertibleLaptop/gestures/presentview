@@ -1,23 +1,28 @@
 #!/bin/bash
 
 DOWNID="${TMPDIR:-/tmp}/downid"
-CURRENTLYUP(){
-    EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")
-    [[ "${EFFECTS[*]}" =~ "presentwindows" ]] && true || false
-}
+EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")
+[[ "${EFFECTS[*]}" =~ "presentwindows" ]] && CURRENTLYUP=true || CURRENTLYUP=false
+[[ "${EFFECTS[*]}" =~ "desktopgrid" ]] && CURRENTLYUPAGAIN=true || CURRENTLYUPAGAIN=false
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 
 case $1 in
   --up )
     if [[ -e $DOWNID ]]; then
       xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm -f $DOWNID || invoke "Expose"
-    elif ! CURRENTLYUP; then
+    elif ! $CURRENTLYUP && ! $CURRENTLYUPAGAIN; then
       invoke "Expose"
+    elif $CURRENTLYUP; then
+      invoke "Expose"
+      sleep .23
+      invoke "ShowDesktopGrid"
     fi
   ;;
   --down )
-    if CURRENTLYUP; then
-      xdotool click 3
+    if $CURRENTLYUPAGAIN; then
+      invoke "ShowDesktopGrid"
+    elif $CURRENTLYUP; then
+      invoke "Expose"
     else
       xdotool getwindowpid $(xdotool getwindowfocus) > $DOWNID
       invoke "Window Minimize"
