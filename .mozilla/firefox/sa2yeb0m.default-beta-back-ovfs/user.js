@@ -26,7 +26,7 @@ user_pref("materialFox.reduceTabOverflow", true);
 
 /* Disable Pocket and screenshots */
 user_pref("extensions.pocket.enabled", false);
-user_pref("extensions.screenshots.disabled". true);
+user_pref("extensions.screenshots.disabled", true);
 
 /* Enable VA-API Acceleration */
 user_pref("media.ffvpx.enabled", false);
