@@ -1,18 +1,11 @@
---- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-04-18 16:40:07.191110037 -0400
-+++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-04-18 16:44:04.806847115 -0400
-@@ -6,13 +6,13 @@
-   setopt $_edit_opts
+--- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-08-26 17:52:53.358880585 -0400
++++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-08-26 17:52:50.040887434 -0400
+@@ -10,7 +10,7 @@
+   local dir=${${(%):-%x}:A:h}
+   local fdir=$dir/functions
+   typeset -gU FPATH fpath=( $dir $fpath )
+-  autoload -Uz $fdir/bind $fdir/[._]edit.*~*.zwc(DN)
++  autoload -Uz $fdir/bind(.:t) $fdir/[._]edit.*~*.zwc(DN.:t)
  
-   local fdir=${${(%):-%x}:h}/functions
--  unfunction bindkey 2>/dev/null
--  autoload -Uz $fdir/bindkey $fdir/_*~*.zwc
-+  autoload -Uz $fdir/_edit_subword
- 
-   local widget
-   for widget in {forward,backward,kill,backward-kill}-word; do
-     zle -N $widget _edit_subword
-   done
-+  return
-   for widget in yank yank-pop reverse-yank-pop; do
-     zle -N $widget _visual_yank
-   done
+   .beginning-of-buffer() {
+     CURSOR=0
