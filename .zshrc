@@ -125,6 +125,12 @@ zt 0a light-mode for \
 ##################
 
 zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
+    blockf nocompletions compile'functions/*~*.zwc' \
+        marlonrichert/zsh-edit \
+    atload'FAST_HIGHLIGHT[chroma-man]=' \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
+    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
+        zdharma/fast-syntax-highlighting \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
@@ -137,16 +143,10 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     compile'h*' \
         zdharma/history-search-multi-word \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
-        michaelxmcbride/zsh-dircycle \
-    blockf nocompletions compile'functions/*~*.zwc' \
-        marlonrichert/zsh-edit \
-    atinit'zicompinit_fast; zicdreplay' atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
-    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
-        zdharma/fast-syntax-highlighting
+        michaelxmcbride/zsh-dircycle
 
 zt 0b light-mode for \
-    blockf compile'lib/*f*~*.zwc' \
+    atinit'zicompinit_fast; zicdreplay' blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \

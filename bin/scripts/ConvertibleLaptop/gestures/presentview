@@ -14,7 +14,7 @@ case $1 in
       invoke "Expose"
     elif $CURRENTLYUP; then
       invoke "Expose"
-      sleep .23
+      sleep .33
       invoke "ShowDesktopGrid"
     fi
   ;;
