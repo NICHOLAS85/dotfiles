@@ -1,0 +1,72 @@
+[$Version]
+update_info=kwinrules.upd:replace-placement-string-to-enum
+
+[1]
+Description=Window settings for kcolorschemeeditor
+clientmachinematch=0
+size=566,613
+sizerule=4
+title=KColorSchemeEditor
+titlematch=2
+types=32
+wmclass=kcolorschemeeditor
+wmclassmatch=1
+
+[2]
+Description=Application settings for zoom
+clientmachinematch=0
+maxsize=961,540
+maxsizerule=2
+position=885,325
+positionrule=3
+title=Zoom - Licensed Account
+titlematch=1
+wmclass=zoom
+wmclasscomplete=false
+wmclassmatch=1
+
+[3]
+Description=Window settings for zoom
+clientmachine=localhost
+position=1543,22
+positionrule=3
+title=Zoom - Licensed Account
+titlematch=1
+types=1
+wmclass=zoom
+wmclassmatch=1
+
+[4]
+Description=Application settings for konsole
+opacityactive=92
+opacityactiverule=2
+size=1041,604
+sizerule=3
+types=1
+wmclass=konsole
+wmclassmatch=1
+
+[5]
+Description=Settings for latte Widgets
+opacityactive=85
+opacityactiverule=2
+opacityinactive=85
+opacityinactiverule=2
+title=Latte Dock
+titlematch=1
+types=32
+wmclass=lattedock
+wmclassmatch=1
+
+[6]
+Description=Notifications
+opacityactive=80
+opacityactiverule=2
+opacityinactive=80
+opacityinactiverule=2
+title=Latte Dock
+titlematch=1
+wmclass=lattedock
+
+[General]
+count=6
