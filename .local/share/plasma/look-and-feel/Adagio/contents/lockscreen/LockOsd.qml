@@ -24,16 +24,11 @@ import "../osd"
 PlasmaCore.FrameSvgItem {
     id: osd
 
-    // OSD Timeout in msecs - how long it will stay on the screen
-    property int timeout: 1800
-    // This is either a text or a number, if showingProgress is set to true,
-    // the number will be used as a value for the progress bar
-    property var osdValue
-    // Icon name to display
-    property string icon
-    // Set to true if the value is meant for progress bar,
-    // false for displaying the value as normal text
-    property bool showingProgress: false
+    property alias timeout: osdItem.timeout
+    property alias osdValue: osdItem.osdValue
+    property alias osdMaxValue: osdItem.osdMaxValue
+    property alias icon: osdItem.icon
+    property alias showingProgress: osdItem.showingProgress
 
     objectName: "onScreenDisplay"
     visible: false
@@ -55,21 +50,20 @@ PlasmaCore.FrameSvgItem {
 
         OsdItem {
             id: osdItem
-            rootItem: osd
         }
     }
 
     SequentialAnimation {
         id: hideAnimation
         // prevent press and hold from flickering
-        PauseAnimation { duration: 100 }
+        PauseAnimation { duration: PlasmaCore.Units.shortDuration }
         NumberAnimation {
             target: osd
             property: "opacity"
             from: 1
             to: 0
-            duration: 4000
-            easing.type: Easing.InOutQuad
+            duration: osd.timeout
+            easing.type: Easing.InQuad
         }
         ScriptAction {
             script: {

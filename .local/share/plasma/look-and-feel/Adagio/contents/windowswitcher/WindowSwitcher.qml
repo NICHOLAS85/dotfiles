@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 2.0 as PlasmaComponents // for Highlight
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kwin 2.0 as KWin
 
@@ -55,13 +55,13 @@ KWin.Switcher {
             ListView {
                 id: thumbnailListView
                 model: tabBox.model
-                spacing: units.smallSpacing
-                highlightMoveDuration: 250
+                spacing: PlasmaCore.Units.smallSpacing
+                highlightMoveDuration: PlasmaCore.Units.longDuration
                 highlightResizeDuration: 0
 
                 Connections {
                     target: tabBox
-                    onCurrentIndexChanged: {
+                    function onCurrentIndexChanged() {
                         thumbnailListView.currentIndex = tabBox.currentIndex;
                         thumbnailListView.positionViewAtIndex(thumbnailListView.currentIndex, ListView.Contain)
                     }
@@ -69,7 +69,7 @@ KWin.Switcher {
 
                 delegate: MouseArea {
                     width: thumbnailListView.width
-                    height: delegateColumn.implicitHeight + 2 * delegateColumn.y
+                    height: delegateColumn.height + 2 * delegateColumn.y
 
                     onClicked: {
                         if (tabBox.noModifierGrab) {
@@ -83,9 +83,9 @@ KWin.Switcher {
                         id: delegateColumn
                         anchors.horizontalCenter: parent.horizontalCenter
                         // anchors.centerIn causes layouting glitches
-                        y: units.smallSpacing
-                        width: parent.width - 2 * units.smallSpacing
-                        spacing: units.smallSpacing
+                        y: PlasmaCore.Units.smallSpacing
+                        width: parent.width - 2 * PlasmaCore.Units.smallSpacing
+                        spacing: PlasmaCore.Units.smallSpacing
 
                         focus: index == thumbnailListView.currentIndex
                         Accessible.name: model.caption
@@ -93,7 +93,7 @@ KWin.Switcher {
 
                         Item {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: Math.round(width / tabBox.screenFactor)
+                            implicitHeight: Math.round(delegateColumn.width / tabBox.screenFactor)
 
                             KWin.ThumbnailItem {
                                 anchors.fill: parent
@@ -102,12 +102,12 @@ KWin.Switcher {
                         }
 
                         RowLayout {
-                            spacing: units.smallSpacing
+                            spacing: PlasmaCore.Units.smallSpacing
                             Layout.fillWidth: true
 
                             PlasmaCore.IconItem {
-                                Layout.preferredHeight: units.iconSizes.medium
-                                Layout.preferredWidth: units.iconSizes.medium
+                                Layout.preferredHeight: PlasmaCore.Units.iconSizes.medium
+                                Layout.preferredWidth: PlasmaCore.Units.iconSizes.medium
                                 source: model.icon
                                 usesPlasmaTheme: false
                             }
@@ -128,17 +128,18 @@ KWin.Switcher {
 
                 highlight: PlasmaComponents.Highlight {}
             }
-        }
-        /*
-        * Key navigation on outer item for two reasons:
-        * @li we have to emit the change signal
-        * @li on multiple invocation it does not work on the list view. Focus seems to be lost.
-        **/
-        Keys.onPressed: {
-            if (event.key === Qt.Key_Up) {
-                icons.decrementCurrentIndex();
-            } else if (event.key === Qt.Key_Down) {
-                icons.incrementCurrentIndex();
+
+            /*
+            * Key navigation on outer item for two reasons:
+            * @li we have to emit the change signal
+            * @li on multiple invocation it does not work on the list view. Focus seems to be lost.
+            **/
+            Keys.onPressed: {
+                if (event.key === Qt.Key_Up) {
+                    icons.decrementCurrentIndex();
+                } else if (event.key === Qt.Key_Down) {
+                    icons.incrementCurrentIndex();
+                }
             }
         }
     }

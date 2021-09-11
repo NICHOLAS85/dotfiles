@@ -34,6 +34,9 @@ Item {
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
 
+    implicitWidth: 800
+    implicitHeight: 600
+
     Loader {
         id: mainLoader
         anchors.fill: parent
@@ -44,15 +47,15 @@ Item {
 
         Behavior on opacity {
             OpacityAnimator {
-                duration: units.longDuration
-                easing.type: Easing.InOutQuad
+                duration: PlasmaCore.Units.longDuration
+                easing.type: Easing.InCubic
             }
         }
     }
     Connections {
         id:loaderConnection
         target: org_kde_plasma_screenlocker_greeter_view
-        onFrameSwapped: {
+        function onFrameSwapped() {
             mainLoader.source = "LockScreenUi.qml";
             loaderConnection.target = null;
         }
