@@ -1,5 +1,6 @@
 # https://github.com/NICHOLAS85/dotfiles/blob/xps_13_9365_refresh/.zshrc
-
+export TMP=${TMP:-${TMPDIR:-/tmp}}
+export TMPDIR=$TMP
 # Change shell behavior when opening the terminal view in dolphin. MYPROMPT set by konsole profile
 if ! [[ $MYPROMPT = dolphin ]]; then
     # Use chpwd_recent_dirs to start new sessions from last working dir
@@ -91,8 +92,6 @@ zt light-mode for \
         wfxr/forgit \
     trigger-load'!ugit' \
         Bhupesh-V/ugit \
-    trigger-load'!zshz' blockf \
-        agkozak/zsh-z \
     trigger-load'!updatelocal' blockf compile'f*/*~*.zwc' \
         NICHOLAS85/updatelocal \
     trigger-load'!zhooks' \
@@ -131,6 +130,8 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
         zdharma/fast-syntax-highlighting \
+    blockf \
+        agkozak/zsh-z \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
@@ -153,8 +154,8 @@ zt 0b light-mode for \
         RobSis/zsh-reentry-hook \
     pick'autoenv.zsh' nocompletions \
         Tarrasch/zsh-autoenv \
-    atload'bindkey "${terminfo[kcuu1]}" history-substring-search-up;
-    bindkey "${terminfo[kcud1]}" history-substring-search-down' \
+    atload'bindkey "^[[A" history-substring-search-up;
+    bindkey "^[[B" history-substring-search-down' \
         zsh-users/zsh-history-substring-search
 
 ##################

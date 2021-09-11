@@ -60,14 +60,13 @@ PER_DIRECTORY_HISTORY_BASE="${ZPFX}/per-directory-history"
 export HISTSIZE=501000
 export SAVEHIST=500000
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
-export CUSTOMIZEPKG_CONFIG="${HOME}/.config/customizepkg"
 export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
 export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export TMPPREFIX="${TMPDIR%/}/zsh"
 
 # Directory checked for locally built projects (plugin NICHOLAS85/updatelocal)
-UPDATELOCAL_GITDIR="${HOME}/github/built"
+UPDATELOCAL_GITDIR="${HOME}/Github/public"
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -138,7 +137,7 @@ alias ..='cd .. 2>/dev/null || cd "$(dirname $PWD)"' # Allows leaving from delet
 [[ $MYPROMPT = dolphin ]] && alias cd='clear -x; cd'
 
 # dot file management
-alias dots='DOTBARE_DIR="$HOME/.dots" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/dotbare" dotbare'
+alias dots='DOTBARE_DIR="$HOME/.local/share/dotfiles/home" DOTBARE_TREE="$HOME" DOTBARE_BACKUP="${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/home-backup" dotbare'
 export DOTBARE_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 export DOTBARE_DIFF_PAGER=delta
 
@@ -152,7 +151,7 @@ alias "r${stratum}"="strat -r ${stratum}"
 [[ -d "/bedrock/strata/${stratum}/etc/.git" ]] && \
 alias "${stratum:0:1}edots"="command sudo strat -r ${stratum} git --git-dir=/etc/.git --work-tree=/etc"
 done }
-alias bedots='command sudo DOTBARE_FZF_DEFAULT_OPTS="$DOTBARE_FZF_DEFAULT_OPTS" DOTBARE_DIR="/bedrock/.git" DOTBARE_TREE="/bedrock" DOTBARE_BACKUP="${ZPFX:-${XDG_DATA_HOME:-$HOME/.local/share}}/bdotbare" dotbare'
+alias bedots="DOTBARE_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/root DOTBARE_TREE=/bedrock DOTBARE_BACKUP=${XDG_DATA_HOME:-$HOME/.local/share}/dotfiles/root-backup dotbare"
 }
 
 #########################

@@ -17,6 +17,9 @@ user_pref("media.ffvpx.enabled", false);
 user_pref("media.rdd-vpx.enabled", false);
 user_pref("media.navigator.mediadatadecoder_vpx_enabled", true);
 
+/* Disable touchpad pinch to zoom */
+user_pref("apz.gtk.touchpad_pinch.enabled", false);
+
 /* Faster Pageload extension */
 user_pref("network.dns.disablePrefetchFromHTTPS", false);
 user_pref("network.predictor.enable-prefetch", true);

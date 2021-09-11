@@ -1,23 +1,9 @@
 [kdeglobals][KDE]
-widgetStyle=kvantum-dark
+widgetStyle=Materia Calorb
 
 [kdeglobals][General]
-ColorScheme=Materia Dark4
+ColorScheme=Materia Dark3
 
 [kdeglobals][Icons]
 Theme=Papirus-Dark
 
-[plasmarc][Theme]
-name=Materia Color
-
-[kcminputrc][Mouse]
-cursorTheme=Vimix Cursors
-
-[kwinrc][WindowSwitcher]
-LayoutName=
-
-[kwinrc][DesktopSwitcher]
-LayoutName=
-
-[kwinrc][org.kde.kdecoration2]
-library=

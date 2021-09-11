@@ -452,7 +452,9 @@ PlasmaCore.ColorScope {
             function showHide() {
                 state = state == "hidden" ? "visible" : "hidden";
             }
-            Component.onCompleted: inputPanel.source = "../components/VirtualKeyboard.qml"
+            Component.onCompleted: {
+                inputPanel.source = Qt.platform.pluginName.includes("wayland") ? "../components/VirtualKeyboard_wayland.qml" : "../components/VirtualKeyboard.qml"
+            }
 
             onKeyboardActiveChanged: {
                 if (keyboardActive) {
@@ -623,7 +625,12 @@ PlasmaCore.ColorScope {
             PlasmaComponents.ToolButton {
                 text: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Button to show/hide virtual keyboard", "Virtual Keyboard")
                 iconName: inputPanel.keyboardActive ? "input-keyboard-virtual-on" : "input-keyboard-virtual-off"
-                onClicked: inputPanel.showHide()
+                onClicked: {
+                    // Otherwise the password field loses focus and virtual keyboard
+                    // keystrokes get eaten
+                    mainBlock.mainPasswordBox.forceActiveFocus();
+                    inputPanel.showHide()
+                }
 
                 visible: inputPanel.status == Loader.Ready
             }

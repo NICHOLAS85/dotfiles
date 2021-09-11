@@ -8,4 +8,4 @@ Environment=DISPLAY=:0
 Restart=always
 
 [Install]
-WantedBy=graphical.target
+WantedBy=graphical-session.target

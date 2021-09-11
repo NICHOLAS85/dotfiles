@@ -15,7 +15,8 @@ Parent=FALLBACK/
 StartInCurrentSessionDir=true
 
 [Interaction Options]
-TrimLeadingSpacesInSelectedText=false
+MiddleClickPasteMode=1
+TrimLeadingSpacesInSelectedText=true
 TrimTrailingSpacesInSelectedText=true
 UnderlineFilesEnabled=false
 

@@ -1,9 +1,0 @@
-[Unit]
-Description=Check for firmware updates, and display a notification if found
-Wants=com.system76.FirmwareManager.Notify.timer
-
-[Service]
-ExecStart=/bedrock/bin/strat arch /usr/bin/com.system76.FirmwareManager.Notify
-
-[Install]
-WantedBy=default.target

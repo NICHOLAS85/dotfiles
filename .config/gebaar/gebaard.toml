@@ -2,32 +2,34 @@
 fingers = 3
 #left_up = ""
 #right_up = ""
-up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
 #left_down = ""
 #right_down = ""
-down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
+#up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
+#down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
 #left = "xdotool key alt+Right"
 #right = "xdotool key alt+Left"
 
 [[swipe.commands]]
 one_shot = false
 fingers = 3
-left = "xdotool key alt+Right"
-right = "xdotool key alt+Left"
+up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
+down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
+left = "ydotool key alt+Right"
+right = "ydotool key alt+Left"
 
-[[swipe.commands]]
-fingers = 4
-up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
-down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
-left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
-right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
+#[[swipe.commands]]
+#fingers = 4
+#up = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Maximize"'
+#down = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "MinimizeAll"'
+#left = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Left"'
+#right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick Tile Right"'
 
 [[swipe.commands]]
 fingers = 2
 type = "TOUCH"
-up = "dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible"
-left = "xdotool key alt+Right"
-right = "xdotool key alt+Left"
+#up = "dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible"
+left = "ydotool key alt+Right"
+right = "ydotool key alt+Left"
 
 [[swipe.commands]]
 fingers = 3
@@ -47,16 +49,16 @@ right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick
 fingers = 2
 type = "ONESHOT"
 in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust &"
-out = "xdotool key ctrl+shift+t"
+out = "ydotool key ctrl+shift+t"
 
-[[pinch.commands]]
-type = "CONTINUOUS"
-rotate_left = "brillo -u 1000 -U 4"
-rotate_right = "brillo -u 1000 -A 4"
+#[[pinch.commands]]
+#type = "CONTINUOUS"
+#rotate_left = "brillo -u 1000 -U 4"
+#rotate_right = "brillo -u 1000 -A 4"
 
-[[switch.commands]]
-laptop = "pkill onboard; pkill screenrotator -INT; pkill unclutter"
-tablet = "screenrotator & onboard & unclutter --timeout 1 -b"
+#[[switch.commands]]
+#laptop = "pkill onboard; pkill screenrotator -INT; pkill unclutter"
+#tablet = "screenrotator & onboard & unclutter --timeout 1 -b"
 
 [settings]
 pinch.threshold = 0.13
