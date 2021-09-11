@@ -1,13 +1,13 @@
 #!/bin/sh
 
-cur_window="$(cat /proc/"$(xdotool getwindowpid "$(xdotool getwindowfocus)")"/comm)"
+#cur_window="$(cat /proc/"$(xdotool getwindowpid "$(xdotool getwindowfocus)")"/comm)"
+. /run/user/1000/activewindowinfo # Provided by patch to applet-window-title
+
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "$1"; }
 
-case $cur_window in
-  "firefox-bin" | "MainThread" )
-    xdotool key ctrl+w # Standard shortcut, can't use qdbus to invoke
-    ;;
-  * )
+if [ "$appName" = "Firefox" ] || [ "$appTitle" = "Mozilla Firefox" ]; then
+    ydotool key ctrl+w # Standard shortcut, can't find shortcut to invoke
+else
     invoke "Window Close"
-    ;;
-esac
+fi
+

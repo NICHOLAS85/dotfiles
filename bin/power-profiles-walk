@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+CMode="$(qdbus --system net.hadess.PowerProfiles /net/hadess/PowerProfiles org.freedesktop.DBus.Properties.Get 'net.hadess.PowerProfiles' 'ActiveProfile')"
+if [[ -r /run/user/1000/power-profiles-walk ]]; then
+    PMode=$(</run/user/1000/power-profiles-walk)
+else
+    PMode=power-saver
+fi
+
+if [[ $CMode != "balanced" ]]; then
+    NMode=(balanced battery-good-symbolic)
+elif [[ $PMode = "power-saver" ]]; then
+    NMode=(performance battery-full-charged-symbolic)
+    echo "$NMode" > /run/user/1000/power-profiles-walk
+elif [[ $PMode = "performance" ]]; then
+    NMode=(power-saver battery-level-30-symbolic)
+    echo "$NMode" > /run/user/1000/power-profiles-walk
+else
+    NMode=(balanced battery-good-symbolic)
+fi
+
+powerprofilesctl set ${NMode[0]}
+
+notify-send.sh -u low -a "Power Profiles" "${NMode[0]^} set" -t 3000 --icon "${NMode[1]}"

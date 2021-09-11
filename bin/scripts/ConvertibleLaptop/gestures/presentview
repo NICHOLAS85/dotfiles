@@ -9,7 +9,8 @@ invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 case $1 in
   --up )
     if [[ -e $DOWNID ]]; then
-      xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm -f $DOWNID || invoke "Expose"
+        :
+      #xdotool windowactivate "$(xdotool search --pid "$(cat $DOWNID)" | tail -1)" && rm -f $DOWNID || invoke "Expose"
     elif ! $CURRENTLYUP && ! $CURRENTLYUPAGAIN; then
       invoke "Expose"
     elif $CURRENTLYUP; then
@@ -24,7 +25,7 @@ case $1 in
     elif $CURRENTLYUP; then
       invoke "Expose"
     else
-      xdotool getwindowpid $(xdotool getwindowfocus) > $DOWNID
+      #xdotool getwindowpid $(xdotool getwindowfocus) > $DOWNID
       invoke "Window Minimize"
       { sleep 0.6; rm -f $DOWNID; } &
     fi
