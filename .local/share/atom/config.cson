@@ -55,6 +55,7 @@
     showIndentGuide: true
     showInvisibles: true
     softWrap: true
+    tabLength: 4
   "exception-reporting":
     userId: "ff2cb61b-13b8-4e40-b325-331a712f49a0"
   "file-icons":
@@ -81,6 +82,7 @@
     gccIncludePaths: " ./src/public.h"
     gccLintOnTheFly: true
   "linter-shellcheck":
+    useProjectCwd: true
     userParameters: "-x"
   "linter-stylelint":
     disableWhenNoConfig: false
