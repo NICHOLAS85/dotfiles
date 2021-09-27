@@ -116,9 +116,9 @@ else
 fi
 
 # Set variables if on ac mode
-if [[ $(cat /run/tlp/last_pwr 2>/dev/null) = 0 ]]; then
+#if [[ $(cat /run/tlp/last_pwr 2>/dev/null) = 0 ]]; then
     alias micro="micro -fastdirty false"
-fi
+#fi
 
 #########################
 #       Aliases         #
@@ -229,6 +229,6 @@ bindkey '^[[1;5D' backward-word  # [Ctrl-LeftArrow]  - move backward one word
 bindkey -s '^[[5~' ''            # Do nothing on pageup and pagedown. Better than printing '~'.
 bindkey -s '^[[6~' ''
 bindkey '^[[3;5~' kill-word      # ctrl+del   delete next word
-# bindkey '^h' _complete_help
 bindkey '^I' expand-or-complete-prefix # Fix autopair completion within brackets
 bindkey '^H' backward-kill-word
+#bindkey '^h' _complete_help

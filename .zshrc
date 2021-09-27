@@ -8,7 +8,7 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':chpwd:*' recent-dirs-file "${TMPDIR:-/tmp}/chpwd-recent-dirs"
-    dirstack=($(awk -F"'" '{print $2}' ${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null))
+    dirstack=("${(u)^${(@fQ)$(<${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
         for dir ($dirstack){
@@ -86,8 +86,6 @@ zt light-mode for \
 zt light-mode for \
     trigger-load'!x' svn \
         OMZ::plugins/extract \
-    trigger-load'!man' \
-        ael-code/zsh-colored-man-pages \
     trigger-load'!ga;!grh;!grb;!glo;!gd;!gcf;!gclean;!gss;!gcp;!gcb' \
         wfxr/forgit \
     trigger-load'!ugit' \
@@ -117,7 +115,9 @@ zt 0a light-mode for \
     as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
         felipec/git-completion \
     ver'develop' atload'_zsh_autosuggest_start' \
-        zsh-users/zsh-autosuggestions
+        zsh-users/zsh-autosuggestions \
+    blockf \
+        agkozak/zsh-z
 
 ##################
 # Wait'0b' block #
@@ -126,16 +126,14 @@ zt 0a light-mode for \
 zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     blockf nocompletions compile'functions/*~*.zwc' \
         marlonrichert/zsh-edit \
+    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
+        hlissner/zsh-autopair \
     atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
         zdharma/fast-syntax-highlighting \
-    blockf \
-        agkozak/zsh-z \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
-    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
-        hlissner/zsh-autopair \
     eval'dircolors -b LS_COLORS' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
         trapd00r/LS_COLORS \
     atload'add-zsh-hook chpwd @chwpd_dir-history-var;
