@@ -1,5 +1,5 @@
 #!/bin/sh
 
-qdbus org.kde.KWin /Compositor suspend
+#qdbus org.kde.KWin /Compositor suspend
 
 powerprofilesctl set power-saver

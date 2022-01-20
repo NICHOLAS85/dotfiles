@@ -56,9 +56,9 @@ out = "ydotool key ctrl+shift+t"
 #rotate_left = "brillo -u 1000 -U 4"
 #rotate_right = "brillo -u 1000 -A 4"
 
-#[[switch.commands]]
-#laptop = "pkill onboard; pkill screenrotator -INT; pkill unclutter"
-#tablet = "screenrotator & onboard & unclutter --timeout 1 -b"
+[[switch.commands]]
+laptop = "qdbus org.kde.KWin /VirtualKeyboard org.freedesktop.DBus.Properties.Set org.kde.kwin.VirtualKeyboard enabled 0"
+tablet = "qdbus org.kde.KWin /VirtualKeyboard org.freedesktop.DBus.Properties.Set org.kde.kwin.VirtualKeyboard enabled 1"
 
 [settings]
 pinch.threshold = 0.13

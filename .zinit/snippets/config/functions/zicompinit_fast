@@ -1,3 +1,4 @@
+# https://gist.github.com/ctechols/ca1035271ad134841284
 setopt extendedglob local_options
 autoload -Uz compinit
 local zcompf="${ZINIT[ZCOMPDUMP_PATH]:-${ZDOTDIR:-$HOME}/.zcompdump}"

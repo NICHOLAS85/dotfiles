@@ -61,6 +61,7 @@ export HISTSIZE=501000
 export SAVEHIST=500000
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 export WGETRC="${XDG_CONFIG_HOME}/wgetrc"
+export LESS="-FiMRSW -x4"
 export LESSKEY="${XDG_CONFIG_HOME}/less/lesskey"
 export LESSHISTFILE="${XDG_CACHE_HOME}/less/history"
 export TMPPREFIX="${TMPDIR%/}/zsh"

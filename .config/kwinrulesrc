@@ -1,3 +1,6 @@
+[$Version]
+update_info=kwinrules.upd:use-virtual-desktop-ids
+
 [1]
 Description=Application settings for org.kde.konsole
 ignoregeometry=true
@@ -10,3 +13,4 @@ wmclassmatch=1
 
 [General]
 count=1
+rules=1
