@@ -3,7 +3,7 @@
 DOWNID="${TMPDIR:-/tmp}/downid"
 EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")
 [[ "${EFFECTS[*]}" =~ "presentwindows" ]] && CURRENTLYUP=true || CURRENTLYUP=false
-[[ "${EFFECTS[*]}" =~ "desktopgrid" ]] && CURRENTLYUPAGAIN=true || CURRENTLYUPAGAIN=false
+[[ "${EFFECTS[*]}" =~ "overview" ]] && CURRENTLYUPAGAIN=true || CURRENTLYUPAGAIN=false
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 
 case $1 in
@@ -15,13 +15,13 @@ case $1 in
       invoke "Expose"
     elif $CURRENTLYUP; then
       invoke "Expose"
-      sleep .33
-      invoke "ShowDesktopGrid"
+      sleep .25
+      invoke "Overview"
     fi
   ;;
   --down )
     if $CURRENTLYUPAGAIN; then
-      invoke "ShowDesktopGrid"
+      invoke "Overview"
     elif $CURRENTLYUP; then
       invoke "Expose"
     else

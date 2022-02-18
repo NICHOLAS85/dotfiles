@@ -1,21 +1,10 @@
 [[swipe.commands]]
-fingers = 3
-#left_up = ""
-#right_up = ""
-#left_down = ""
-#right_down = ""
-#up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
-#down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
-#left = "xdotool key alt+Right"
-#right = "xdotool key alt+Left"
-
-[[swipe.commands]]
 one_shot = false
 fingers = 3
 up = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --up"
 down = "~/bin/scripts/ConvertibleLaptop/gestures/presentview --down"
-left = "ydotool key alt+Right"
-right = "ydotool key alt+Left"
+left = "ydotool key 56:1 106:1 106:0 56:0" # alt+Right
+right = "ydotool key 56:1 105:1 105:0 56:0" # alt+Left
 
 #[[swipe.commands]]
 #fingers = 4
@@ -28,8 +17,8 @@ right = "ydotool key alt+Left"
 fingers = 2
 type = "TOUCH"
 #up = "dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible"
-left = "ydotool key alt+Right"
-right = "ydotool key alt+Left"
+left = "ydotool key 56:1 106:1 106:0 56:0" # alt+Right
+right = "ydotool key 56:1 105:1 105:0 56:0" # alt+Left
 
 [[swipe.commands]]
 fingers = 3
@@ -49,7 +38,7 @@ right = 'qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Window Quick
 fingers = 2
 type = "ONESHOT"
 in = "~/bin/scripts/ConvertibleLaptop/gestures/firefoxorbust &"
-out = "ydotool key ctrl+shift+t"
+out= "ydotool key 29:1 42:1 20:1 20:0 42:0 29:0" #Lctrl+Lshift+t
 
 #[[pinch.commands]]
 #type = "CONTINUOUS"

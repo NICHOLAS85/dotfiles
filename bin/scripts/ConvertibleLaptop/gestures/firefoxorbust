@@ -1,11 +1,12 @@
 #!/bin/sh
 
 # Provided by patch to applet-window-title
+# shellcheck source=/run/user/1000/activewindowinfo
 . /run/user/1000/activewindowinfo || notify-send "a: $(cat /run/1000/activewindowinfo)" 
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "$1"; }
 
 if [ "$appName" = "Firefox" ] || [ "$appTitle" = "Mozilla Firefox" ]; then
-    ydotool key ctrl+w # Standard shortcut, can't find shortcut to invoke
+    ydotool key 29:1 17:1 17:0 29:0 # ctrl+w
 else
     invoke "Window Close"
 fi

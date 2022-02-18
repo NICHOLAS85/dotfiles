@@ -38,18 +38,18 @@ autoload -Uz _zinit
 ### End of Zinit installer's chunk
 
 # A binary Zsh module which transparently and automatically compiles sourced scripts
-module_path+=( "${HOME}/.zinit/bin/zmodules/Src" )
-zmodload zdharma/zplugin &>/dev/null
+module_path+=( "${HOME}/.zinit/module/Src" )
+zmodload zdharma_continuum/zinit
 
 # Functions to make configuration less verbose
 # zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
 zt(){ zinit depth'3' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}"; }
 
-##################
-#    Annexes     #
-# Config source  #
-#     Prompt     #
-##################
+#################
+#    Annexes    #
+# Config source #
+#     Prompt    #
+#################
 
 zt light-mode blockf svn id-as for \
         https://github.com/NICHOLAS85/dotfiles/trunk/.zinit/snippets/config
@@ -106,16 +106,18 @@ zt light-mode for \
 ##################
 
 zt 0a light-mode for \
-        OMZP::systemd/systemd.plugin.zsh \
-        OMZP::sudo/sudo.plugin.zsh \
-    atload'zstyle ":completion:*" special-dirs false' \
-        OMZL::completion.zsh \
+    atload'FAST_HIGHLIGHT[chroma-man]=' \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
+    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
+        zdharma-continuum/fast-syntax-highlighting \
+    atload'_zsh_autosuggest_start' \
+        zsh-users/zsh-autosuggestions \
+    compile'h*~*.zwc' \
+        zdharma-continuum/history-search-multi-word \
     as'completion' atpull'zinit cclear' blockf \
         zsh-users/zsh-completions \
     as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
         felipec/git-completion \
-    atload'_zsh_autosuggest_start' \
-        zsh-users/zsh-autosuggestions \
     blockf \
         agkozak/zsh-z
 
@@ -128,10 +130,6 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
         marlonrichert/zsh-edit \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair \
-    atload'FAST_HIGHLIGHT[chroma-man]=' \
-    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
-    compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
-        zdharma-continuum/fast-syntax-highlighting \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
     eval'dircolors -b LS_COLORS' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
@@ -139,13 +137,11 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     atload'add-zsh-hook chpwd @chwpd_dir-history-var;
     add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var now' \
         kadaan/per-directory-history \
-    compile'h*~*.zwc' \
-        zdharma-continuum/history-search-multi-word \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle
 
 zt 0b light-mode for \
-    atinit'zicompinit_fast; zicdreplay' blockf compile'lib/*f*~*.zwc' \
+    blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
@@ -154,15 +150,15 @@ zt 0b light-mode for \
         Tarrasch/zsh-autoenv \
     atload'bindkey "^[[A" history-substring-search-up;
     bindkey "^[[B" history-substring-search-down' \
-        zsh-users/zsh-history-substring-search
+        zsh-users/zsh-history-substring-search \
+        OMZP::systemd/systemd.plugin.zsh \
+        OMZP::sudo/sudo.plugin.zsh
 
 ##################
 # Wait'0c' block #
 ##################
 
 zt 0c light-mode binary from'gh-r' lman lbin for \
-    atclone'./just --completions zsh > _just' atpull'%atclone' \
-        casey/just \
     bpick'*linux64*' \
         zyedidia/micro \
     atclone'mv -f **/*.zsh _bat' atpull'%atclone' \
@@ -179,11 +175,9 @@ zt 0c light-mode binary for \
         kazhala/dotbare
 
 zt 0c light-mode null for \
-    lbin'!**/winapps' patch"${pchf}/%PLUGIN%.patch" reset \
-        Fmstrat/winapps \
     lbin'*d.sh;*n.sh' \
         bkw777/notify-send.sh \
-    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' \
+    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' eval'antidot init' \
         doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
@@ -199,9 +193,5 @@ zt 0c light-mode null for \
         nateshmbhat/rm-trash \
     lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' lman \
         junegunn/fzf \
-    lbin from'gh-r' \
-        ericchiang/pup \
-    lbin \
-        Bugswriter/tuxi \
-    id-as'Cleanup' nocd atinit'unset -f zt; _zsh_autosuggest_bind_widgets' \
+    id-as'Cleanup' nocd atinit'unset -f zt; zicompinit_fast; zicdreplay; _zsh_highlight_bind_widgets; _zsh_autosuggest_bind_widgets' \
         zdharma-continuum/null
