@@ -127,7 +127,7 @@ def prepare_metadata(input_file, working_directory, options):
 def build_wallpaper(working_directory, output_file, options):
     metadata_file = make_metadata_filename(working_directory)
     builder_cmd = subprocess.Popen(['kdynamicwallpaperbuilder', '--output', output_file,
-                                    '--quality', str(options['quality']), metadata_file])
+                                    metadata_file])
     builder_cmd.wait()
 
 

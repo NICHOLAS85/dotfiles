@@ -1,26 +1,26 @@
---- trapd00r---LS_COLORS/LS_COLORS	2021-12-28 16:32:22.913960662 -0500
-+++ trapd00r---LS_COLORS/LS_COLORS-patch	2021-12-28 16:32:52.791946199 -0500
-@@ -34,7 +34,7 @@
- BLK                   38;5;68
- CAPABILITY            38;5;17
- CHR                   38;5;113;1
--DIR                   38;5;30
-+DIR                   01;34
- DOOR                  38;5;127
- EXEC                  38;5;208;1
- FIFO                  38;5;126
-@@ -161,10 +161,10 @@
- .key                  38;5;166
- # }}}
- # configs {{{2
--*config               1
--*cfg                  1
--*conf                 1
--*rc                   1
-+*config               36
-+*cfg                  36
-+*conf                 36
-+*rc                   36
- *authorized_keys      1
- *known_hosts          1
- .ini                  1
+--- trapd00r---LS_COLORS/LS_COLORS	2022-04-06 00:08:00.501202876 -0400
++++ trapd00r---LS_COLORS/LS_COLORS-patch	2022-04-06 00:10:02.254035208 -0400
+@@ -37,7 +37,7 @@
+ BLK                   38;5;68             # core
+ CAPABILITY            38;5;17             # core
+ CHR                   38;5;113;1          # core
+-DIR                   38;5;30             # core
++DIR                   01;34               # core
+ DOOR                  38;5;127            # core
+ EXEC                  38;5;208;1          # core
+ FIFO                  38;5;126            # core
+@@ -149,10 +149,10 @@
+ .xltm                 38;5;73;4           # Spreadsheet (with macros)
+ .xltx                 38;5;73             # Spreadsheet (with macros)
+ .key                  38;5;166            # License keys
+-*config               1                   # Configs
+-*cfg                  1                   # Configs
+-*conf                 1                   # Configs
+-*rc                   1                   # Configs
++*config               36                  # Configs
++*cfg                  36                  # Configs
++*conf                 36                  # Configs
++*rc                   36                  # Configs
+ *authorized_keys      1                   # Configs
+ *known_hosts          1                   # Configs
+ .ini                  1                   # Configs

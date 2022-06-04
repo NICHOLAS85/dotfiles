@@ -7,7 +7,7 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     # Populate dirstack with chpwd history
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
-    zstyle ':chpwd:*' recent-dirs-file "${TMPDIR:-/tmp}/chpwd-recent-dirs"
+    zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
     dirstack=("${(u)^${(@fQ)$(<${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
@@ -43,7 +43,7 @@ zmodload zdharma_continuum/zinit
 
 # Functions to make configuration less verbose
 # zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
-zt(){ zinit depth'3' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}"; }
+zt(){ zinit depth'3' lucid "${@}"; }
 
 #################
 #    Annexes    #
@@ -83,7 +83,7 @@ zt light-mode for \
 # Trigger-load block #
 ######################
 
-zt light-mode for \
+zt wait light-mode for \
     trigger-load'!x' svn \
         OMZ::plugins/extract \
     trigger-load'!ga;!grh;!grb;!glo;!gd;!gcf;!gclean;!gss;!gcp;!gcb' \
@@ -105,7 +105,7 @@ zt light-mode for \
 # Wait'0a' block #
 ##################
 
-zt 0a light-mode for \
+zt light-mode for \
     atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
@@ -125,7 +125,7 @@ zt 0a light-mode for \
 # Wait'0b' block #
 ##################
 
-zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
+zt light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     blockf nocompletions compile'functions/*~*.zwc' \
         marlonrichert/zsh-edit \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
@@ -140,7 +140,7 @@ zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
         michaelxmcbride/zsh-dircycle
 
-zt 0b light-mode for \
+zt light-mode for \
     blockf compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab \
     autoload'#manydots-magic' \
@@ -158,7 +158,7 @@ zt 0b light-mode for \
 # Wait'0c' block #
 ##################
 
-zt 0c light-mode binary from'gh-r' lman lbin for \
+zt light-mode binary from'gh-r' lman lbin for \
     bpick'*linux64*' \
         zyedidia/micro \
     atclone'mv -f **/*.zsh _bat' atpull'%atclone' \
@@ -166,7 +166,7 @@ zt 0c light-mode binary from'gh-r' lman lbin for \
         @sharkdp/hyperfine \
         @sharkdp/fd
 
-zt 0c light-mode binary for \
+zt light-mode binary for \
     lbin \
         laggardkernel/git-ignore \
     lbin from'gh-r' \
@@ -174,19 +174,17 @@ zt 0c light-mode binary for \
     lbin'!' patch"${pchf}/%PLUGIN%.patch" reset \
         kazhala/dotbare
 
-zt 0c light-mode null for \
+zt light-mode null for \
+    make lbin'build/*' \
+        zdharma-continuum/zshelldoc \
     lbin'*d.sh;*n.sh' \
         bkw777/notify-send.sh \
     lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' eval'antidot init' \
         doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
-    lbin'nnn* -> nnn' from'gh-r' bpick'*nerd*' \
-        jarun/nnn \
     lbin \
         paulirish/git-open \
-    lbin'**/*nal;**/*nal-run' from'gh-r' \
-        tycho-kirchner/shournal \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
         dandavison/delta \
     lbin lman patch"${pchf}/%PLUGIN%.patch" reset \
@@ -195,3 +193,4 @@ zt 0c light-mode null for \
         junegunn/fzf \
     id-as'Cleanup' nocd atinit'unset -f zt; zicompinit_fast; zicdreplay; _zsh_highlight_bind_widgets; _zsh_autosuggest_bind_widgets' \
         zdharma-continuum/null
+

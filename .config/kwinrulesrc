@@ -11,6 +11,35 @@ wmclass=konsole org.kde.konsole
 wmclasscomplete=true
 wmclassmatch=1
 
+[57104711-fd5a-4e99-85c8-81fea39658f3]
+Description=Window settings for Right_Bottom
+position=-24,-24
+positionrule=2
+title=Right_Bottom
+titlematch=1
+wmclass=RoudedScreenCorners
+wmclassmatch=1
+
+[8df8a6e3-8ca1-483a-89d3-275762e5d089]
+Description=Settings for RoudedScreenCorners
+above=true
+aboverule=2
+acceptfocusrule=2
+desktops=\\0
+desktopsrule=2
+minimizerule=2
+wmclass=RoudedScreenCorners
+wmclassmatch=1
+
 [General]
 count=1
 rules=1
+
+[fb959d54-839d-4908-843e-8b1e73cc1689]
+Description=Copy of Window settings for Right_Bottom
+position=1,1
+positionrule=2
+title=Left_Bottom
+titlematch=1
+wmclass=roudedscreencorners
+wmclassmatch=1
