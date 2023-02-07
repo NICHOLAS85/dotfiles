@@ -8,6 +8,7 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
+    touch "${TMPDIR}/chpwd-recent-dirs"
     dirstack=("${(u)^${(@fQ)$(<${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
@@ -179,6 +180,8 @@ zt light-mode null for \
         zdharma-continuum/zshelldoc \
     lbin'*d.sh;*n.sh' \
         bkw777/notify-send.sh \
+    lbin from'gh-r' bpick'*gnu*' \
+        rapiz1/catp \
     lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' eval'antidot init' \
         doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \

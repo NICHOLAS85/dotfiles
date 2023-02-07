@@ -5,4 +5,4 @@ Description=Watch for gebaar configuration changes
 PathModified=%h/.config/gebaar/gebaard.toml
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target

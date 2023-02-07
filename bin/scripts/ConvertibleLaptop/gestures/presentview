@@ -2,7 +2,7 @@
 
 DOWNID="${TMPDIR:-/tmp}/downid"
 EFFECTS=("$(qdbus org.kde.KWin /Effects activeEffects)")
-[[ "${EFFECTS[*]}" =~ "presentwindows" ]] && CURRENTLYUP=true || CURRENTLYUP=false
+[[ "${EFFECTS[*]}" =~ "windowview" ]] && CURRENTLYUP=true || CURRENTLYUP=false
 [[ "${EFFECTS[*]}" =~ "overview" ]] && CURRENTLYUPAGAIN=true || CURRENTLYUPAGAIN=false
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "$1"; }
 
