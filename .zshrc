@@ -9,7 +9,7 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
     touch "${TMPDIR}/chpwd-recent-dirs"
-    dirstack=("${(u)^${(@fQ)$(<${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
+    dirstack=("${(u)^${(@fQ)$(<${TMPDIR}/chpwd-recent-dirs 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
         for dir ($dirstack){
@@ -105,7 +105,6 @@ zt wait light-mode for \
 ##################
 # Wait'0a' block #
 ##################
-
 zt light-mode for \
     atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
@@ -173,7 +172,9 @@ zt light-mode binary for \
     lbin from'gh-r' \
         Peltoche/lsd \
     lbin'!' patch"${pchf}/%PLUGIN%.patch" reset \
-        kazhala/dotbare
+        kazhala/dotbare \
+    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null; ./**/antidot* completion zsh > _antidot' atpull'%atclone' eval'antidot init' \
+        doron-cohen/antidot
 
 zt light-mode null for \
     make lbin'build/*' \
@@ -182,8 +183,6 @@ zt light-mode null for \
         bkw777/notify-send.sh \
     lbin from'gh-r' bpick'*gnu*' \
         rapiz1/catp \
-    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' eval'antidot init' \
-        doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
     lbin \
