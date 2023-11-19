@@ -5,7 +5,7 @@
 . /run/user/1000/activewindowinfo || notify-send "$appName | $appTitle" 
 invoke(){ qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut "$1"; }
 
-if [ "$appName" = "Firefox" ] || [ "$appTitle" = "Mozilla Firefox" ] || [ "$appName" = "Brave Web Browser" ]; then
+if [ "$appName" = "Firefox" ] || [ "$appTitle" = "Mozilla Firefox" ] || [ "$appName" = "Brave Web Browser" ]|| [ "$appName" = "Thorium Browser" ]; then
     ydotool key 29:1 17:1 17:0 29:0 # ctrl+w
 else
     invoke "Window Close"
