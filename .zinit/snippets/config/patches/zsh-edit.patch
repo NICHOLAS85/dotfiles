@@ -1,11 +1,27 @@
---- marlonrichert---zsh-edit/zsh-edit.plugin.zsh	2021-08-26 17:52:53.358880585 -0400
-+++ marlonrichert---zsh-edit/zsh-edit.plugin.zsh-patch	2021-08-26 17:52:50.040887434 -0400
-@@ -10,7 +10,7 @@
-   local dir=${${(%):-%x}:A:h}
+Compatibility with fast-syntax-highlighting https://github.com/marlonrichert/zsh-edit/issues/24
+Fix issue with loading via Zinit
+diff --git a/functions/zsh-edit b/functions/zsh-edit
+index 5513a8d..dfe2d16 100644
+--- a/functions/zsh-edit
++++ b/functions/zsh-edit
+@@ -107,6 +107,7 @@ zsh-edit-precmd() {
+ 
+ bindkey -M emacs  '^[/' redo \
+                   '^[Y' reverse-yank-pop
++zle -N reverse-yank-pop .edit.visual-yank
+ 
+ for widget in {insert-{last,first},copy-{prev,next}}-word; do
+   zle -N "$widget" .edit.insert-word
+diff --git a/zsh-edit.plugin.zsh b/zsh-edit.plugin.zsh
+index de2cd02..2323e5a 100644
+--- a/zsh-edit.plugin.zsh
++++ b/zsh-edit.plugin.zsh
+@@ -6,7 +6,7 @@
+   local dir=${${(%):-%x}:P:h}
    local fdir=$dir/functions
    typeset -gU FPATH fpath=( $dir $fpath )
--  autoload -Uz $fdir/bind $fdir/[._]edit.*~*.zwc(DN)
-+  autoload -Uz $fdir/bind(.:t) $fdir/[._]edit.*~*.zwc(DN.:t)
+-  autoload -Uz $fdir/{bind,zsh-edit} $fdir/[._]edit.*~*.zwc(DN)
++  autoload -Uz $fdir/{bind,zsh-edit}(.:t) $fdir/[._]edit.*~*.zwc(DN.:t)
  
-   .beginning-of-buffer() {
-     CURSOR=0
+   {
+     zsh-edit "$@"

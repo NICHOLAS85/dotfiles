@@ -50,11 +50,12 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    my_per_dir_status
+    my_per_dir_status       # Shows if using local or gobal history - doubles as instant prompt indicater
     command_execution_time  # duration of the last command
     status                  # exit code of the last command
     background_jobs         # presence of background jobs
     context                 # user@hostname
+    time
     # =========================[ Line #2 ]=========================
     newline                 # \n
     command_execution_time
@@ -1515,12 +1516,12 @@
   #
   # Usually, you should either not define instant_prompt_* or simply call prompt_* from it. If
   # instant_prompt_* is not defined for a segment, the segment won't be shown in instant prompt.
-  function instant_prompt_example() {
-    # Since prompt_example always makes the same `p10k segment` calls, we can call it from
-    # instant_prompt_example. This will give us the same `example` prompt segment in the instant
-    # and regular prompts.
-    prompt_example
-  }
+#  function instant_prompt_example() {
+#    # Since prompt_example always makes the same `p10k segment` calls, we can call it from
+#    # instant_prompt_example. This will give us the same `example` prompt segment in the instant
+#    # and regular prompts.
+#    prompt_example
+#  }
 
   # User-defined prompt segments can be customized the same way as built-in segments.
   # typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=208
@@ -1539,14 +1540,27 @@
     # # Show empty line if it's the first prompt in the TTY.
     # [[ $P9K_TTY == old ]] && p10k display 'empty_line'=show
     # Show the first prompt line.
-    p10k display '1|*/left_frame'=show '2/right/(time|dir|status|command_execution_time)'=hide
+    p10k display '1|*/left_frame'=show '1/right/(time|my_per_dir_status|background_jobs)'=show '2/right/(time|dir|status|command_execution_time)'=hide
   }
 
   function p10k-on-post-prompt() {
-    # Hide the empty line and the first prompt line.
-    p10k display '1|*/left_frame'=hide '2/right/(time|dir|status|command_execution_time)'=show
-  }
-
+    local current_dir=${(%):-%/}
+    local current_time=${(%):-%D{%H:%M}}
+    # If time or directory haven't changed don't show on post-prompt
+    if [[ $current_dir == $last_dir && $current_time == $last_time ]]; then
+      p10k display '1|*/left_frame'=hide '2/right/(status|command_execution_time)'=show
+    elif [[ $current_dir == $last_dir ]]; then
+    # time changed, show time
+      p10k display '1|*/left_frame'=hide '2/right/(time|status|command_execution_time)'=show
+    elif [[ $current_time == $last_time ]]; then
+    # directory changed, show directory. hide per_dir_status
+      p10k display '1|*/left_frame'=show '1/right/(time|my_per_dir_status|background_jobs)'=hide '2/right/(status|command_execution_time)'=show
+    else
+       p10k display '1/right/(my_per_dir_status|background_jobs)'=hide
+    fi
+    last_dir=$current_dir
+    last_time=$current_time
+}
   # Instant prompt mode.
   #
   #   - off:     Disable instant prompt. Choose this if you've tried instant prompt and found

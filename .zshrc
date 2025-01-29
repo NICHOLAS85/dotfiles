@@ -1,6 +1,7 @@
 # https://github.com/NICHOLAS85/dotfiles/blob/xps_13_9365_refresh/.zshrc
-export TMP=${TMP:-${TMPDIR:-/tmp}}
-export TMPDIR=$TMP
+export TMP="${TMPDIR:-${TMP:-/tmp}}"
+export TMPDIR="$TMP"
+
 # Change shell behavior when opening the terminal view in dolphin. MYPROMPT set by konsole profile
 if ! [[ $MYPROMPT = dolphin ]]; then
     # Use chpwd_recent_dirs to start new sessions from last working dir
@@ -8,19 +9,19 @@ if ! [[ $MYPROMPT = dolphin ]]; then
     autoload -Uz chpwd_recent_dirs add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
     zstyle ':chpwd:*' recent-dirs-file "${TMPDIR}/chpwd-recent-dirs"
-    touch "${TMPDIR}/chpwd-recent-dirs"
-    dirstack=("${(u)^${(@fQ)$(<${TMPDIR}/chpwd-recent-dirs 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
+    if [[ ! -f "${TMPDIR}/chpwd-recent-dirs" ]]; then touch ${TMPDIR}/chpwd-recent-dirs; fi
+    dirstack=("${(u)^${(@fQ)$(<${$(zstyle -L ':chpwd:*' recent-dirs-file)[4]} 2>/dev/null)}[@]:#(\.|${TMPDIR:A}/*)}"(N-/))
     [[ ${PWD} = ${HOME}  || ${PWD} = "." ]] && (){
         local dir
         for dir ($dirstack){
             [[ -d "${dir}" ]] && { cd -q "${dir}"; break }
         }
     } 2>/dev/null
-fi
 
-# Enable Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    # Enable Powerlevel10k instant prompt
+    if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+      source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
 fi
 
 ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-${HOME}}/.zinit}}"
@@ -29,22 +30,24 @@ ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-${ZPLG_BIN_DIR_NAME}}:-bin}"
 if [[ ! -f "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
     command mkdir -p "${ZINIT_HOME}" && command chmod g-rwX "${ZINIT_HOME}"
-    command git clone https://github.com/zdharma-continuum/zinit "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME" && \\
+    command git clone https://github.com/zdharma-continuum/zinit "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
         print -P "%F{160}▓▒░ The clone has failed.%f"
 fi
 source "${ZINIT_HOME}/${ZINIT_BIN_DIR_NAME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
 ### End of Zinit installer's chunk
 
 # A binary Zsh module which transparently and automatically compiles sourced scripts
-module_path+=( "${HOME}/.zinit/module/Src" )
-zmodload zdharma_continuum/zinit
+# seems to not be compiling correctly in recent updates
+#module_path+=( "${HOME}/.zinit/module/Src" )
+#zmodload zdharma_continuum/zinit
 
 # Functions to make configuration less verbose
 # zt() : First argument is a wait time and suffix, ie "0a". Anything that doesn't match will be passed as if it were an ice mod. Default ices depth'3' and lucid
-zt(){ zinit depth'3' lucid "${@}"; }
+zt(){ zinit depth'3' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}"; }
 
 #################
 #    Annexes    #
@@ -64,17 +67,18 @@ zt light-mode for \
         NICHOLAS85/z-a-linkbin \
         atinit'Z_A_USECOMP=1' \
         NICHOLAS85/z-a-eval
+# Load $MYPROMPT configuration and powerlevel10k
+if ! [[ -f "${thmf}/${MYPROMPT:=p10k}-pre.zsh" || -f "${thmf}/${MYPROMPT}-post.zsh" ]]; then
+    print -P "%F{220}Theme \"${MYPROMPT}\" not found, defaulting to p10k%f"
+    MYPROMPT=p10k
+fi
 
-(){ # Load $MYPROMPT configuration and powerlevel10k
-    if [[ -f "${thmf}/${1}-pre.zsh" || -f "${thmf}/${1}-post.zsh" ]] && {
-        zt light-mode for \
-                romkatv/powerlevel10k \
-            id-as"${1}-theme" \
-            atinit"[[ -f ${thmf}/${1}-pre.zsh ]] && source ${thmf}/${1}-pre.zsh" \
-            atload"[[ -f ${thmf}/${1}-post.zsh ]] && source ${thmf}/${1}-post.zsh" \
-                zdharma-continuum/null
-    } || print -P "%F{220}Theme \"${1}\" not found%f"
-} "${MYPROMPT=p10k}"
+zt light-mode for \
+        romkatv/powerlevel10k \
+    id-as"${MYPROMPT}-theme" \
+    atinit"[[ -f ${thmf}/${MYPROMPT}-pre.zsh ]] && source ${thmf}/${MYPROMPT}-pre.zsh" \
+    atload"[[ -f ${thmf}/${MYPROMPT}-post.zsh ]] && source ${thmf}/${MYPROMPT}-post.zsh" \
+        zdharma-continuum/null
 
 ###########
 # Plugins #
@@ -95,28 +99,27 @@ zt wait light-mode for \
         NICHOLAS85/updatelocal \
     trigger-load'!zhooks' \
         agkozak/zhooks \
-    trigger-load'!gcomp' blockf \
+    trigger-load'!gencomp' blockf \
     atclone'command rm -rf lib/*;git ls-files -z lib/ |xargs -0 git update-index --skip-worktree' \
     submods'RobSis/zsh-completion-generator -> lib/zsh-completion-generator;
     nevesnunes/sh-manpage-completions -> lib/sh-manpage-completions' \
-    atload' gcomp(){gencomp "${@}" && zinit creinstall -q ${ZINIT[SNIPPETS_DIR]}/config 1>/dev/null}' \
+    atload'functions[gencomp]="$functions[gencomp];zinit creinstall -q ${ZINIT[SNIPPETS_DIR]}/config 1>/dev/null"' \
          Aloxaf/gencomp
 
 ##################
 # Wait'0a' block #
 ##################
-zt light-mode for \
+
+zt 0a light-mode for \
     atload'FAST_HIGHLIGHT[chroma-man]=' \
     atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
     compile'.*fast*~*.zwc' nocompletions atpull'%atclone' \
         zdharma-continuum/fast-syntax-highlighting \
     atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions \
-    compile'h*~*.zwc' \
-        zdharma-continuum/history-search-multi-word \
     as'completion' atpull'zinit cclear' blockf \
         zsh-users/zsh-completions \
-    as'completion' nocompile mv'*.zsh -> _git' patch"${pchf}/%PLUGIN%.patch" reset \
+    as'completion' nocompile mv'*.zsh -> _git' \
         felipec/git-completion \
     blockf \
         agkozak/zsh-z
@@ -125,11 +128,11 @@ zt light-mode for \
 # Wait'0b' block #
 ##################
 
-zt light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
+zt 0b light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
+    compile'h*~*.zwc' \
+        zdharma-continuum/history-search-multi-word \
     blockf nocompletions compile'functions/*~*.zwc' \
         marlonrichert/zsh-edit \
-    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
-        hlissner/zsh-autopair \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(__fz_zsh_completion)' \
         changyuheng/fz \
     eval'dircolors -b LS_COLORS' atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" \
@@ -138,10 +141,12 @@ zt light-mode patch"${pchf}/%PLUGIN%.patch" reset nocompile'!' for \
     add-zsh-hook zshaddhistory @append_dir-history-var; @chwpd_dir-history-var now' \
         kadaan/per-directory-history \
     trackbinds bindmap'\e[1\;6D -> ^[[1\;5B; \e[1\;6C -> ^[[1\;5A' \
-        michaelxmcbride/zsh-dircycle
+        michaelxmcbride/zsh-dircycle \
+    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
+        hlissner/zsh-autopair
 
-zt light-mode for \
-    blockf compile'lib/*f*~*.zwc' \
+zt 0b light-mode for \
+    blockf atclone'touch modules/Src/aloxaf/fzftab.so' compile'lib/*f*~*.zwc' \
         Aloxaf/fzf-tab \
     autoload'#manydots-magic' \
         knu/zsh-manydots-magic \
@@ -158,7 +163,7 @@ zt light-mode for \
 # Wait'0c' block #
 ##################
 
-zt light-mode binary from'gh-r' lman lbin for \
+zt 0c light-mode binary from'gh-r' lman lbin for \
     bpick'*linux64*' \
         zyedidia/micro \
     atclone'mv -f **/*.zsh _bat' atpull'%atclone' \
@@ -166,33 +171,30 @@ zt light-mode binary from'gh-r' lman lbin for \
         @sharkdp/hyperfine \
         @sharkdp/fd
 
-zt light-mode binary for \
+zt 0c light-mode binary for \
     lbin \
         laggardkernel/git-ignore \
     lbin from'gh-r' \
-        Peltoche/lsd \
+        lsd-rs/lsd \
     lbin'!' patch"${pchf}/%PLUGIN%.patch" reset \
         kazhala/dotbare \
-    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null; ./**/antidot* completion zsh > _antidot' atpull'%atclone' eval'antidot init' \
-        doron-cohen/antidot
+    lbin'rmw* -> rmw' from'gh-r' \
+        theimpossibleastronaut/rmw
 
-zt light-mode null for \
+zt 0c light-mode null for \
     make lbin'build/*' \
         zdharma-continuum/zshelldoc \
-    lbin'*d.sh;*n.sh' \
-        bkw777/notify-send.sh \
-    lbin from'gh-r' bpick'*gnu*' \
-        rapiz1/catp \
+    lbin'*.sh -> notice' \
+        bkw777/notice.sh \
+    lbin'antidot* -> antidot' from'gh-r' atclone'./**/antidot* update 1>/dev/null' atpull'%atclone' eval'antidot init' \
+        doron-cohen/antidot \
     lbin from'gh-r' bpick'*x_x86*' \
         charmbracelet/glow \
     lbin \
         paulirish/git-open \
     lbin'*/delta;git-dsf' from'gh-r' patch"${pchf}/%PLUGIN%.patch" \
         dandavison/delta \
-    lbin lman patch"${pchf}/%PLUGIN%.patch" reset \
-        nateshmbhat/rm-trash \
     lbin from'gh-r' dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1' lman \
         junegunn/fzf \
     id-as'Cleanup' nocd atinit'unset -f zt; zicompinit_fast; zicdreplay; _zsh_highlight_bind_widgets; _zsh_autosuggest_bind_widgets' \
         zdharma-continuum/null
-
